@@ -11,7 +11,7 @@ B) I could really dig completely deep and at some point, I would be at enterpris
 The use case for this documentation/project is to help people who want to be in Cybersecurity learn how to break into Cybersecurity. There are several avenues in which a person could perform a *Cybersecurity Role* (such as DevSecOps, SOC, GRC, Security Engineer, IT Security Specialists, etc.) and none of them are wrong, but from my experience, if you do not have a Home Lab and a Project to show case, your chances of **Breaking into Cybersecurity** are very slim. I hope this project will inspire those who want to break into the field, and be able to showcase what they learn.
 
 ## "How do I use (something like) this for a Cybersecurity Career?"
-Most resumes have a "Project" section. Don't post my project on there (don't even fork it to your repository and post it, it won't work). Create your own GitHub, website, etc., and showcase your project on your resume under "Current Projects".  You can even post you project on [LinkedIn](https://www.linkedin.com/in/imjustinjohnson/).
+Most resumes have a "Project" section. Don't post my project on there (don't even fork it to your repository and post it, it won't look right... However if you want to fork it and contribute in the future to planning and implementing - suggestion - etc., I'm open to contributions). Create your own GitHub, website, etc., and showcase your project on your resume under "Current Projects".  You can even post you project on [LinkedIn](https://www.linkedin.com/in/imjustinjohnson/).
 
 
 ## Software Used
