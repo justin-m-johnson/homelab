@@ -30,15 +30,16 @@ For my HomeLab I am using:
 		 - 1TB NVMe
 
 ## Software Used
+|Purpose        	|Software			|Link						  |
+|-------------------|-------------------|-----------------------------|
+|Hypervisor			|Proxmox          	|https://www.proxmox.com/en/           |
+|Siem				|Elastic Search		|https://www.elastic.co/elasticsearch         |
+|Siem				|Kibana				|https://www.elastic.co/kibana|
+|Siem				|Logstash			|https://www.elastic.co/logstash|
+|Siem				|Beats				|https://www.elastic.co/beats|
+|EDR				|Elastic Detection and Response|https://www.elastic.co/endpoint-detection-response|
+| Vulnerability Scanning | Nessus Essentials |https://www.tenable.com/products/nessus/nessus-essentials |
 
- - Hypervisor: [Proxmox](https://www.proxmox.com/en/)
-	 - Built in Containerization and KVM/QEMU Support
-	 - Hypervisor isn't necessarily important per se for this project, but any future Ansible/Terraform scripts will be tailored towards the Proxmox Hypervisor.
- - SIEM: [ELK Stack:](https://www.elastic.co/elastic-stack)
-    - [Elastic Search](https://www.elastic.co/elasticsearch) 	
-    - [Kibana](https://www.elastic.co/kibana) 	
-    - [Log Stash](https://www.elastic.co/logstash)
-  - [Elastic EDR](https://www.elastic.co/endpoint-detection-response)
   - More TBD
 
 ## Architecture Diagram
@@ -65,3 +66,17 @@ Coming Soon
 
 TBD
 
+
+
+# Future Updates
+
+
+The following is a list of items to be implemented into this project into the future. Items from this list will be brought to the top and as it is implemented. This is more of a "laundry list" of ideas/brain dump.
+
+ - Python Script to take Data from Nessus Essentials (API) to ELK Stack
+ - Implement self-hosted APT/RPM Repository for updating Linux Machines 
+	 - [aptly](https://www.aptly.info/doc/overview/) or
+	 - [lbr38/repomanager: A web UI to mirror rpm or deb packages repositories. (github.com)](https://github.com/lbr38/repomanager)
+ - Automation through SOAR solution?
+	 - The Hive?
+ - (Much later) Add Domain Controller, connect to Azure, implement further with Intune for compliance?
