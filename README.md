@@ -38,6 +38,7 @@ For my HomeLab I am using:
 |Purpose        	|Software			|Link						  |
 |-------------------|-------------------|-----------------------------|
 |Hypervisor			|Proxmox          	|https://www.proxmox.com/en/           |
+|Containers			|K3s				|https://k3s.io				|
 |Siem				|Elastic Search		|https://www.elastic.co/elasticsearch         |
 |Siem				|Kibana				|https://www.elastic.co/kibana|
 |Siem				|Logstash			|https://www.elastic.co/logstash|
@@ -55,7 +56,7 @@ Coming Soon
 
 # Implementation
 
-Coming Soon
+Starting with [1 - SIEM Setup](https://github.com/initcyber/homelab_soc/blob/main/1%-%SIEM%Setup/), installing a single node k3s to host the ELK stack
 
 ## Virtual Machine Requirements
 
