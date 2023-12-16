@@ -56,7 +56,7 @@ Coming Soon
 
 # Implementation
 
-Starting with [1 - SIEM Setup](https://github.com/initcyber/homelab_soc/blob/main/1%-%SIEM%Setup/), installing a single node k3s to host the ELK stack
+Starting with [1 - SIEM Setup](https://github.com/initcyber/homelab_soc/blob/main/1%20-%20SIEM%20Setup/Install.md), installing a single node k3s to host the ELK stack
 
 ## Virtual Machine Requirements
 
