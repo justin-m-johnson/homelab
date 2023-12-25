@@ -24,15 +24,12 @@ Most resumes have a "Project" section. Don't post my project on there (don't eve
 ## Hardware Used
 For my HomeLab I am using:
 
- - Two similarly spec'd Dell 5050 Small Form Factor Computers
+ - Dell 5050 Small Form Factor Computer:
 	 - i7-7700 Intel CPU
 	 - 64GB Ram
-	 - Machine 1:
-		 - 128GB SSD Boot
-		 - 1TB NVMe
-	 - Machine 2:
-		 - 256GB SSD Boot
-		 - 1TB NVMe
+	 - 128GB SSD Boot
+	 - 256GB SSD Data
+	 - 1TB NVMe Data(2)
 
 ## Software Used
 |Purpose        	|Software			|Link						  |
@@ -86,3 +83,4 @@ The following is a list of items to be implemented into this project into the fu
  - Automation through SOAR solution?
 	 - The Hive?
  - (Much later) Add Domain Controller, connect to Azure, implement further with Intune for compliance?
+ - (Much much later) - Implement AI into the mix to fully automate everything??
