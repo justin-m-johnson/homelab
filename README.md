@@ -34,7 +34,7 @@ For my HomeLab I am using:
 ## Software Used
 |Purpose        	|Software			|Link						  |
 |-------------------|-------------------|-----------------------------|
-|Hypervisor			|Proxmox          	|https://www.proxmox.com/en/           |
+|Hypervisor			|VMWare/ESXI         	|https://www.vmware.com/           |
 |Containers			|K3s				|https://k3s.io				|
 |Siem				|Elastic Search		|https://www.elastic.co/elasticsearch         |
 |Siem				|Kibana				|https://www.elastic.co/kibana|
