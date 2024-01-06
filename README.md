@@ -29,7 +29,8 @@ For my HomeLab I am using:
 |Purpose        	|Software			|Link						  |
 |-------------------|-------------------|-----------------------------|
 |Hypervisor			|Proxmox        	|https://www.proxmox.com/           |
-|Security SIEM/Platform  	| Wazuh			| https://wazuh.com/	|
+|Security Platform  	| Wazuh			| https://wazuh.com/	|
+|SIEM/Logging	| Elasticsearch/Kibana/Logstash	| https://www.elasticsearch.com |
 | SOAR/Incident Response	| The Hive		| https://thehive-project.com	|
 | Malware Information Sharing/OSINT	| MISP			| https://www.misp-project.org/ 
 | Vulnerability Scanning | Nessus Essentials |https://www.tenable.com/products/nessus/nessus-essentials |
