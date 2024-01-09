@@ -42,7 +42,7 @@
   # Create VM and capture shell command output
     - name: Create new VM
       ansible.builtin.shell: 
-        cmd: qm create 9999 --memory 1024 --core 2 --cpu host --name ubuntu-cloud --net0 virtio,bridge=vmbr0
+        cmd: qm create 9999 --memory 1024 --core 2 --cpu host --name ubuntu-2204-cloud --net0 virtio,bridge=vmbr0
       register: vmcreate_result
       changed_when: "'unable' not in vmcreate_result.stderr"
   # Show shell command output for vmcreate error check
