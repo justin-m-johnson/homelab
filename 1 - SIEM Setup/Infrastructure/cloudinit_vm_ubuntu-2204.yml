@@ -1,0 +1,121 @@
+---
+- name: Create VM Templates for Ubuntu 22.04 (Jammy Jellyfish)
+  hosts: all
+  tasks:
+  # Check to see if cloud-img already exists in directory
+    - name: Check to see if cloud-img exists
+      stat:
+        path: /home/jammy-server-cloudimg-amd64.img
+      register: cloudimg
+    - debug:
+        msg: "/home/jammy-server-cloudimg-amd64.img already exists!"
+    - debug:
+        msg: "File not found, downloading now:"
+  # Download latest/current Ubuntu 24.04
+    - name: Download Cloud-Init image (If it doesn't exist)
+      ansible.builtin.shell:
+        cmd: cd /home && wget https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
+      when: not cloudimg.stat.exists
+  # Update APT Cache
+    - name: Updating APT Cache
+      apt:
+        update_cache: yes
+  # Install libguestfs-tools
+    - name: Install libguestfs-tools if not installed
+      apt: 
+        name: libguestfs-tools
+        state: present
+  # Inject Qemu-Guest-Agent in Downloaded Cloud-Init Image and capture shell command output
+    - name: Inject Qemu-Guest-Agent and SSH Key
+      ansible.builtin.shell: |
+        virt-customize -a /home/jammy-server-cloudimg-amd64.img --install qemu-guest-agent
+        virt-customize -a /home/jammy-server-cloudimg-amd64.img --run-command 'useradd justin'
+        virt-customize -a /home/jammy-server-cloudimg-amd64.img --run-command 'mkdir -p /home/justin/.ssh'
+        virt-customize -a /home/jammy-server-cloudimg-amd64.img --ssh-inject justin:file:/root/.ssh/id_rsa.pub
+        virt-customize -a /home/jammy-server-cloudimg-amd64.img --run-command 'chown -R justin:justin /home/justin'
+      register: qemuinject_result
+      changed_when: "'Finishing' in qemuinject_result.stderr"
+  # Show shell command output for vmcreate error check
+    - name: Debug Create Qemu-Guest-Agent in Downloaded Cloud-Init Image
+      ansible.builtin.debug:
+        var: qemuinject_result
+  # Create VM and capture shell command output
+    - name: Create new VM
+      ansible.builtin.shell: 
+        cmd: qm create 9999 --memory 1024 --core 2 --cpu host --name ubuntu-cloud --net0 virtio,bridge=vmbr0
+      register: vmcreate_result
+      changed_when: "'unable' not in vmcreate_result.stderr"
+  # Show shell command output for vmcreate error check
+    - name: Debug Create new VM shell output
+      ansible.builtin.debug:
+        var: vmcreate_result
+  # Import Disk and capture shell command output
+    - name: Import Disk
+      ansible.builtin.shell: 
+        cmd: qm importdisk 9999 /home/jammy-server-cloudimg-amd64.img local-zfs
+      register: importdisk_result
+      changed_when: "'Successfully' in importdisk_result.stdout"
+  # Show shell command output for importdisk error check
+    - name: Debug Import Disk shell output
+      ansible.builtin.debug:
+        var: importdisk_result
+  # Attach Imported Disk and capture shell command output
+    - name: Attach Imported Disk 
+      ansible.builtin.shell:
+        cmd: qm set 9999 --scsihw virtio-scsi-single  --scsi0 local-zfs:vm-9999-disk-0
+      register: attachdisk_result
+      changed_when: "'update' in attachdisk_result.stdout"
+  # Show shell command output for importdisk error check
+    - name: Debug Attach Imported Disk shell output
+      ansible.builtin.debug:
+        var: attachdisk_result
+# Make cloudinit disk bootable and capture shell command output
+    - name: Make cloudinit disk bootable 
+      ansible.builtin.shell:
+        cmd: qm set 9999 --boot c --bootdisk scsi0
+      register: bootcloudinit_result
+      changed_when: "'update' in bootcloudinit_result.stdout"
+# Show shell command output for Make cloudinit disk bootable error check
+    - name: Debug Make cloudinit disk bootable output
+      ansible.builtin.debug:
+        var: bootcloudinit_result
+# Attach cloudinit Disk and capture shell command output
+    - name: Add cloudinit disk 
+      ansible.builtin.shell:
+        cmd: qm set 9999 --ide2 local-zfs:cloudinit
+      register: attachcloudinit_result
+      changed_when: "'update' in attachcloudinit_result.stdout"
+  # Show shell command output for Attach cloudinit Disk error check
+    - name: Debug Attach cloudinit Disk shell output
+      ansible.builtin.debug:
+        var: attachcloudinit_result
+# Attach VGA Display to Cloud-Init Image (for Debugging Purposes) and capture shell command output
+    - name: Attach VGA Display
+      ansible.builtin.shell:
+        cmd: qm set 9999 --serial0 socket --vga serial0
+      register: attachvgadisplay_result
+      changed_when: "'update' in attachvgadisplay_result.stdout"
+# Show shell command output for Attach VGA Display to Cloud-Init Image error check
+    - name: Debug Attached VGA Display to Cloud-Init Image
+      ansible.builtin.debug:
+        var: attachvgadisplay_result
+# Enable QEMU Agent and capture shell command output
+    - name: Enable QEMU Agent
+      ansible.builtin.shell:
+        cmd: qm set 9999 --agent enabled=1
+      register: enableqemuagent_result
+      changed_when: "'update' in enableqemuagent_result.stdout"
+# Show shell command output for Attach VGA Display to Cloud-Init Image error check
+    - name: Debug Enable QEMU Agent
+      ansible.builtin.debug:
+        var: enableqemuagent_result
+# Create template and capture shell command output
+    - name: Create Template  
+      ansible.builtin.shell:
+        cmd: qm template 9999
+      register: templatecreate_result
+      changed_when: true
+# Show shell command output for Make cloudinit disk bootable error check
+    - name: Debug Create Template output
+      ansible.builtin.debug:
+        var: templatecreate_result
