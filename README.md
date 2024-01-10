@@ -29,6 +29,7 @@ For my HomeLab I am using:
 |Purpose        	|Software			|Link						  |
 |-------------------|-------------------|-----------------------------|
 |Hypervisor			|Proxmox        	|https://www.proxmox.com/           |
+|Containers			|Docker				|https://www.docker.com	|
 |Security Platform  	| Wazuh			| https://wazuh.com/	|
 |SIEM/Logging	| Elasticsearch/Kibana/Logstash	| https://www.elasticsearch.com |
 | SOAR/Incident Response	| The Hive		| https://thehive-project.com	|
@@ -42,11 +43,11 @@ For my HomeLab I am using:
 
 Coming Soon
 
-
-
 # Implementation
 
-Coming Soon
+1 - SIEM Setup
+This sets up the cloud-init image, clones the image, creates the docker environment, and pulls the ELK docker container down.
+
 
 ## Virtual Machine Requirements
 
