@@ -1,2 +1,5 @@
-[Sample Host]
-192.168.1.10
+[discovery]
+172.16.99.3
+
+[docker-siem]
+172.16.10.20

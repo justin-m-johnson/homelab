@@ -1,0 +1,33 @@
+- name: Adjust mmap count for ELK
+  become: yes
+  shell:
+    cmd: "sysctl -w vm.max_map_count=262144"
+
+# Check to see if Docker ELK already exists in directory
+- name: Check to see if Docker Elk directory exists
+  remote_user: justin  #Change to your user as needed #######
+  stat:
+    path: ~/elk-docker
+  register: elkdir
+- debug:
+    msg: "Elk Directory already exists!"
+- debug:
+    msg: "File not found, downloading now:"
+
+# Download latest Elk Docker from github
+- name: Download Cloud-Init image (If it doesn't exist)
+  ansible.builtin.shell:
+    cmd: cd ~ && git clone https://github.com/spujadas/elk-docker.git && cd elk-docker
+  when: not elkdir.stat.exists
+  
+- name: Build Docker Container
+  become: yes
+  shell:
+    cmd: "cd ~/elk-docker && docker build -t elk-docker"
+  when: not elkdir.stat.exists
+
+
+- name: Run container
+  become: yes
+  shell:
+    cmd: "cd ~/elk-docker && docker run -d -p 5601:5601 -p 9200:9200 -p 5044:5044 -it --name elk sebp/elk"
