@@ -1,6 +1,6 @@
 ---
 - name: Create VM Templates for Ubuntu 22.04 (Jammy Jellyfish)
-  hosts: discovery
+  hosts: discovery # Change to match hosts file
   become: true
   ignore_errors: yes # set right now until I can fix the download_cloud_init role
 
@@ -12,7 +12,7 @@
 
 - name: Install Docker and inject docker files for ELK Stack
   remote_user: justin
-  hosts: docker-siem
+  hosts: docker-siem # Change to match hosts file
   become: true
   roles:
     - provision_docker_server
