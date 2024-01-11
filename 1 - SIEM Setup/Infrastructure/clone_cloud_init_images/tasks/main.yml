@@ -1,4 +1,3 @@
-- tasks:
-  - name: 'Create VM's with Cloud-Init Images (clone)'
+- name: 'Create VMs with Cloud-Init Images (clone)'
 
 ## TO BE FINISHED

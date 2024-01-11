@@ -1,33 +1,35 @@
-- name: Adjust mmap count for ELK
+# Following https://documentation.wazuh.com/current/deployment-options/docker/wazuh-container.html
+- name: Adjust mmap count for Wazuh
   become: yes
   shell:
     cmd: "sysctl -w vm.max_map_count=262144"
 
-# Check to see if Docker ELK already exists in directory
-- name: Check to see if Docker Elk directory exists
+# Check to see if Docker Wazuh already exists in directory
+- name: Check to see if Docker Wazuh directory exists
   remote_user: justin  #Change to your user as needed #######
   stat:
-    path: ~/elk-docker
-  register: elkdir
+    path: ~/wazuh-docker
+  register: wazuhdir
+
 - debug:
-    msg: "Elk Directory already exists!"
+    msg: "Wazuh Directory already exists!"
+  when: wazuhdir.stat.exists
 - debug:
     msg: "File not found, downloading now:"
+  when: not wazuhdir.stat.exists
 
-# Download latest Elk Docker from github
-- name: Download Cloud-Init image (If it doesn't exist)
-  ansible.builtin.shell:
-    cmd: cd ~ && git clone https://github.com/spujadas/elk-docker.git && cd elk-docker
-  when: not elkdir.stat.exists
-  
-- name: Build Docker Container
-  become: yes
+# Download latest Wazuh Docker from github
+- name: Clone Wazuh Github Repo (If it doesn't exist)
   shell:
-    cmd: "cd ~/elk-docker && docker build -t elk-docker"
-  when: not elkdir.stat.exists
+    cmd: cd ~ && git clone https://github.com/wazuh/wazuh-docker.git -b v4.7.2
+  when: not wazuhdir.stat.exists
 
-
-- name: Run container
-  become: yes
+- name: Wazuh Self Sign Certs
+  remote_user: justin  #Change to your user as needed #######
   shell:
-    cmd: "cd ~/elk-docker && docker run -d -p 5601:5601 -p 9200:9200 -p 5044:5044 -it --name elk sebp/elk"
+    cmd: "cd ~/wazuh-docker/single-node && docker compose -f generate-indexer-certs.yml run --rm generator"
+
+- name: Run Wazuh Docker Container
+  remote_user: justin  #Change to your user as needed #######
+  shell:
+    cmd: "cd ~/wazuh-docker/single-node && docker compose up -d"

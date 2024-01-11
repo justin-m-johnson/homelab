@@ -71,20 +71,23 @@
   pip:
     name: docker
 
+##################################################################################
+## Commented out below for now, as Portainer has a conflicting port with Splunk ##
+##################################################################################
 # https://docs.ansible.com/ansible/latest/collections/community/docker/docker_container_module.html#ansible-collections-community-docker-docker-container-module
-- name: Create portainer container
-  docker_container:
-    name: portainer
-    image: portainer/portainer-ce
-    state: started
-    recreate: yes
-    restart_policy: always
-    published_ports:
-      - "8000:8000"
-      - "9000:9000"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/data
+#- name: Create portainer container
+#  docker_container:
+#    name: portainer
+#    image: portainer/portainer-ce
+#    state: started
+#    recreate: yes
+#    restart_policy: always
+#    published_ports:
+#      - "8000:8000"
+#      - "9000:9000"
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#      - portainer_data:/data
 
 
 # FIREWALL SETUP - If Needed - Commented out for now
