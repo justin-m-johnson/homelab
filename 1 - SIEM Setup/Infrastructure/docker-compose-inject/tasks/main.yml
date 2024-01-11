@@ -33,3 +33,32 @@
   remote_user: justin  #Change to your user as needed #######
   shell:
     cmd: "cd ~/wazuh-docker/single-node && docker compose up -d"
+
+
+####################################################################
+#Default UN and PW for Wazuh: kibanaserver / kibanaserver (https://hostname) #
+####################################################################
+
+
+
+- name: Create Splunk container
+  remote_user: justin  #Change to your user as needed #######
+  docker_container:
+    name: splunk
+    image: splunk/splunk:latest
+    state: started
+    recreate: yes
+    restart_policy: always
+    published_ports:
+      - "8000:8000"
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - splunk_logs:/data ### Note: Need to add Network Share!
+    env:
+      SPLUNK_START_ARGS: '--accept-license' 
+      SPLUNK_PASSWORD: '<secret password>'
+
+###########################################################################################
+#Default UN and PW for Splunk: admin / (Whatever your password is) (http://hostname:8000) #
+###########################################################################################
