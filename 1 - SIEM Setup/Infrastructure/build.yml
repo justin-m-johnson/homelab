@@ -1,14 +1,16 @@
 ---
-- name: Create VM Templates for Ubuntu 22.04 (Jammy Jellyfish)
-  hosts: discovery # Change to match hosts file
-  become: true
-  ignore_errors: yes # set right now until I can fix the download_cloud_init role
+#- name: Create VM Templates for Ubuntu 22.04 (Jammy Jellyfish)
+#  hosts: discovery # Change to match hosts file
+#  become: true
+#  ignore_errors: yes # set right now until I can fix the download_cloud_init role
 
-  roles:
-    # Download cloud-init images
-    - download_cloud_init_images
+#  roles:
     # Clone Cloud-init to VM's   ***To be completed***
-    - clone_cloud_init_images 
+    #- clone_cloud_init_images 
+    # Download cloud-init images
+    #- download_cloud_init_images
+    # Clone Cloud-init to VM's   ***To be completed***
+    #- clone_cloud_init_images 
 
 - name: Install Docker and inject docker files for Splunk and Wazuh
   remote_user: justin
