@@ -40,7 +40,7 @@
 #Default UN and PW for Kibana: kibanaserver/kibanaserver                #
 #########################################################################
 
-- name: Create Splunk container
+- name: Create Splunk Container
   remote_user: justin  #Change to your user as needed #######
   docker_container:
     name: splunk
