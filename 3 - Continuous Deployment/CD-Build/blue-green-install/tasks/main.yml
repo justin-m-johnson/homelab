@@ -1,0 +1,15 @@
+# This installs Tailscale, create a file called "tailscalekey.ini" under "CD-Build/blue-green-install/vars/" and put it on the same folder. Put your tailscale auth key on one line in that file.
+
+- name: Read contents of tailscalekey.ini
+  set_fact:
+    ts_auth_key: "{{ lookup('file', 'vars/tailscalekey.ini') }}"
+
+- name: One liner Tailscale Install
+  ansible.builtin.shell: curl -fsSL https://tailscale.com/install.sh | sh
+  args:
+    executable: /bin/bash    
+
+- name: Sign into Tailscale and Accept Routes
+  ansible.builtin.shell: tailscale up --authkey={{ ts_auth_key }} --accept-routes
+  args:
+    executable: /bin/bash   

@@ -1,0 +1,76 @@
+### This does not work at the moment, need to clean it up... For this particular file need 2 VM's
+
+- name: 'Create VMs with Cloud-Init Images (clone)'
+  vars:
+    user_cicustom: "{{ inventory_hostname }}-user-ci.yml"
+    network_cicustom: "{{ inventory_hostname }}-network-ci.yml"
+    hypervisor_hostname: pve2
+    hypervisor_username: root@pam
+    templateid: 9000
+    proxmox_node: pve2
+    package_upgrade: false
+  vars_prompt:
+      - name: hypervisor_password
+  tasks:
+  - name: Copy user cloud-init file
+    template:
+      src: user.j2
+      dest: "/var/lib/vz/snippets/{{ user_cicustom }}"
+    delegate_to: pve2
+
+- name: Copy network cloud-init file
+  template:
+    src: network.j2
+    dest: "/var/lib/vz/snippets/{{ network_cicustom }}"
+  delegate_to: pve2
+
+- name: Clone Ubuntu image
+  throttle: 1
+  proxmox_kvm:
+    agent: yes
+    api_user: "{{ hypervisor_username }}"
+    api_password: "{{ hypervisor_password }}"
+    api_host: "{{ hypervisor_hostname }}"
+    clone: not_used_value
+    vmid: "{{ templateid }}"
+    newid: "{{ newid |default(omit) }}"
+    format: unspecified
+    full: no
+    name: "{{ inventory_hostname }}"
+    state: present
+    node: "{{ proxmox_node }}"
+    proxmox_default_behavior: compatibility
+    citype: nocloud
+  register: vm
+  until: vm is not failed
+  retries: 10
+  delegate_to: localhost
+
+- name: Update vm
+  throttle: 2
+  proxmox_kvm:
+    memory: "{{ vm_memory | default(4096) }}"
+    api_user: "{{ hypervisor_username }}"
+    api_password: "{{ hypervisor_password }}"
+    api_host: "{{ hypervisor_hostname }}"
+    name: "{{ inventory_hostname }}"
+    state: present
+    node: "{{ proxmox_node }}"
+    proxmox_default_behavior: compatibility
+    update: yes
+    cicustom: "user=local:snippets/{{ user_cicustom }},network=local:snippets/{{ network_cicustom }}"
+    citype: nocloud
+  register: vmupdate
+  until: vmupdate is not failed
+  retries: 10
+  delegate_to: localhost
+
+- name: Start vm
+  proxmox_kvm:
+    api_user: "{{ hypervisor_username }}"
+    api_password: "{{ hypervisor_password }}"
+    api_host: "{{ hypervisor_hostname }}"
+    state: started
+    name: "{{ inventory_hostname }}"
+    proxmox_default_behavior: compatibility
+  delegate_to: localhost

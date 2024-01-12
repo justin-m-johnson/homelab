@@ -8,10 +8,10 @@
     # Clone Cloud-init to VM's   ***To be completed***
     #- clone_cloud_init_images 
 
-- name: Install Docker and inject docker files for Continuous Integration Stack
+- name: Install Docker and inject docker files for Blue Green Stack 
   remote_user: justin
-  hosts: ci-vm # Change to match hosts file
+  hosts: cd-group # Change to match hosts file
   become: true
   roles:
     - provision_docker_server
-    - ci-stack-install
+    - blue-green-install #just installs Tailscale using pre-supplied API key
