@@ -22,3 +22,8 @@ then:
 ```bash
 ansible-playbook -i hosts build.yml -u <<user>> -K
 ```
+then you must manually log into the VM and running
+```bash
+semgrep login
+```
+In order to log in via web.

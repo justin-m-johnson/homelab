@@ -35,9 +35,10 @@
     cmd: "cd ~/wazuh-docker/single-node && docker compose up -d"
 
 
-####################################################################
-#Default UN and PW for Wazuh: kibanaserver / kibanaserver (https://hostname) #
-####################################################################
+#########################################################################
+#Default UN and PW for Wazuh: admin / SecretPassword (https://hostname) #
+#Default UN and PW for Kibana: kibanaserver/kibanaserver                #
+#########################################################################
 
 
 
