@@ -53,13 +53,13 @@ Last Edit: January 2024
 1 - SIEM Setup
 This sets up the cloud-init image, clones the image, provisions the VM, creates the docker environment, and pulls the Wazuh and Splunk docker containers down.
 
-2 - Continuous Implementation Setup
+2 - Continuous Implementation
 This clones the image created in 1 - SIEM setup, provisions the VM, creates a docker environment and implements Pytest, Semgrep, Trivy and Falco.
 
 3 - Continuous Deployment
 TBD
 
-4 - Monitoring and Notifications
+4 - Monitoring-Notifications
 TBD
 
 ## Virtual Machine Requirements
