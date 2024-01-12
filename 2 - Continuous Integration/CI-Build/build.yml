@@ -5,8 +5,6 @@
   ignore_errors: yes # set right now until I can fix the download_cloud_init role
 
   roles:
-    # Download cloud-init images
-    #- download_cloud_init_images
     # Clone Cloud-init to VM's   ***To be completed***
     #- clone_cloud_init_images 
 
