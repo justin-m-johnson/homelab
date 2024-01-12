@@ -40,7 +40,6 @@ For my HomeLab I am using:
 | SAST - Programs	| Semgrep	|	https://www.semgrep.dev |
 | IAST/Runtime | Falco	| https://falco.org/ |
 | Unit Test, Integration Test, and Functional Test | Pytest and Unitest |  Varies |
-| AV	| Windows Defender (Windows) and ClamAV (Linux)	| Varies |
 
   - More TBD
 
