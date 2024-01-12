@@ -39,9 +39,6 @@
 #Default UN and PW for Wazuh: admin / SecretPassword (https://hostname) #
 #Default UN and PW for Kibana: kibanaserver/kibanaserver                #
 #########################################################################
-
-
-
 - name: Create Splunk container
   remote_user: justin  #Change to your user as needed #######
   docker_container:
