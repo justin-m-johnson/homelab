@@ -51,22 +51,35 @@ Last Edit: January 2024
 # Implementation
 
 1 - SIEM Setup
-This sets up the cloud-init image, clones the image, creates the docker environment, and pulls the Wazuh and Splunk docker containers down.
+This sets up the cloud-init image, clones the image, provisions the VM, creates the docker environment, and pulls the Wazuh and Splunk docker containers down.
 
+2 - Continuous Implementation Setup
+This clones the image created in 1 - SIEM setup, provisions the VM, creates a docker environment and implements Pytest, Semgrep, Trivy and Falco.
+
+3 - Continuous Deployment
+TBD
+
+4 - Monitoring and Notifications
+TBD
 
 ## Virtual Machine Requirements
 
-Coming Soon
+1 - SIEM VM
+ - 2 CPU Cores
+ - 16 GB RAM
+ - 100 GB SSD
+
+2 - CI VM
+ - 2 CPU core
+ - 16 GB RAM
+ - 50 GB SSD
 
 
 
 # Putting it all together
 
-Coming Soon
+View the readme.md in each subfolder to run the Ansible Playbooks.
 
-## TBD
-
-TBD
 
 
 
@@ -75,9 +88,8 @@ TBD
 
 The following is a list of items to be implemented into this project into the future. Items from this list will be brought to the top and as it is implemented. This is more of a "laundry list" of ideas/brain dump.
 
- - Python Script to take Data from Nessus Essentials (API) to ELK Stack
- - Implement self-hosted APT/RPM Repository for updating Linux Machines 
-	 - [aptly](https://www.aptly.info/doc/overview/) or
-	 - [lbr38/repomanager: A web UI to mirror rpm or deb packages repositories. (github.com)](https://github.com/lbr38/repomanager)
- - (Much later) Add Domain Controller, connect to Azure, implement further with Intune for compliance?
+ - Python Script to take Data from Nessus Essentials (API) to Wazuh and Splunk
+ - (Much later) Add Domain Controller, connect to Azure, implement further with Intune for compliance (securing the infrastructure)
+or
+ - Automate Compliance through Ansible (CIS benchmarks) and Golden Image
  - (Much much later) - Implement AI into the mix to fully automate everything??
