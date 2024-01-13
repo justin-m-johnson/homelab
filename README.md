@@ -30,16 +30,15 @@ For my HomeLab I am using:
 |Hypervisor			| Proxmox        	|https://www.proxmox.com/           |
 |Containers			| Docker				|https://www.docker.com	|
 |Security Platform  	| Wazuh			| https://wazuh.com/	|
-| Git repository | GitHub | https://www.github.com |
+| SCM/ | GitHub | https://www.github.com |
 | Pipeline/automation	| Github Actions	| https://docs.github.com/en/actions|
 |SIEM/Logging	| Splunk		| https://www.splunk.com	|
 | SOAR/Incident Response	| The Hive		| https://thehive-project.com	|
 | Malware Information Sharing/OSINT	| MISP			| https://www.misp-project.org/ 
 | Vulnerability Scanning | Nessus Essentials |https://www.tenable.com/products/nessus/nessus-essentials |
-| SAST - Containers		| Aqua Trivy	|https://trivy.dev/ |
-| SAST - Programs	| Semgrep	|	https://www.semgrep.dev |
+| SAST 	| Semgrep	|	https://www.semgrep.dev |
+| DAST	| OWASP ZAP	| https://www.zaproxy.org/ |
 | IAST/Runtime | Falco	| https://falco.org/ |
-| Unit Test, Integration Test, and Functional Test | Pytest and Unitest |  Varies |
 
   - More TBD
 

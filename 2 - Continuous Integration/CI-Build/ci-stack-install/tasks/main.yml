@@ -8,47 +8,10 @@
     packages:
       - python3-pip
 
-
-- name: Install pytest
-  pip:
-    name: pytest
 ########################################################################################################################
-## Install Trivy
-# Incorporate GH Action here : https://github.com/aquasecurity/trivy-action and https://github.com/aquasecurity/trivy-sarif-demo/blob/master/.github/workflows/scan.yml
+# Install Git Hub Runner (Self Hosted)
+# To be integrated
 ########################################################################################################################
-- name: Install dependencies for Trivy
-  become: true
-  apt:
-    name: "{{ packages }}"
-    state: latest
-  vars:
-    packages:
-      - wget
-      - apt-transport-https
-      - gnupg
-      - lsb-release
-
-- name: Add an apt signing key for Trivy
-  become: true
-  apt_key:
-    url: https://aquasecurity.github.io/trivy-repo/deb/public.key
-    state: present
-- name: Add apt repository for stable version Trivy
-  become: true
-  apt_repository:
-    repo: deb https://aquasecurity.github.io/trivy-repo/deb jammy main
-    filename: trivy
-    state: present
-
-- name: Install Trivy
-  become: true
-  apt:
-    name: "{{ packages }}"
-    state: present
-    update_cache: yes
-  vars:
-    packages:
-      - trivy
 
 ########################################################################################################################
 # Install Semgrep
@@ -62,6 +25,11 @@
 # semgrep login
 ########################################################################################################################
 
+
+########################################################################################################################
+# Install OWASP ZAP
+# To be integrated
+########################################################################################################################
 
 ########################################################################################################################
 # Install Falco
