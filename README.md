@@ -27,6 +27,7 @@ For my HomeLab I am using:
 ## Software Used
 |Purpose        	|Software			|Link						  |
 |-------------------|-------------------|-----------------------------|
+| Initial Code Scan | pre-commit | https://pre-commit.com/|
 |Hypervisor			| Proxmox        	|https://www.proxmox.com/           |
 |Containers			| Docker				|https://www.docker.com	|
 |Security Platform  	| Wazuh			| https://wazuh.com/	|
@@ -78,7 +79,7 @@ TBD
 
 View the readme.md in each subfolder to run the Ansible Playbooks.
 
-Also as a best practice - Install/implement pre-commit hooks for certain tasks that will run before your code is pushed to your git repository (such as secret scanning, linting, black (for python), etc.)
+Also as a best practice - Install/implement pre-commit hooks for certain tasks that will run before your code is pushed to your git repository (such as secret scanning, linting, black (for python), etc.). At the base of this file you can find pre-commit hooks - .pre-commit-config.yaml , .yamlint.yml, .ansible-lint . For further documentation
 
 
 
