@@ -30,7 +30,7 @@ For my HomeLab I am using:
 |Hypervisor			| Proxmox        	|https://www.proxmox.com/           |
 |Containers			| Docker				|https://www.docker.com	|
 |Security Platform  	| Wazuh			| https://wazuh.com/	|
-| SCM/ | GitHub | https://www.github.com |
+| SCM | GitHub | https://www.github.com |
 | Pipeline/automation	| Github Actions	| https://docs.github.com/en/actions|
 |SIEM/Logging	| Splunk		| https://www.splunk.com	|
 | SOAR/Incident Response	| The Hive		| https://thehive-project.com	|
@@ -77,6 +77,8 @@ TBD
 # Putting it all together
 
 View the readme.md in each subfolder to run the Ansible Playbooks.
+
+Also as a best practice - Install/implement pre-commit hooks for certain tasks that will run before your code is pushed to your git repository (such as secret scanning, linting, black (for python), etc.)
 
 
 
