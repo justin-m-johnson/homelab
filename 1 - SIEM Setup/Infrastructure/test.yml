@@ -1,0 +1,34 @@
+# This is broken...
+
+---
+- name: Create VM Templates for Ubuntu 22.04 (Jammy Jellyfish)
+  hosts: localhost # Change to match hosts file
+  become: true
+
+  roles:
+    # Download cloud-init images
+    #- download_cloud_init_images
+    # Clone Cloud-init to VM's   ***To be completed***
+    - role: clone_cloud_init_reqs
+      hosts: localhost
+
+
+- name: Clone the Cloud_init VM
+  hosts: discovery # Change to match hosts file
+
+  roles:
+    # Download cloud-init images
+    #- download_cloud_init_images
+    # Clone Cloud-init to VM's   ***To be completed***
+    - role: clone_cloud_init_images 
+      cpu: 2
+      memory: 2048
+      ip_address: 172.16.10.99
+      vlan_id: 10
+      hard_drive_space: 50G
+      proxmox_host: "Discovery"
+      proxmox_password: "Insert Password Here"
+      proxmox_storage: "local-zfs"
+      proxmox_image: "ubuntu-2204-cloud"
+
+

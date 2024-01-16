@@ -1,0 +1,11 @@
+- name: Install required packages
+  apt:
+    name:
+      - python3-pip
+      - python3-dev
+      - build-essential
+      - libguestfs-tools
+      - virtualenv
+      - python3-proxmoxer
+      - python3-requests
+    state: present

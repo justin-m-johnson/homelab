@@ -27,3 +27,6 @@ then you must manually log into the VM and running
 semgrep login
 ```
 In order to log in via web.
+
+### Note-
+Github Runners are installed manually on the CI Nodes and used to run Semgrep, Falco, and other SAST/DAST/SCA tools.

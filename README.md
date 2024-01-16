@@ -48,6 +48,9 @@ Last Edit: January 2024
 
 # Implementation
 
+0 - Pre-Commit Install
+This  folder has a .pre-commmit-config.yaml file. You can read more here: [Pre-Commit](https://pre-commit.com/) You will want to have pre-commits installed on your working instance and can automate this using Ansible Scripts. In a "Shift-left" mentality you want to ensure that you are providing developers with the tools required to check their code before committing. Some examples of code checking before committing is using tools that will "Lint" your code as well as code scanning (ex. Black for Python, trimming whitepace, secrets scanning, etc.). 
+
 1 - SIEM Setup
 This sets up the cloud-init image, clones the image, provisions the VM, creates the docker environment, and pulls the Wazuh and Splunk docker containers down.
 
@@ -78,7 +81,12 @@ TBD
 
 View the readme.md in each subfolder to run the Ansible Playbooks.
 
-Also as a best practice - Install/implement pre-commit hooks for certain tasks that will run before your code is pushed to your git repository (such as secret scanning, linting, black (for python), etc.)
+# Best Practices
+For the initial stages and a "Shift left", start with the Developer(s) to own security for their code from their development workspace. Encourage .gitignore files and using the pre-commit hooks in order to start securing their code from the beginning.
+
+Commit Signing is also encouraged, as well as using SSH to clone/push repo changes. Obviously using different branches to push code into without affecting the Main/Master branch.
+
+A Local Software Composition Analysis and local Static Code Analysis scan (implemented via pre-commit hooks) can be utilized.
 
 
 
