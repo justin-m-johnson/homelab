@@ -27,6 +27,7 @@ For my HomeLab I am using:
 ## Software Used
 |Purpose        	|Software			|Link						  |
 |-------------------|-------------------|-----------------------------|
+| Initial Code Scan | pre-commit | https://pre-commit.com/|
 |Hypervisor			| Proxmox        	|https://www.proxmox.com/           |
 |Containers			| Docker				|https://www.docker.com	|
 |Security Platform  	| Wazuh			| https://wazuh.com/	|
