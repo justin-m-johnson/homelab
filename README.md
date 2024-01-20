@@ -9,10 +9,11 @@ The use case for this documentation/project is to help people who want to be in 
 Most resumes have a "Project" section. Create your own GitHub, website, etc., and showcase your project on your resume under "Current Projects".  You can even post you project on [LinkedIn](https://www.linkedin.com/in/imjustinjohnson/).
 
 ## Updates
-|Date        	|Description			
-|-------------------|-------------------|
-| December 2023 | Initial Project      |
-| January 2024 | Software/Hardware Changes, project rename (Homelab SOC to Homelab DevSecOp) |
+| Date             | Description                                                                          |
+| ---------------- | ------------------------------------------------------------------------------------ |
+| December 2023    | Initial Project                                                                      |
+| January 2024     | Software/Hardware Changes, project rename (Homelab SOC to Homelab DevSecOp)          |
+| Mid January 2024 | Added the Actions Workflow yml file that allows uploading Github Actions log to SIEM |
 
 ## Hardware Used
 For my HomeLab I am using:
@@ -25,21 +26,21 @@ For my HomeLab I am using:
 	 - 1TB NVMe Data(2)
 
 ## Software Used
-|Purpose        	|Software			|Link						  |
-|-------------------|-------------------|-----------------------------|
-| Initial Code Scan | pre-commit | https://pre-commit.com/|
-|Hypervisor			| Proxmox        	|https://www.proxmox.com/           |
-|Containers			| Docker				|https://www.docker.com	|
-|Security Platform  	| Wazuh			| https://wazuh.com/	|
-| SCM | GitHub | https://www.github.com |
-| Pipeline/automation	| Github Actions	| https://docs.github.com/en/actions|
-|SIEM/Logging	| Splunk		| https://www.splunk.com	|
-| SOAR/Incident Response	| The Hive		| https://thehive-project.com	|
-| Malware Information Sharing/OSINT	| MISP			| https://www.misp-project.org/ 
-| Vulnerability Scanning | Nessus Essentials |https://www.tenable.com/products/nessus/nessus-essentials |
-| SAST 	| Semgrep	|	https://www.semgrep.dev |
-| DAST	| OWASP ZAP	| https://www.zaproxy.org/ |
-| IAST/Runtime | Falco	| https://falco.org/ |
+| Purpose                           | Software          | Link                                                      |
+| --------------------------------- | ----------------- | --------------------------------------------------------- |
+| Initial Code Scan                 | pre-commit        | https://pre-commit.com/                                   |
+| Hypervisor                        | Proxmox           | https://www.proxmox.com/                                  |
+| Containers                        | Docker            | https://www.docker.com                                    |
+| Security Platform                 | Wazuh             | https://wazuh.com/                                        |
+| SCM                               | GitHub            | https://www.github.com                                    |
+| Pipeline/automation               | Github Actions    | https://docs.github.com/en/actions                        |
+| SIEM/Logging                      | Splunk            | https://www.splunk.com                                    |
+| SOAR/Incident Response            | The Hive          | https://thehive-project.com                               |
+| Malware Information Sharing/OSINT | MISP              | https://www.misp-project.org/                             |
+| Vulnerability Scanning            | Nessus Essentials | https://www.tenable.com/products/nessus/nessus-essentials |
+| SAST                              | Semgrep           | https://www.semgrep.dev                                   |
+| DAST                              | OWASP ZAP         | https://www.zaproxy.org/                                  |
+| IAST/Runtime                      | Falco             | https://falco.org/                                        |
 
   - More TBD
 

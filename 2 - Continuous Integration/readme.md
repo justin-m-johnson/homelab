@@ -30,3 +30,5 @@ In order to log in via web.
 
 ### Note-
 Github Runners are installed manually on the CI Nodes and used to run Semgrep, Falco, and other SAST/DAST/SCA tools. Semgrep does not work in ARM with Self Hosted Github Runners!!! This is an issue.
+
+Check out the log-schedule.yml in order to upload logs to your SIEM from Github Actions
