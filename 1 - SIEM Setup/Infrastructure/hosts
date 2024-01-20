@@ -1,5 +1,12 @@
 [discovery]
-172.16.99.3
+discovery.home.initcyber.com
 
-[docker-siem]
-172.16.10.20
+[home-siem]
+splunk.home.initcyber.com
+
+[syslog-cloud]
+syslog-1.home.initcyber.com
+
+[syslog-clients]
+amd-vm2.home.initcyber.com
+docker-arm1.home.initcyber
