@@ -1,76 +1,71 @@
-### This does not work at the moment, need to clean it up...
+vars: 
+  proxmox_user: Please
+  proxmox_password: use
+  proxmox_host: some
+  proxmox_node: sort
+  ip_address: 192.168.1.x
+  proxmox_storage: local-zfs
+  proxmox_image: ubuntu-2204-cloud
+  hard_drive_space: 50G #this increased by 50 gigabytes
+  gateway: 192.168.1.x
+  mem: 16384 #In bytes
+  cpu: 2
+  vm_name: test50
+  vm_new_id: 104 #vm ID of new clone
 
-- name: 'Create VMs with Cloud-Init Images (clone)'
-  vars:
-    user_cicustom: "{{ inventory_hostname }}-user-ci.yml"
-    network_cicustom: "{{ inventory_hostname }}-network-ci.yml"
-    hypervisor_hostname: pve2
-    hypervisor_username: root@pam
-    templateid: 9000
-    proxmox_node: pve2
-    package_upgrade: false
-  vars_prompt:
-      - name: hypervisor_password
-  tasks:
-  - name: Copy user cloud-init file
-    template:
-      src: user.j2
-      dest: "/var/lib/vz/snippets/{{ user_cicustom }}"
-    delegate_to: pve2
 
-- name: Copy network cloud-init file
-  template:
-    src: network.j2
-    dest: "/var/lib/vz/snippets/{{ network_cicustom }}"
-  delegate_to: pve2
+#Install required packages
+- name: Install required packages
+  apt:
+    name:
+      - python3-pip
+      - python3-dev
+      - build-essential
+      - libguestfs-tools
+      - virtualenv
+      - python3-proxmoxer
+      - python3-requests
 
-- name: Clone Ubuntu image
-  throttle: 1
-  proxmox_kvm:
-    agent: yes
-    api_user: "{{ hypervisor_username }}"
-    api_password: "{{ hypervisor_password }}"
-    api_host: "{{ hypervisor_hostname }}"
-    clone: not_used_value
-    vmid: "{{ templateid }}"
-    newid: "{{ newid |default(omit) }}"
-    format: unspecified
-    full: no
-    name: "{{ inventory_hostname }}"
-    state: present
+- name: Clone Cloud-Init Image
+  community.general.proxmox_kvm:
+    api_user: "{{ proxmox_user}}"
+    api_password: "{{ proxmox_password }}"
+    api_host: "{{ proxmox_host }}"
+    clone: ubuntu-2204-cloud
+    name: "{{ vm_name }}"
     node: "{{ proxmox_node }}"
-    proxmox_default_behavior: compatibility
-    citype: nocloud
-  register: vm
-  until: vm is not failed
-  retries: 10
-  delegate_to: localhost
+    storage: "{{ proxmox_storage }}" #Change to match storage name
+    format: qcow2
+    timeout: 500
+    ide:
+      ide2: 'local-zfs:vm-9999-cloudinit'
+    net:
+      net0: 'virtio,bridge=vmbr0,tag=10'
+    ipconfig:
+      ipconfig0: 'ip=172.16.10.81/24'
+    newid: "{{ vm_new_id }}"
+    sshkeys: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJkVm98B71lD5XHfihwcYHE9TVpsJmK1vR1JcaU82L+'
+    searchdomains: 'home.initcyber.com'
 
-- name: Update vm
-  throttle: 2
-  proxmox_kvm:
-    memory: "{{ vm_memory | default(4096) }}"
-    api_user: "{{ hypervisor_username }}"
-    api_password: "{{ hypervisor_password }}"
-    api_host: "{{ hypervisor_hostname }}"
-    name: "{{ inventory_hostname }}"
-    state: present
+- name: Update VM configuration
+  community.general.proxmox_kvm:
+    api_user: "{{ proxmox_user }}"
+    api_password: "{{ proxmox_password }}"
+    api_host: "{{ proxmox_host }}"
+    name: "{{ vm_name }}"
     node: "{{ proxmox_node }}"
-    proxmox_default_behavior: compatibility
-    update: yes
-    cicustom: "user=local:snippets/{{ user_cicustom }},network=local:snippets/{{ network_cicustom }}"
-    citype: nocloud
-  register: vmupdate
-  until: vmupdate is not failed
-  retries: 10
-  delegate_to: localhost
+    cores: "{{ cpu }}"
+    memory: "{{ mem }}"
+    scsi: 
+      scsi0: '{{ proxmox_storage }}:+50G'
+    update: true
 
-- name: Start vm
-  proxmox_kvm:
-    api_user: "{{ hypervisor_username }}"
-    api_password: "{{ hypervisor_password }}"
-    api_host: "{{ hypervisor_hostname }}"
-    state: started
-    name: "{{ inventory_hostname }}"
-    proxmox_default_behavior: compatibility
-  delegate_to: localhost
+# I literally can't find an ansible way to do this outside of shell
+- name: Grow Disk
+  ansible.builtin.shell:
+    cmd: qm resize "{{ vm_new_id }}" scsi0 "+{{ hard_drive_space }}"
+
+
+
+  
+

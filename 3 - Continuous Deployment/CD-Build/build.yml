@@ -1,12 +1,12 @@
 ---
-#- name: Create VM Templates for Ubuntu 22.04 (Jammy Jellyfish)
-#  hosts: discovery # Change to match hosts file
-#  become: true
-#  ignore_errors: yes # set right now until I can fix the download_cloud_init role
+- name: Create VM Templates for Ubuntu 22.04 (Jammy Jellyfish)
+  hosts: discovery # Change to match hosts file
+  become: true
+  ignore_errors: yes # set right now until I can fix the download_cloud_init role
 
-#  roles:
-    # Clone Cloud-init to VM's   ***To be completed***
-    #- clone_cloud_init_images 
+  roles:
+    - clone Cloud-init to VM's 
+    - clone_cloud_init_images 
 
 - name: Install Docker and inject docker files for Blue Green Stack 
   remote_user: justin
