@@ -5,9 +5,10 @@ Plan is to "Hybridize" the homelab into Oracle (Tailscale/VPN) to a kubernetes c
 This will set up the basic infrastructure for the Wazuh and Splunk
 
 # To-do:
-clone_cloud_init_images folder needs to be finished. Goal is to have Proxmox clone the cloud-init image, 
-change the VM to have 100GB Drive, 16GB ram, 2 Cores, and appropriate network settings/hostname/etc.
-Add Wazuh Docker Container
+~~clone_cloud_init_images folder needs to be finished. Goal is to have Proxmox clone the cloud-init image, ~~
+~~change the VM to have 100GB Drive, 16GB ram, 2 Cores, and appropriate network settings/hostname/etc.~~
+~~Add Wazuh Docker Container~~
+Test Scripts
 
 # VM Requirements:
 Memory: 16 GB

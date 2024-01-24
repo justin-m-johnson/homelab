@@ -5,8 +5,9 @@ Plan is to "Hybridize" the homelab into Oracle (Tailscale/VPN) to a kubernetes c
 This will set up the basic infrastructure for Trivy, pytest, semgrep, and falco.
 
 # To-do:
-clone_cloud_init_images folder needs to be finished. Goal is to have Proxmox clone the cloud-init image, 
-change the VM to have 100GB Drive, 8GB ram, 2 Cores, and appropriate network settings/hostname/etc.
+~~clone_cloud_init_images folder needs to be finished. Goal is to have Proxmox clone the cloud-init image, ~~
+~~change the VM to have 100GB Drive, 8GB ram, 2 Cores, and appropriate network settings/hostname/etc.~~
+Test Scripts
 
 
 # VM Requirements:

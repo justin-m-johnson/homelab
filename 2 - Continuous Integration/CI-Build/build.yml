@@ -5,7 +5,6 @@
   ignore_errors: yes # set right now until I can fix the download_cloud_init role
 
   roles:
-    #- role: download_cloud_init_images  #Comment out if Cloud Init Images exist
     # Clone Cloud-init to VM's, duplicate for each VM
     - role: clone_cloud_init_images 
       proxmox_user: root@pam
