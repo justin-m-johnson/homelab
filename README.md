@@ -1,5 +1,5 @@
 #  Project Description
-Welcome to my Home Lab DevSecOp documentation where I plan on documenting how I set up my Home Lab as a DevSecOp lab and my journey in using (mostly) free and open-source software. This documentation will also be posted on [my personal website](https://www.initcyber.com) and I may also do a [YouTube](https://www.youtube.com/@initcyber) video or two.
+Welcome to my Home Lab DevSecOp/Production documentation where I plan on documenting how I set up my Home Lab as a DevSecOp lab and my journey in using (mostly) free and open-source software. This documentation will also be posted on [my personal website](https://www.initcyber.com) and I may also do a [YouTube](https://www.youtube.com/@initcyber) video or two.
 
 
 ## Use Case
@@ -14,16 +14,22 @@ Most resumes have a "Project" section. Create your own GitHub, website, etc., an
 | December 2023    | Initial Project                                                                      |
 | January 2024     | Software/Hardware Changes, project rename (Homelab SOC to Homelab DevSecOp)          |
 | Mid January 2024 | Added the Actions Workflow yml file that allows uploading Github Actions log to SIEM |
+| End January 2024 | Major Overhaul in scripts                                                            |
 
 ## Hardware Used
 For my HomeLab I am using:
 
- - Dell 5050 Small Form Factor Computer:
+ - Dell 5050 Small Form Factor Computer (Discovery):
 	 - i7-7700 Intel CPU
 	 - 64GB Ram
 	 - 128GB SSD Boot
 	 - 256GB SSD Data
-	 - 1TB NVMe Data(2)
+	 - 1TB NVMe Data(x2)
+ - White Box Computer
+     - i3 - 9300 Intel CPU
+     - 32GB Ram
+     - 512GB SSD Boot
+     - 256GB SSD Log Storage
 
 ## Software Used
 | Purpose                           | Software          | Link                                                      |
@@ -50,17 +56,19 @@ Last Edit: January 2024
 
 # Implementation
 
-0 - Pre-Commit Install
-This  folder has a .pre-commmit-config.yaml file. You can read more here: [Pre-Commit](https://pre-commit.com/) You will want to have pre-commits installed on your working instance and can automate this using Ansible Scripts. In a "Shift-left" mentality you want to ensure that you are providing developers with the tools required to check their code before committing. Some examples of code checking before committing is using tools that will "Lint" your code as well as code scanning (ex. Black for Python, trimming whitepace, secrets scanning, etc.). 
+0 - Development Environment Files
+This  folder has a Development Container which contains the .pre-commmit-config.yaml file. You can read more here: [Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers),  [Pre-Commit](https://pre-commit.com/) In a "Shift-left" mentality you want to ensure that you are providing developers with the tools required to check their code before committing. Some examples of code checking before committing is using tools that will "Lint" your code as well as code scanning (ex. Black for Python, trimming whitepace, secrets scanning, etc.). 
 
-1 - SIEM Setup
-This sets up the cloud-init image, clones the image, provisions the VM, creates the docker environment, and pulls the Wazuh and Splunk docker containers down.
+You can use the pre-commit separately without using Dev Containers as well.
 
-2 - Continuous Implementation
-This clones the image created in 1 - SIEM setup, provisions the VM, creates a docker environment and implements Pytest, Semgrep, Trivy and Falco.
+1-Ansible-Infrastructure
+This folder is used to provision the infrastructure running in my homelab. Change the ansible files as needed.
 
-3 - Continuous Deployment
-TBD
+2-Ansible-Provision
+These scripts are used to provision the various VM's created from folder 1 - Ansible-Infrastructure.
+
+3-Docker Containers
+These contain the docker-compose.yml scripts for various VM's.
 
 4 - Monitoring-Notifications
 TBD
@@ -98,6 +106,7 @@ A Local Software Composition Analysis and local Static Code Analysis scan (imple
 
 The following is a list of items to be implemented into this project into the future. Items from this list will be brought to the top and as it is implemented. This is more of a "laundry list" of ideas/brain dump.
 
+ - Will be replacing with Jenkins shortly
  - Python Script to take Data from Nessus Essentials (API) to Wazuh and Splunk
  - (Much later) Add Domain Controller, connect to Azure, implement further with Intune for compliance (securing the infrastructure)
 or

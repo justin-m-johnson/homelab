@@ -1,0 +1,31 @@
+version: "3"
+
+networks:
+  gitea:
+    external: false
+
+services:
+  server:
+    image: gitea/gitea:1.21.4
+    container_name: gitea
+    environment:
+      # https://docs.gitea.io/en-us/install-with-docker/#environments-variables
+      - USER_UID=1000
+      - USER_GID=100
+      - RUN_MODE=prod
+      - ROOT_URL=http://devops.home.initcyber:3000
+      - SSH_PORT=222
+      - SSH_LISTEN_PORT=222
+      - SSH_DOMAIN=devops.home.initcyber
+      - HTTP_PORT=3000
+      - DB_TYPE=sqlite3
+    ports:
+      - "3000:3000"
+      - "222:22"
+    networks:
+      - gitea
+    volumes:
+      - gitea:/data
+volumes:
+  gitea:
+    external: true
