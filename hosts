@@ -2,8 +2,8 @@
 syslog1.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #amd1
 amdvm-2.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #amd2
 
-[dockerarm]
-dockerarm-1.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #oraclearm1
+[ubuntuarm]
+ubuntuarm.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #oraclearm1
 
 [syslog-servers]
 syslog1.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #amd1
@@ -13,7 +13,7 @@ syslog1.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1
 amdvm-2.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #amd2
 
 [oracle-all]
-dockerarm-1.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu
+ubuntuarm.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu
 syslog1.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu
 amdvm-2.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu
  
@@ -34,7 +34,6 @@ discovery.home.initcyber.com ansible_user=root
 enterprise.home.initcyber.com ansible_user=root
 
 [docker-all]
-docker-arm1.oracle.home.initcyber.com
 devops.home.initcyber.com
 deploy.home.initcyber.com
 
@@ -44,8 +43,9 @@ devops.home.initcyber.com #Uses Docker
 [deploy]
 deploy.home.initcyber.com #discovery
 
-[dockerarm]
-dockerarm-1.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #oraclearm1
+
+#[dockerarm]
+#ubuntuarm.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #oraclearm1
 
 #[dockerarm:vars]
 #ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q ubuntu@syslog1.oracle.home.initcyber.com -i ~/.ssh/OracleKey1-2024.key"' ansible_user=ubuntu
