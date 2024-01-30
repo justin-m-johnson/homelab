@@ -43,7 +43,11 @@ devops.home.initcyber.com #Uses Docker
 [deploy]
 deploy.home.initcyber.com #discovery
 
+[development]
+development.home.initcyber.com #discovery
 
+[omv]
+omv.home.initcyber.com
 #[dockerarm]
 #ubuntuarm.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #oraclearm1
 
