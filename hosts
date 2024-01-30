@@ -36,6 +36,7 @@ enterprise.home.initcyber.com ansible_user=root
 [docker-all]
 devops.home.initcyber.com
 deploy.home.initcyber.com
+ubuntuarm.oracle.home.initcyber.com
 
 [devops]
 devops.home.initcyber.com #Uses Docker
