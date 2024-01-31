@@ -1,0 +1,18 @@
+---
+services:
+  gha-runner:
+    image: initcyber/github-actions:latest
+    restart: always
+    environment:
+      - REPO={{Owner}}/{{Repo}} #Replace with your information here
+      - TOKEN={{YourToken}} #Replace wiht your GH PAT Token here
+    deploy:
+      mode: replicated
+      replicas: 3 #Change to the number of containers you want running
+      resources:
+        limits:
+          cpus: "0.75" # These
+          memory: 2048M # Are
+        reservations:
+          cpus: "0.5" # All
+          memory: 128M # Changeable
