@@ -1,21 +1,21 @@
-[amd-oracle]
-syslog1.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #amd1
-amdvm-2.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #amd2
+[amd_oracle]
+syslog1.oracle.home.initcyber.com #ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #amd1
+amdvm-2.oracle.home.initcyber.com #ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #amd2
 
 [ubuntuarm]
-ubuntuarm.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #oraclearm1
+ubuntuarm.oracle.home.initcyber.com #ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #oraclearm1
 
-[syslog-servers]
-syslog1.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #amd1
+[syslog_servers]
+syslog1.oracle.home.initcyber.com #ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #amd1
 
-[syslog-clients]
-syslog1.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #amd1
-amdvm-2.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #amd2
+[syslog_clients]
+syslog1.oracle.home.initcyber.com #ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #amd1
+amdvm-2.oracle.home.initcyber.com #ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #amd2
 
-[oracle-all]
-ubuntuarm.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu
-syslog1.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu
-amdvm-2.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu
+[oracle_all]
+ubuntuarm.oracle.home.initcyber.com #ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu
+syslog1.oracle.home.initcyber.com #ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu
+amdvm-2.oracle.home.initcyber.com #ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu
  
 [splunk]
 172.16.10.20 #change to DHCP and set hostname
@@ -29,28 +29,29 @@ enterprise.home.initcyber.com ansible_user=root
 [discovery]
 discovery.home.initcyber.com ansible_user=root
 
-[servers-all]
+[servers_all]
 discovery.home.initcyber.com ansible_user=root
 enterprise.home.initcyber.com ansible_user=root
 
-[docker-all]
-devops.home.initcyber.com
+[docker_all]
+devop.home.initcyber.com
 deploy.home.initcyber.com
 ubuntuarm.oracle.home.initcyber.com
+develop.home.initcyber.com
 
-[devops]
-devops.home.initcyber.com #Uses Docker
+[devop]
+devop.home.initcyber.com #Uses Docker
 
 [deploy]
 deploy.home.initcyber.com #discovery
 
-[development]
-development.home.initcyber.com #discovery
+[develop]
+develop.home.initcyber.com #discovery
 
 [omv]
 omv.home.initcyber.com
 #[dockerarm]
-#ubuntuarm.oracle.home.initcyber.com ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #oraclearm1
+#ubuntuarm.oracle.home.initcyber.com #ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #oraclearm1
 
 #[dockerarm:vars]
 #ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q ubuntu@syslog1.oracle.home.initcyber.com -i ~/.ssh/OracleKey1-2024.key"' ansible_user=ubuntu
