@@ -4,7 +4,8 @@ services:
     image: initcyber/github-actions:latest
     restart: always
     environment:
-      - REPO=$REPO #Replace with your information here
+      - OWNER=$OWNER #Replace with your information here
+      - REPOSITORY=$REPO #Replace with your information here
       - TOKEN=$TOKEN #Replace with your GH PAT Token here
     deploy:
       mode: replicated
