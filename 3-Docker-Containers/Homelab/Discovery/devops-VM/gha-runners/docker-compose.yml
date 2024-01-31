@@ -4,8 +4,8 @@ services:
     image: initcyber/github-actions:latest
     restart: always
     environment:
-      - REPO={{Owner}}/{{Repo}} #Replace with your information here
-      - TOKEN={{YourToken}} #Replace wiht your GH PAT Token here
+      - REPO=$REPO #Replace with your information here
+      - TOKEN=$TOKEN #Replace with your GH PAT Token here
     deploy:
       mode: replicated
       replicas: 3 #Change to the number of containers you want running
