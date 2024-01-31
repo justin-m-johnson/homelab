@@ -1,7 +1,7 @@
 ---
 services:
   gha-runner:
-    image: initcyber/github-actions:latest
+    image: initcyber/github-actions:2.312.0
     restart: always
     environment:
       - GH_OWNER=$OWNER #Replace with your information here
