@@ -37,13 +37,13 @@ For my HomeLab I am using:
 | Initial Code Scan                 | pre-commit        | https://pre-commit.com/                                   |
 | Hypervisor                        | Proxmox           | https://www.proxmox.com/                                  |
 | Containers                        | Docker            | https://www.docker.com                                    |
-| Security Platform                 | Wazuh             | https://wazuh.com/                                        |
+| Security Platform/Vuln Scanner    | Wazuh             | https://wazuh.com/                                        |
 | SCM                               | GitHub            | https://www.github.com                                    |
+| Secrets Storage / Cert Management | Hashicorp Vault   | https://hashicorp.com
 | Pipeline/automation               | Github Actions    | https://docs.github.com/en/actions                        |
 | SIEM/Logging                      | Splunk            | https://www.splunk.com                                    |
 | SOAR/Incident Response            | The Hive          | https://thehive-project.com                               |
 | Malware Information Sharing/OSINT | MISP              | https://www.misp-project.org/                             |
-| Vulnerability Scanning            | Nessus Essentials | https://www.tenable.com/products/nessus/nessus-essentials |
 | SAST                              | Semgrep           | https://www.semgrep.dev                                   |
 | DAST                              | OWASP ZAP         | https://www.zaproxy.org/                                  |
 | IAST/Runtime                      | Falco             | https://falco.org/                                        |
@@ -108,9 +108,6 @@ A Local Software Composition Analysis and local Static Code Analysis scan (imple
 
 The following is a list of items to be implemented into this project into the future. Items from this list will be brought to the top and as it is implemented. This is more of a "laundry list" of ideas/brain dump.
 
- - Will be replacing with Jenkins shortly
  - Python Script to take Data from Nessus Essentials (API) to Wazuh and Splunk
- - (Much later) Add Domain Controller, connect to Azure, implement further with Intune for compliance (securing the infrastructure)
-or
  - Automate Compliance through Ansible (CIS benchmarks) and Golden Image
- - (Much much later) - Implement AI into the mix to fully automate everything??
+
