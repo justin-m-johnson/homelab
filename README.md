@@ -15,16 +15,16 @@ Most resumes have a "Project" section. Create your own GitHub, website, etc., an
 | January 2024     | Software/Hardware Changes, project rename (Homelab SOC to Homelab DevSecOp)          |
 | Mid January 2024 | Added the Actions Workflow yml file that allows uploading Github Actions log to SIEM |
 | End January 2024 | Major Overhaul in scripts                                                            |
+| Mid June 2024    | Overhaul Homelab - Old Discovery Node removed - Three (3) new nodes added - Added LLM Docker Containers and OpenWebUI    |
 
 ## Hardware Used
 For my HomeLab I am using:
 
- - Dell 5050 Small Form Factor Computer (Discovery):
-	 - i7-7700 Intel CPU
-	 - 64GB Ram
-	 - 128GB SSD Boot
-	 - 256GB SSD Data
-	 - 1TB NVMe Data(x2)
+ - Lenovo m710q Ultra small form Factor Computer x3 (Discovery, Atlantis, Endeavor):
+	 - i5-6500T Intel CPU
+	 - 8GB RAM (To be upgraded to 64GB)
+	 - 1TB NVMe Data 
+
  - White Box Computer
      - i3 - 9300 Intel CPU
      - 32GB Ram
@@ -47,6 +47,8 @@ For my HomeLab I am using:
 | SAST                              | Semgrep           | https://www.semgrep.dev                                   |
 | DAST                              | OWASP ZAP         | https://www.zaproxy.org/                                  |
 | IAST/Runtime                      | Falco             | https://falco.org/                                        |
+| Open Source Large Language Model Tool  | Ollama            | https://ollama.com/                                  |
+| Web UI for Large Language Models/API's  | OpenWebUI   | https://openwebui.com                                     |
 
   - More TBD
 
