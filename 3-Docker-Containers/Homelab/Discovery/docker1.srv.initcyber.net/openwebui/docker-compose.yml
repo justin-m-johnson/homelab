@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  nginx-proxy-manager:
+    image: 'jc21/nginx-proxy-manager:2.11.1' #https://github.com/NginxProxyManager/nginx-proxy-manager/issues/3824
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - npmdata:/data
+      - letsencrypt:/etc/letsencrypt
+
+  openWebUI:
+    image: ghcr.io/open-webui/open-webui:main
+    restart: always
+    ports:
+      - "3000:8080"
+    environment:
+      - 'OLLAMA_BASE_URL=http://172.16.100.10:11434' 
+    #extra_hosts:
+    #  - "host.docker.internal:host-gateway"
+    volumes:
+      - open-webui-local:/app/backend/data
+
+
+volumes:
+  open-webui-local:
+    external: true
+  npmdata:
+    external: true
+  letsencrypt:
+    external: true
+  
