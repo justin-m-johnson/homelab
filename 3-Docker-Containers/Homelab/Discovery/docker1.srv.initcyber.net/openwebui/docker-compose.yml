@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   nginx-proxy-manager:
-    image: 'jc21/nginx-proxy-manager:2.11.1' #https://github.com/NginxProxyManager/nginx-proxy-manager/issues/3824
+    image: 'jc21/nginx-proxy-manager:2.11.3' #https://github.com/NginxProxyManager/nginx-proxy-manager/issues/3824
     restart: unless-stopped
     ports:
       - '80:80'
