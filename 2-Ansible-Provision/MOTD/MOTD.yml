@@ -1,5 +1,5 @@
 ---
-- hosts: "oracle-all"
+- hosts: all
   become: true
   roles:
     - role: claranet.motd

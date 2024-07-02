@@ -1,57 +1,64 @@
-[amd_oracle]
-syslog1.oracle.home.initcyber.com #ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #amd1
-amdvm-2.oracle.home.initcyber.com #ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #amd2
 
 [ubuntuarm]
-ubuntuarm.oracle.home.initcyber.com #ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #oraclearm1
-
-[syslog_servers]
-syslog1.oracle.home.initcyber.com #ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #amd1
-
-[syslog_clients]
-syslog1.oracle.home.initcyber.com #ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #amd1
-amdvm-2.oracle.home.initcyber.com #ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #amd2
+oracle-arm-1.srv.initcyber.net #ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #oraclearm1
 
 [oracle_all]
-ubuntuarm.oracle.home.initcyber.com #ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu
-syslog1.oracle.home.initcyber.com #ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu
-amdvm-2.oracle.home.initcyber.com #ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu
+oracle-arm-1.srv.initcyber.net #ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu
  
 [splunk]
-172.16.10.20 #change to DHCP and set hostname
+splunk.srv.initcyber.net
 
 [wazuh]
-172.16.10.21 #change to DHCP and set hostname
+wazuh.srv.initcyber.net
+
+[freeipa1]
+freeipa1.srv.initcyber.net
+
+[freeipa2]
+freeipa2.srv.initcyber.net
+
+[freeipa_all]
+freeipa1.srv.initcyber.net
+freeipa2.srv.initcyber.net
 
 [enterprise]
-enterprise.home.initcyber.com ansible_user=root
+enterprise.srv.initcyber.net ansible_user=root
 
 [discovery]
-discovery.home.initcyber.com ansible_user=root
+enterprise.srv.initcyber.net ansible_user=root
 
-[servers_all]
-discovery.home.initcyber.com ansible_user=root
-enterprise.home.initcyber.com ansible_user=root
+[atlantis]
+atlantis.srv.initcyber.net ansible_user=root
+
+[endeavour]
+endeavour.srv.initcyber.net ansible_user=root
+
+[proxmox_all]
+discovery.srv.initcyber.net ansible_user=root
+enterprise.srv.initcyber.net ansible_user=root
+atlantis.srv.initcyber.net ansible_user=root
+endeavour.srv.initcyber.net ansible_user=root
 
 [docker_all]
-devop.home.initcyber.com
-deploy.home.initcyber.com
-ubuntuarm.oracle.home.initcyber.com
-develop.home.initcyber.com
+devop.srv.initcyber.net
+deploy.srv.initcyber.net
+oracle-arm-1.srv.initcyber.net
+develop.srv.initcyber.net
 
 [devop]
-devop.home.initcyber.com #Uses Docker
+devop.srv.initcyber.net #Uses Docker
 
 [deploy]
-deploy.home.initcyber.com #discovery
+deploy.srv.initcyber.net #discovery
 
 [develop]
-develop.home.initcyber.com #discovery
+develop.srv.initcyber.net #discovery
 
 [omv]
-omv.home.initcyber.com
+omv.srv.initcyber.net ansible_user=root
+
 #[dockerarm]
-#ubuntuarm.oracle.home.initcyber.com #ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #oraclearm1
+#oracle-arm-1.srv.initcyber.net #ansible_ssh_private_key_file=~/.ssh/OracleKey1-2024.key ansible_user=ubuntu #oraclearm1
 
 #[dockerarm:vars]
-#ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q ubuntu@syslog1.oracle.home.initcyber.com -i ~/.ssh/OracleKey1-2024.key"' ansible_user=ubuntu
+#ansible_ssh_netmon_args='-o Proxynetmand="ssh -W %h:%p -q ubuntu@syslog1.oracle.srv.initcyber.net -i ~/.ssh/OracleKey1-2024.key"' ansible_user=ubuntu
