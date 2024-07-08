@@ -60,7 +60,7 @@ For my HomeLab I am using:
   - More TBD
 
 ## Architecture Diagram (Ever Changing)
-Last Edited: January 2024
+Last Edited: July 2024
 ![HomelabDevSecOps](assets/Homelab.png)
 
 # Implementation
