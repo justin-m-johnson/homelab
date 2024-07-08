@@ -18,8 +18,6 @@ services:
     volumes:
       - ./config/prometheus.yaml:/etc/prometheus/prometheus.yaml
       - prometheus-data:/prometheus
-    networks:
-      - monitoring
 
 volumes:
   grafana-storage:  
