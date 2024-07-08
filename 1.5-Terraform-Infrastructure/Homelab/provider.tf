@@ -31,6 +31,11 @@ variable "ubuntu_24_template" {
     type = string
 }
 
+variable "rhel_9_template" {
+    type = string
+}
+
+
 provider "proxmox" {
 
     pm_api_url = var.proxmox_api_url
