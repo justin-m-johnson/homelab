@@ -68,11 +68,8 @@ Last Edited: July 2024
 #### 0 - Development Environment Files
 The Development Environment folder includes a Development Container and the .pre-commit-config.yaml file. Learn more about [Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers),  [Pre-Commit](https://pre-commit.com/) 
 
-#### 1-Ansible-Infrastructure
-This folder is for provisioning infrastructure using Ansible. Modify the files as needed.
-
-#### 1.5 - Terraform-Infrastructure
-This folder will soon replace the Ansible infrastructure configuration. Terraform will manage IaC, while Ansible will handle software and configuration provisioning post-Terraform application.
+#### 1 - Terraform-Infrastructure
+Terraform will manage IaC, while Ansible will handle software and configuration provisioning post-Terraform application.
 
 #### 2-Ansible-Provision
 These scripts provision the VMs created by the 1.5 - Terraform-Infrastructure folder.
