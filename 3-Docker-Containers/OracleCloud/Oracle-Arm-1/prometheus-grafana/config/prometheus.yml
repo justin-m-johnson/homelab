@@ -27,3 +27,15 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: [localhost:8080]
+
+  # Scrape Node Exporter in OMV
+  - job_name: 'node_exporter-OMV'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['omv.home.initcyber.net:9100']
+
+  # Scrape Docker Server in OMV
+  - job_name: 'cadvisor-OMV'
+    scrape_interval: 5s
+    static_configs:
+      - targets: [omv.home.initcyber.net:8081]
