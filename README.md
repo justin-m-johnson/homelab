@@ -24,14 +24,14 @@ Include a "Projects" section in your resume showcasing your GitHub repository, w
 ## Hardware Used
 For my HomeLab I am using:
 
- - Proxmox HA Cluster - (Kennedy)
-   - 3x Lenovo m710q Ultra Small Form Factor (USFF) PCs: Discovery, Atlantis, Endeavour
+ - Proxmox HA Cluster - "Kennedy"
+   - 3x Lenovo m710q Ultra Small Form Factor (USFF) PCs: "Discovery", "Atlantis", "Endeavour"
 	 - i5-6500T Intel CPU
 	 - 32GB RAM
    - 128GB SATA SSD (Boot)
 	 - 1TB NVMe (Data) 
 
- - White Box Computer - (Enterprise)
+ - NAS/Hyperconverged PC- "Enterprise"
      - i3 - 9300 Intel CPU
      - 32GB Ram
      - 512GB SSD (Boot)
@@ -44,17 +44,18 @@ For my HomeLab I am using:
 | Hypervisor                        | Proxmox           | https://www.proxmox.com/                                  |
 | Containers                        | Docker            | https://www.docker.com                                    |
 | Security Platform/Vuln Scanner    | Wazuh             | https://wazuh.com/                                        |
-| SCM                               | GitHub            | https://www.github.com                                    |
-| Secrets Storage/Cert Management   | Hashicorp Vault   | https://hashicorp.com
+| Identity and Authentication       | FreeIPA           | https://www.freeipa.org/                                  |
+| SCM                               | GitHub            | https://www.github.com/                                   |
+| Secrets Storage/Cert Management   | Hashicorp Vault   | https://hashicorp.com/                                    |
 | Pipeline/automation               | Github Actions    | https://docs.github.com/en/actions                        |
-| SIEM/Logging                      | Splunk            | https://www.splunk.com                                    |
-| SOAR/Incident Response            | The Hive          | https://thehive-project.com                               |
+| SIEM/Logging                      | Splunk            | https://www.splunk.com/                                   |
+| SOAR/Incident Response            | The Hive          | https://thehive-project.com/                              |
 | Malware Information Sharing/OSINT | MISP              | https://www.misp-project.org/                             |
-| SAST                              | Semgrep           | https://www.semgrep.dev                                   |
+| SAST                              | Semgrep           | https://www.semgrep.dev/                                  |
 | DAST                              | OWASP ZAP         | https://www.zaproxy.org/                                  |
 | IAST/Runtime                      | Falco             | https://falco.org/                                        |
 | Open Source Large Language Model Tool  | Ollama            | https://ollama.com/                                  |
-| Web UI for Large Language Models/API's  | OpenWebUI   | https://openwebui.com                                     |
+| Web UI for Large Language Models/API's  | OpenWebUI   | https://openwebui.com/                                    |
 
   - More TBD
 
