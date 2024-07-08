@@ -15,3 +15,15 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: ['localhost:9090']
+  
+  # Scrape Node Exporter in Oracle Cloud (Local host)
+  - job_name: 'node_exporter'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9100']
+
+  # Scrape Docker Server in Oracle Cloud (Local Host)
+  - job_name: 'cadvisor'
+    scrape_interval: 5s
+    static_configs:
+      - targets: [localhost:8080]

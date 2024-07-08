@@ -16,7 +16,7 @@ services:
     ports:
       - '9090:9090'
     volumes:
-      - ./config/prometheus.yaml:/etc/prometheus/prometheus.yaml
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus-data:/prometheus
 
   node_exporter: #Monitors Oracle Cloud system
