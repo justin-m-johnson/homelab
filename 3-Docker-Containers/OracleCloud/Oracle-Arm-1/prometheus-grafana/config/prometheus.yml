@@ -39,3 +39,16 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: [omv.home.initcyber.net:8081]
+
+    # Scrape Node Exporter in Prod-1 (Docker)
+  - job_name: 'node_exporter-Prod-1'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['prod1.home.initcyber.net:9100']
+
+  # Scrape Docker Server in Prod-1 (Docker)
+  - job_name: 'cadvisor-Prod-1'
+    scrape_interval: 5s
+    static_configs:
+      - targets: [prod1.home.initcyber.net:8080]
+
