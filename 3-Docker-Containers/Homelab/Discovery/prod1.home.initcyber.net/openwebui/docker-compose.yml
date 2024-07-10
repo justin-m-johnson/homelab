@@ -1,16 +1,6 @@
 version: "3.8"
 
 services:
-  nginx-proxy-manager:
-    image: 'jc21/nginx-proxy-manager:2.11.3' #https://github.com/NginxProxyManager/nginx-proxy-manager/issues/3824
-    restart: unless-stopped
-    ports:
-      - '80:80'
-      - '81:81'
-      - '443:443'
-    volumes:
-      - npmdata:/data
-      - letsencrypt:/etc/letsencrypt
 
   openWebUI:
     image: ghcr.io/open-webui/open-webui:main
@@ -57,9 +47,5 @@ services:
 
 volumes:
   open-webui-local:
-    external: true
-  npmdata:
-    external: true
-  letsencrypt:
     external: true
   
