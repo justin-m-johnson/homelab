@@ -2,7 +2,7 @@
 # ---
 # This will create a new Virtual Machine from a cloud-init file
 
-resource "proxmox_vm_qemu" "ubuntu-vm" {
+resource "proxmox_vm_qemu" "enterprise_ipa1_rhel9" {
     
     #Set this number to how many VM's you need to deploy, comment out if you don't need to deploy more than 1 (adjust "vmid" and "name" as needed)
     #count = 1
@@ -36,10 +36,31 @@ resource "proxmox_vm_qemu" "ubuntu-vm" {
     network {
         bridge = "vmbr0"
         model  = "virtio"
+        tag = 10
     }
 
     # Default to cloud-init
     os_type = "cloud-init"
+
+    # VM Hard Drive settings
+    scsihw = "virtio-scsi-pci"  # default virtio-scsi-pci
+    disks {
+        scsi{
+            scsi0 {
+                disk {
+                    storage = "VM_Storage"
+                    size = "40G"
+                }
+            }
+        }
+        ide{
+            ide1{
+                cloudinit{
+                    storage = "VM_Storage"
+                }
+            }
+        }
+    }
 
     # IP Address and Gateway - Again, we are using the count.index variable here, assuming we are NOT going above 10 virtual machines this should be OK.
     ipconfig0 = "ip=172.16.10.6/24,gw=172.16.10.1"

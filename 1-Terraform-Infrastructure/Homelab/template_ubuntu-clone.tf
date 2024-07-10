@@ -27,15 +27,36 @@ resource "proxmox_vm_qemu" "ubuntu-vm" {
     # VM CPU settings - self explanatory
     cores = 2
     sockets = 1
-    cpu = "host"    
+    cpu = "host"  
+    # VM Hard Drive settings
+    scsihw = "virtio-scsi-pci"  # default virtio-scsi-pci
+    disks {
+        scsi{
+            scsi0 {
+                disk {
+                    storage = "VM_Storage"
+                    size = "40G"
+                }
+            }
+        }
+        ide{
+            ide1{
+                cloudinit{
+                    storage = "VM_Storage"
+                }
+            }
+        }
+    }
     
     # VM Memory Settings - Again, self explantory
     memory = 2048
+    automatic_reboot = false  # refuse auto-reboot when changing a setting
 
     # VM Network Settings - Same
     network {
         bridge = "vmbr0"
         model  = "virtio"
+        tag = 10
     }
 
     # Default to cloud-init
@@ -45,10 +66,8 @@ resource "proxmox_vm_qemu" "ubuntu-vm" {
     ipconfig0 = "ip=172.16.10.6${count.index + 1}/24,gw=172.16.10.1"
     
     # Set user name here
-    # ciuser = "your-username"
+     ciuser = "justin"
+     cipassword = var.ci_password
     # ---
     # Set SSH keys here
-    # sshkeys = <<EOF
-    # #YOUR-PUBLIC-SSH-KEY
-    # EOF
-}
+     sshkeys = var.ssh_key

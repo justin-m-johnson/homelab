@@ -62,3 +62,9 @@ provider.tf houses the proxmox provider, where we initialize the variables used 
 rename credentials.auto.tfvars -EXAMPLE- file to "credentials.auto.tfvars", adjust variables accordingly
 
 ubuntu-clone.tf is the meat and potatos of the files. This is where we create the VM's of the project.
+
+To apply a specific TF plan, such as the template file ("template_ubuntu-clone.tf") - run:
+```bash
+terraform apply -target=proxmox_vm_qemu.ubuntu-vm
+```
+Which is found on top of the actual .tf file you want to apply ("resource "proxmox_vm_qemu" "ubuntu-vm")

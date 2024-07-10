@@ -26,6 +26,12 @@ variable "proxmox_api_token_id" {
 variable "proxmox_api_token_secret" {
     type = string
 }
+variable "ssh_key" {
+    type = string
+}
+variable "ci_password" {
+    type = string
+}
 
 variable "ubuntu_24_template" {
     type = string
