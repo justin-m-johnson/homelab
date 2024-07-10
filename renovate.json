@@ -1,9 +1,11 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:base"  
   ],
-  "assignees": [
-    "initcyber"
+  "packageRules": [
+    {
+      "updateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    }
   ]
 }
