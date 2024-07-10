@@ -36,7 +36,7 @@ resource "proxmox_vm_qemu" "discovery_Gitea_Runners_Ubuntu" {
             scsi0 {
                 disk {
                     storage = "VM_Storage"
-                    size = "40G"
+                    size = "45G"
                 }
             }
         }
@@ -68,9 +68,34 @@ resource "proxmox_vm_qemu" "discovery_Gitea_Runners_Ubuntu" {
     ipconfig0 = "ip=172.16.10.4${count.index + 1}/24,gw=172.16.10.1"
     
     # Set user name here
-     ciuser = "justin"
+     ciuser = var.user
      cipassword = var.ci_password
     # ---
     # Set SSH keys here
      sshkeys = var.ssh_key
+###########Start Ansible Provisioner########################
+    connection {
+        host = "172.16.10.4${count.index + 1}"
+        user = var.user
+        private_key = file(var.ssh_keys["priv"])
+        agent = false
+        timeout = "3m"
+    } 
+    provisioner "remote-exec" {
+        inline = ["echo 'Starting Ansible Playbooks'"]
+
+    }
+    provisioner "local-exec" {
+        working_dir = "../../2-Ansible-Provision/MOTD/"
+        command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.4${count.index + 1}, MOTD.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
+    }
+    provisioner "local-exec" {
+        working_dir = "../../2-Ansible-Provision/set-time-zone/"
+        command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.4${count.index + 1}, set-time-zone.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
+
+    }  
+    provisioner "local-exec" {
+        working_dir = "../../2-Ansible-Provision/Docker-Install/"
+        command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.4${count.index + 1}, Docker-Gitea-Act-Runner.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
+    }     
 }

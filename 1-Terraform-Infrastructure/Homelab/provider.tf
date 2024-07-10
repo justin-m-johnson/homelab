@@ -41,7 +41,17 @@ variable "rhel_9_template" {
     type = string
 }
 
-
+variable "ssh_keys" {
+	type = map
+     default = {
+       pub  = "~/.ssh/id_rsa.pub"
+       priv = "~/.ssh/id_rsa"
+     }
+}
+variable "user" {
+	default     = "justin"
+	description = "User used to SSH into the machine and provision it"
+}
 provider "proxmox" {
 
     pm_api_url = var.proxmox_api_url

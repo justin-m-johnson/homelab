@@ -66,10 +66,11 @@ resource "proxmox_vm_qemu" "discovery_ipa1_rhel9" {
     ipconfig0 = "ip=172.16.10.7/24,gw=172.16.10.1"
     
     # Set user name here
-    # ciuser = "your-username"
+     ciuser = "justin"
+     cipassword = var.ci_password
     # ---
     # Set SSH keys here
-    # sshkeys = <<EOF
-    # #YOUR-PUBLIC-SSH-KEY
-    # EOF
+     sshkeys = var.ssh_key
+
+    
 }

@@ -66,8 +66,24 @@ resource "proxmox_vm_qemu" "ubuntu-vm" {
     ipconfig0 = "ip=172.16.10.6${count.index + 1}/24,gw=172.16.10.1"
     
     # Set user name here
-     ciuser = "justin"
+     ciuser = var.user
      cipassword = var.ci_password
     # ---
     # Set SSH keys here
      sshkeys = var.ssh_key
+###########Start Ansible Provisioner########################
+    connection {
+        host = "172.16.10.6${count.index + 1}"
+        user = var.user
+        private_key = file(var.ssh_keys["priv"])
+        agent = false
+        timeout = "3m"
+    } 
+    provisioner "remote-exec" {
+        inline = ["echo 'Start Ansible Provisioning'"]
+    }
+    provisioner "local-exec" {
+        working_dir = "../../2-Ansible-Provision/MOTD/"
+        command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.6${count.index + 1}, MOTD.yml"
+    }  
+}

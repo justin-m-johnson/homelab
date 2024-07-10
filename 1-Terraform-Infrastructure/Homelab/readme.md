@@ -68,3 +68,20 @@ To apply a specific TF plan, such as the template file ("template_ubuntu-clone.t
 terraform apply -target=proxmox_vm_qemu.ubuntu-vm
 ```
 Which is found on top of the actual .tf file you want to apply ("resource "proxmox_vm_qemu" "ubuntu-vm")
+
+
+--------------------
+# Added 7/10/24
+### Ansible Provisioning
+Added Ansible Provisioning!
+
+Also added in variables assuming the box you are deploying the TF files from has the appropriate SSH keys you wish to deploy to the box (under provider.tf)
+```bash
+variable "ssh_keys" {
+	type = map
+     default = {
+       pub  = "~/.ssh/id_rsa.pub"
+       priv = "~/.ssh/id_rsa"
+     }
+}
+```

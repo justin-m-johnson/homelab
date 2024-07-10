@@ -1,5 +1,5 @@
 ---
-# Install Docker and Docker CE
+# Install Docker, Docker CE and Portainer
 - hosts: all
   become: yes
   gather_facts: yes
