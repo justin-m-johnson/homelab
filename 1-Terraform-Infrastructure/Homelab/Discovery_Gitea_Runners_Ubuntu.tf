@@ -5,7 +5,7 @@
 resource "proxmox_vm_qemu" "discovery_Gitea_Runners_Ubuntu" {
     
     #Set this number to how many VM's you need to deploy, comment out if you don't need to deploy more than 1 (adjust "vmid" and "name" as needed)
-    count = 1
+    count = 2
     # List our target node (this is the node ID of our "cluster")
     # vmid is the virtual machine ID in Proxmox, default starts at 100 and counts up
     # name is the name we will identify our virtual machine as
