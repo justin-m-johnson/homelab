@@ -4,12 +4,8 @@ This project is under heavy construction as of July 2024. After a brief hiatus i
 #  Project Description
 Welcome to my Home Lab DevSecOps documentation! Here, I document my journey setting up a DevSecOps home lab using mostly free and open-source software. You can follow this documentation on [my personal website](https://www.initcyber.com) and my [YouTube](https://www.youtube.com/@initcyber) channel.
 
-
 ## Use Case
-This project is designed to help aspiring cybersecurity professionals build a portfolio that demonstrates their skills. Having a home lab and relevant projects can significantly improve your chances of breaking into various cybersecurity roles such as DevSecOps, SOC, GRC, Security Engineer, and IT Security Specialist.
-
-## How to Use This for a Cybersecurity Career
-Include a "Projects" section in your resume showcasing your GitHub repository, website, and related work. Highlighting your project on platforms like [LinkedIn](https://www.linkedin.com/in/imjustinjohnson/) can also increase your visibility. 
+This repo documents my homelab and how I have it set up from a DevSecOps environment. It is under constant construction as I build, tear down, rebuild, automate, write it out as code (IAC/Terraform), and figure out what works best for me and my lab environment.
 
 ## Updates
 | Date             | Description                                                                          |
@@ -80,7 +76,7 @@ This folder contains docker-compose.yml scripts for various VMs.
 #### 4 - Monitoring-Notifications
 (TBD)
 
-## Virtual Machine Requirements
+## Virtual Machine Requirements - Incomplete
 
 1 - Splunk VM
  - 4 CPU Cores
@@ -101,7 +97,7 @@ This folder contains docker-compose.yml scripts for various VMs.
 
 # Putting it all together
 
-Refer to the README.md files in each subfolder to run the Ansible Playbooks.
+(TBD)
 
 # Best Practices
 Adopt a "Shift Left" security approach by empowering developers to secure their code from their development environment. Use .gitignore files and pre-commit hooks for code linting, scanning, and more.
