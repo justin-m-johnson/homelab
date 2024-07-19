@@ -18,8 +18,10 @@ services:
       - '9090:9090'
     network_mode: host
     volumes:
-      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      #- ./config/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus-data:/prometheus
+    command: 
+      - "--config.file=/config/prometheus.yml"
 
   node_exporter: #Monitors Oracle Cloud system
     image: quay.io/prometheus/node-exporter:latest
