@@ -1,0 +1,19 @@
+---
+- hosts: "oracle-nodes"
+  become: yes
+  tasks:
+    - name: Save iptables rules
+      shell: iptables-save > ~/iptables-rules
+
+    - name: Set default policies for INPUT, FORWARD and OUTPUT chains
+      iptables:
+        chain: "{{ item.chain }}"
+        policy: ACCEPT
+      loop:
+        - { chain: 'INPUT' }
+        - { chain: 'FORWARD' }
+        - { chain: 'OUTPUT' }
+
+    - name: Flush all current rules from iptables
+      command: iptables -F
+...
