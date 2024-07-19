@@ -5,11 +5,11 @@ You can use this in Githubs Codespaces or cloning the repository and running it 
 
 Examples of Codespace Below:
 
-![Example 1]("/assets for README.MD/image.png")
+![Example 1]("/assets for README.md/image.png")
 
-![Example 2]("/assets for README.MD/image.png")
+![Example 2]("/assets for README.md/image.png")
 
-If you choose to use this container, you can safely remove "assets for README.MD" folder and the README.md file
+If you choose to use this container, you can safely remove "assets for README.md" folder and the README.md file
 
 ## Pre-Commit Information
 This has Python 3 Installed, black, flake8, pre-commit (with pre-commit-config.yaml)

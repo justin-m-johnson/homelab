@@ -1,6 +1,6 @@
 ---
-# Install Docker and Docker CE
-- hosts: all
+# Install Docker, Docker CE and Portainer
+- hosts: oracle-nodes
   become: yes
   gather_facts: yes
   vars:
@@ -25,6 +25,7 @@
           - ca-certificates
           - curl
           - software-properties-common
+          - nfs-common
 
 
     # DOCKER INSTALLATION
@@ -56,7 +57,7 @@
     #Change URL to current URL and "-armv7" to "x86_64"  as needed
     - name: Download docker-compose {{ docker_compose_version }}
       get_url:
-        url: https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-linux-x86_64
+        url: https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-linux-armv7
         dest: ~/docker-compose
         mode: "+x"
 

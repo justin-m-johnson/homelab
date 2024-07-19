@@ -1,6 +1,6 @@
 ---
 # This installs Tailscale, create a file called "tailscalekey.ini" and put it on the same folder. Put your tailscale auth key on one line in that file.
-- hosts: splunk
+- hosts: oracle-nodes
   become: yes
   vars:
     ts_auth_key: "{{ lookup('file', 'tailscalekey.ini')}}"

@@ -1,5 +1,5 @@
 ---
-# Install Docker, Docker CE and Portainer
+# Install Docker and Docker CE
 - hosts: all
   become: yes
   gather_facts: yes
@@ -25,6 +25,7 @@
           - ca-certificates
           - curl
           - software-properties-common
+          - nfs-common
 
 
     # DOCKER INSTALLATION
