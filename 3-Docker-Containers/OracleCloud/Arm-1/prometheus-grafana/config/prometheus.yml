@@ -73,5 +73,17 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: [ops.home.initcyber.net:8080]
+  
+  # Scrape Docker Server in Staging-1 (Docker)     
+  - job_name: 'node_exporter-staging1'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['staging1.home.initcyber.net:9100']
+
+  # Scrape Docker Server in Prod-1 (Docker)
+  - job_name: 'cadvisor-staging1'
+    scrape_interval: 5s
+    static_configs:
+      - targets: [staging1.home.initcyber.net:8080]
 
 

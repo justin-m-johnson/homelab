@@ -1,19 +1,16 @@
 version: "3.8"
-
 services:
-
-  node_exporter: #Monitors Oracle Cloud system
-    image: quay.io/prometheus/node-exporter:latest
-    container_name: node_exporter
-    command:
-      - '--path.rootfs=/host'
-    ports:
-    - 9100:9100
-    pid: host
-    restart: unless-stopped
-    volumes:
-      - '/:/host:ro,rslave' #This is READ ONLY
-
+  node_exporter: #Monitors system
+      image: quay.io/prometheus/node-exporter:latest
+      container_name: node_exporter
+      command:
+        - '--path.rootfs=/host'
+      ports:
+      - 9100:9100
+      pid: host
+      restart: unless-stopped
+      volumes:
+        - '/:/host:ro,rslave' #This is READ ONLY
   cadvisor: #Monitors Docker Containers
     image: gcr.io/cadvisor/cadvisor:latest
     container_name: cadvisor
@@ -32,4 +29,3 @@ services:
     container_name: redis
     ports:
     - 6379:6379
-
