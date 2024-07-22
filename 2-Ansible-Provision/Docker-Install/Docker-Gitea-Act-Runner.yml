@@ -77,10 +77,7 @@
         packages:
           - python3-pip
           - mc
-
-    - name: Install python packages
-      pip:
-        name: docker
+          - python3-docker
 
 #   Sample Docker Container Creation - Will be installing Gitea Act Runner
     # https://docs.ansible.com/ansible/latest/collections/community/docker/docker_container_module.html#ansible-collections-community-docker-docker-container-module

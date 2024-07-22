@@ -78,10 +78,8 @@
         packages:
           - python3-pip
           - mc
+          - python3-docker
 
-    - name: Install python packages
-      pip:
-        name: docker
 
 #   Sample Docker Container Creation - Will be installing Portainer Agent Instead then following up with remaining from node.
     # https://docs.ansible.com/ansible/latest/collections/community/docker/docker_container_module.html#ansible-collections-community-docker-docker-container-module

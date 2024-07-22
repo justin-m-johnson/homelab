@@ -86,16 +86,16 @@ resource "proxmox_vm_qemu" "discovery_Gitea_Runners_Ubuntu" {
 
     }
     provisioner "local-exec" {
-        working_dir = "../../2-Ansible-Provision/MOTD/"
+        working_dir = "../../../2-Ansible-Provision/MOTD/"
         command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.4${count.index + 1}, MOTD.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
     }
     provisioner "local-exec" {
-        working_dir = "../../2-Ansible-Provision/set-time-zone/"
+        working_dir = "../../../2-Ansible-Provision/set-time-zone/"
         command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.4${count.index + 1}, set-time-zone.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
 
     }  
     provisioner "local-exec" {
-        working_dir = "../../2-Ansible-Provision/Docker-Install/"
+        working_dir = "../../../2-Ansible-Provision/Docker-Install/"
         command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.4${count.index + 1}, Docker-Gitea-Act-Runner.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
     }     
 }

@@ -2,7 +2,7 @@
 # ---
 # This will create a new Virtual Machine from a cloud-init file
 
-resource "proxmox_vm_qemu" "discovery_k3s_node" {
+resource "proxmox_vm_qemu" "discovery_swarm_node" {
     
     #Set this number to how many VM's you need to deploy, comment out if you don't need to deploy more than 1 (adjust "vmid" and "name" as needed)
     # count = 2
@@ -108,7 +108,7 @@ resource "proxmox_vm_qemu" "discovery_k3s_node" {
     }     
 }
 
-resource "proxmox_vm_qemu" "atlantis_k3s_node" {
+resource "proxmox_vm_qemu" "atlantis_swarm_node" {
     
     #Set this number to how many VM's you need to deploy, comment out if you don't need to deploy more than 1 (adjust "vmid" and "name" as needed)
     # count = 2
@@ -211,7 +211,7 @@ resource "proxmox_vm_qemu" "atlantis_k3s_node" {
 
 }
 
-resource "proxmox_vm_qemu" "endeavour_k3s_node" {
+resource "proxmox_vm_qemu" "endeavour_swarm_node" {
     
     #Set this number to how many VM's you need to deploy, comment out if you don't need to deploy more than 1 (adjust "vmid" and "name" as needed)
     # count = 2
