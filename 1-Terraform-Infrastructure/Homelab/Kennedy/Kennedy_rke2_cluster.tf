@@ -11,7 +11,7 @@ resource "proxmox_vm_qemu" "discovery_swarm_node" {
     # name is the name we will identify our virtual machine as
     # desc is a descriptive name for our virtual machine
     target_node = "discovery"
-    vmid = "100"
+    vmid = "500"
     name = "node1.home.initcyber.net"
     desc = "docker swarm"
 
@@ -98,14 +98,8 @@ resource "proxmox_vm_qemu" "discovery_swarm_node" {
         working_dir = "../../2-Ansible-Provision/bash-shell/"
         command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.30, bash-shell.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
     }    
-    provisioner "local-exec" {
-        working_dir = "../../2-Ansible-Provision/Docker-Install/"
-        command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.30, Docker-Portainer-Install.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
-    }   
-    provisioner "local-exec" {
-        working_dir = "../../2-Ansible-Provision/Docker-Install/"
-        command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.30, Docker-Portainer-Install.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
-    }     
+
+
 }
 
 resource "proxmox_vm_qemu" "atlantis_swarm_node" {
@@ -117,7 +111,7 @@ resource "proxmox_vm_qemu" "atlantis_swarm_node" {
     # name is the name we will identify our virtual machine as
     # desc is a descriptive name for our virtual machine
     target_node = "atlantis"
-    vmid = "101"
+    vmid = "501"
     name = "node2.home.initcyber.net"
     desc = "docker swarm"
 
@@ -204,10 +198,7 @@ resource "proxmox_vm_qemu" "atlantis_swarm_node" {
         working_dir = "../../2-Ansible-Provision/bash-shell/"
         command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.31, bash-shell.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
     }   
-    provisioner "local-exec" {
-        working_dir = "../../2-Ansible-Provision/Docker-Install/"
-        command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.31, Docker-Portainer-Install.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
-    }  
+
 
 }
 
@@ -220,7 +211,7 @@ resource "proxmox_vm_qemu" "endeavour_swarm_node" {
     # name is the name we will identify our virtual machine as
     # desc is a descriptive name for our virtual machine
     target_node = "endeavour"
-    vmid = "102"
+    vmid = "502"
     name = "node3.home.initcyber.net"
     desc = "docker swarm"
 
@@ -306,8 +297,4 @@ resource "proxmox_vm_qemu" "endeavour_swarm_node" {
         working_dir = "../../2-Ansible-Provision/bash-shell/"
         command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.32, bash-shell.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
     } 
-    provisioner "local-exec" {
-        working_dir = "../../2-Ansible-Provision/Docker-Install/"
-        command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.32, Docker-Portainer-Install.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
-    }  
 }
