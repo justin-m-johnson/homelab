@@ -45,9 +45,9 @@ services:
     ports:
     - 6379:6379
 
-  nfs:
-    driver_opts:
-      type: "nfs"
-      o: "addr=172.16.10.10"
-      device: ":/export/home-prod"
+  #nfs:
+  #  driver_opts:
+    #  type: "nfs"
+      #o: "addr=172.16.10.10"
+      #device: ":/export/home-prod"
   
