@@ -2,7 +2,7 @@
 # ---
 # This will create a new Virtual Machine from a cloud-init file
 
-resource "proxmox_vm_qemu" "discovery_swarm_node" {
+resource "proxmox_vm_qemu" "discovery_rke2_node" {
     
     #Set this number to how many VM's you need to deploy, comment out if you don't need to deploy more than 1 (adjust "vmid" and "name" as needed)
     # count = 2
@@ -13,7 +13,7 @@ resource "proxmox_vm_qemu" "discovery_swarm_node" {
     target_node = "discovery"
     vmid = "500"
     name = "node1.home.initcyber.net"
-    desc = "docker swarm"
+    desc = "docker rke2"
 
     # Set VM to start on boot (true/false)
     onboot = true 
@@ -86,23 +86,23 @@ resource "proxmox_vm_qemu" "discovery_swarm_node" {
 
     }
     provisioner "local-exec" {
-        working_dir = "../../2-Ansible-Provision/MOTD/"
+        working_dir = "../../../2-Ansible-Provision/MOTD/"
         command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.30, MOTD.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
     }
     provisioner "local-exec" {
-        working_dir = "../../2-Ansible-Provision/set-time-zone/"
+        working_dir = "../../../2-Ansible-Provision/set-time-zone/"
         command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.30, set-time-zone.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
 
     }  
     provisioner "local-exec" {
-        working_dir = "../../2-Ansible-Provision/bash-shell/"
+        working_dir = "../../../2-Ansible-Provision/bash-shell/"
         command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.30, bash-shell.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
     }    
 
 
 }
 
-resource "proxmox_vm_qemu" "atlantis_swarm_node" {
+resource "proxmox_vm_qemu" "atlantis_rke2_node" {
     
     #Set this number to how many VM's you need to deploy, comment out if you don't need to deploy more than 1 (adjust "vmid" and "name" as needed)
     # count = 2
@@ -113,7 +113,7 @@ resource "proxmox_vm_qemu" "atlantis_swarm_node" {
     target_node = "atlantis"
     vmid = "501"
     name = "node2.home.initcyber.net"
-    desc = "docker swarm"
+    desc = "docker rke2"
 
     # Set VM to start on boot (true/false)
     onboot = true 
@@ -186,23 +186,23 @@ resource "proxmox_vm_qemu" "atlantis_swarm_node" {
 
     }
     provisioner "local-exec" {
-        working_dir = "../../2-Ansible-Provision/MOTD/"
+        working_dir = "../../../2-Ansible-Provision/MOTD/"
         command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.31, MOTD.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
     }
     provisioner "local-exec" {
-        working_dir = "../../2-Ansible-Provision/set-time-zone/"
+        working_dir = "../../../2-Ansible-Provision/set-time-zone/"
         command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.31, set-time-zone.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
 
     }  
     provisioner "local-exec" {
-        working_dir = "../../2-Ansible-Provision/bash-shell/"
+        working_dir = "../../../2-Ansible-Provision/bash-shell/"
         command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.31, bash-shell.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
     }   
 
 
 }
 
-resource "proxmox_vm_qemu" "endeavour_swarm_node" {
+resource "proxmox_vm_qemu" "endeavour_rke2_node" {
     
     #Set this number to how many VM's you need to deploy, comment out if you don't need to deploy more than 1 (adjust "vmid" and "name" as needed)
     # count = 2
@@ -213,7 +213,7 @@ resource "proxmox_vm_qemu" "endeavour_swarm_node" {
     target_node = "endeavour"
     vmid = "502"
     name = "node3.home.initcyber.net"
-    desc = "docker swarm"
+    desc = "docker rke2"
 
     # Set VM to start on boot (true/false)
     onboot = true 
@@ -285,16 +285,16 @@ resource "proxmox_vm_qemu" "endeavour_swarm_node" {
 
     }
     provisioner "local-exec" {
-        working_dir = "../../2-Ansible-Provision/MOTD/"
+        working_dir = "../../../2-Ansible-Provision/MOTD/"
         command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.32, MOTD.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
     }
     provisioner "local-exec" {
-        working_dir = "../../2-Ansible-Provision/set-time-zone/"
+        working_dir = "../../../2-Ansible-Provision/set-time-zone/"
         command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.32, set-time-zone.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
 
     }  
     provisioner "local-exec" {
-        working_dir = "../../2-Ansible-Provision/bash-shell/"
+        working_dir = "../../../2-Ansible-Provision/bash-shell/"
         command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.32, bash-shell.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
     } 
 }
