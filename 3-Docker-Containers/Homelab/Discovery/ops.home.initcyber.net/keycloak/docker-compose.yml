@@ -3,7 +3,7 @@ version : '3.8'
 services:
   postgres:
     container_name: openrmf-postgres
-    image: postgres:11.5
+    image: postgres:16.3
     restart: always
     ports:
       - 5432
