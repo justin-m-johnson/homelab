@@ -8,8 +8,8 @@ services:
       POSTGRES_DB: ${POSTGRESQL_DB}
       POSTGRES_USER: ${POSTGRESQL_USER}
       POSTGRES_PASSWORD: ${POSTGRESQL_PASS}
-    networks:
-      - local-keycloak
+    # networks:
+    #   - local-keycloak
 
   keycloak:
     depends_on:
@@ -25,8 +25,8 @@ services:
     ports:
       - "28080:8080"
     restart: unless-stopped
-    networks:
-      - local-keycloak
+#     networks:
+#       - local-keycloak
 
-networks:
-  local-keycloak:
+# networks:
+#   local-keycloak:
