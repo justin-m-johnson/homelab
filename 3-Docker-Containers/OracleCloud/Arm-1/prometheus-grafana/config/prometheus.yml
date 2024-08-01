@@ -86,4 +86,10 @@ scrape_configs:
     static_configs:
       - targets: [staging1.home.initcyber.net:8080]
 
+############Firewall#############
+  # Scrape OPNSense Firewall - Node Exporter   
+  - job_name: 'node_exporter-apollo'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['staging1.home.initcyber.net:9100']
 
