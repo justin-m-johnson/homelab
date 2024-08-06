@@ -2,7 +2,7 @@
 # ---
 # This will create a new Virtual Machine from a cloud-init file
 
-resource "proxmox_vm_qemu" "discovery_rke2_node" {
+resource "proxmox_vm_qemu" "discovery_k3s_node" {
     
     #Set this number to how many VM's you need to deploy, comment out if you don't need to deploy more than 1 (adjust "vmid" and "name" as needed)
     # count = 2
@@ -13,7 +13,7 @@ resource "proxmox_vm_qemu" "discovery_rke2_node" {
     target_node = "discovery"
     vmid = "500"
     name = "node1.home.initcyber.net"
-    desc = "docker rke2"
+    desc = "k3s"
 
     # Set VM to start on boot (true/false)
     onboot = true 
@@ -102,7 +102,7 @@ resource "proxmox_vm_qemu" "discovery_rke2_node" {
 
 }
 
-resource "proxmox_vm_qemu" "atlantis_rke2_node" {
+resource "proxmox_vm_qemu" "atlantis_k3s_node" {
     
     #Set this number to how many VM's you need to deploy, comment out if you don't need to deploy more than 1 (adjust "vmid" and "name" as needed)
     # count = 2
@@ -113,7 +113,7 @@ resource "proxmox_vm_qemu" "atlantis_rke2_node" {
     target_node = "atlantis"
     vmid = "501"
     name = "node2.home.initcyber.net"
-    desc = "docker rke2"
+    desc = "k3s"
 
     # Set VM to start on boot (true/false)
     onboot = true 
@@ -202,7 +202,7 @@ resource "proxmox_vm_qemu" "atlantis_rke2_node" {
 
 }
 
-resource "proxmox_vm_qemu" "endeavour_rke2_node" {
+resource "proxmox_vm_qemu" "endeavour_k3s_node" {
     
     #Set this number to how many VM's you need to deploy, comment out if you don't need to deploy more than 1 (adjust "vmid" and "name" as needed)
     # count = 2
@@ -213,7 +213,7 @@ resource "proxmox_vm_qemu" "endeavour_rke2_node" {
     target_node = "endeavour"
     vmid = "502"
     name = "node3.home.initcyber.net"
-    desc = "docker rke2"
+    desc = "k3s"
 
     # Set VM to start on boot (true/false)
     onboot = true 
