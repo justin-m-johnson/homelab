@@ -1,5 +1,5 @@
 ---
-- hosts: all,!ubuntuarm.oracle.home.initcyber.com,!splunk,!wazuh
+- hosts: all,!oracle-nodes,!splunk,!wazuh
   remote_user: justin
   vars:
     username: justin
