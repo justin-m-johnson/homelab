@@ -102,7 +102,7 @@ resource "proxmox_vm_qemu" "discovery_k3s_node" {
 
 }
 
-resource "proxmox_vm_qemu" "atlantis_k3s_node" {
+resource "proxmox_vm_qemu" "discovery_k3s_node" {
     
     #Set this number to how many VM's you need to deploy, comment out if you don't need to deploy more than 1 (adjust "vmid" and "name" as needed)
     # count = 2
@@ -110,7 +110,7 @@ resource "proxmox_vm_qemu" "atlantis_k3s_node" {
     # vmid is the virtual machine ID in Proxmox, default starts at 100 and counts up
     # name is the name we will identify our virtual machine as
     # desc is a descriptive name for our virtual machine
-    target_node = "atlantis"
+    target_node = "discovery"
     vmid = "501"
     name = "node2.home.initcyber.net"
     desc = "k3s"
@@ -202,7 +202,7 @@ resource "proxmox_vm_qemu" "atlantis_k3s_node" {
 
 }
 
-resource "proxmox_vm_qemu" "endeavour_k3s_node" {
+resource "proxmox_vm_qemu" "discovery_k3s_node" {
     
     #Set this number to how many VM's you need to deploy, comment out if you don't need to deploy more than 1 (adjust "vmid" and "name" as needed)
     # count = 2
@@ -210,7 +210,7 @@ resource "proxmox_vm_qemu" "endeavour_k3s_node" {
     # vmid is the virtual machine ID in Proxmox, default starts at 100 and counts up
     # name is the name we will identify our virtual machine as
     # desc is a descriptive name for our virtual machine
-    target_node = "endeavour"
+    target_node = "discovery"
     vmid = "502"
     name = "node3.home.initcyber.net"
     desc = "k3s"

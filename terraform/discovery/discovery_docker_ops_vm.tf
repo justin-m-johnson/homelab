@@ -2,16 +2,16 @@
 # ---
 # This will create a new Virtual Machine from a cloud-init file
 
-resource "proxmox_vm_qemu" "prod1_Docker" {
+resource "proxmox_vm_qemu" "OPS-Docker" {
      
     # List our target node (this is the node ID of our "cluster")
     # vmid is the virtual machine ID in Proxmox, default starts at 100 and counts up
     # name is the name we will identify our virtual machine as
     # desc is a descriptive name for our virtual machine
-    target_node = "atlantis"
-    vmid = "200"
-    name = "prod1.home.initcyber.net"
-    desc = "Production 1 - Docker Container"
+    target_node = "discovery"
+    vmid = "1000"
+    name = "ops.home.initcyber.net"
+    desc = "Operations Home - Docker Container"
 
     # Set VM to start on boot (true/false)
     onboot = true 
@@ -61,7 +61,7 @@ resource "proxmox_vm_qemu" "prod1_Docker" {
     os_type = "cloud-init"
 
     # IP Address and Gateway - Again, we are using the count.index variable here, assuming we are NOT going above 10 virtual machines this should be OK.
-    ipconfig0 = "ip=172.16.10.12/24,gw=172.16.10.1"
+    ipconfig0 = "ip=172.16.10.8/24,gw=172.16.10.1"
     
     # Set user name here
      ciuser = var.user
@@ -71,7 +71,7 @@ resource "proxmox_vm_qemu" "prod1_Docker" {
      sshkeys = var.ssh_key
 ###########Start Ansible Provisioner########################
     connection {
-        host = "172.16.10.12"
+        host = "172.16.10.8"
         user = var.user
         private_key = file(var.ssh_keys["priv"])
         agent = false
@@ -82,18 +82,18 @@ resource "proxmox_vm_qemu" "prod1_Docker" {
     }
     provisioner "local-exec" {
         working_dir = "../../../2-Ansible-Provision/MOTD/"
-        command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.12, MOTD.yml"
+        command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.8, MOTD.yml"
     }  
     provisioner "local-exec" {
         working_dir = "../../../2-Ansible-Provision/bash-shell/"
-        command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.12, bash-shell.yml"
+        command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.8, bash-shell.yml"
     }  
     provisioner "local-exec" {
         working_dir = "../../../2-Ansible-Provision/set-time-zone/"
-        command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.12, set-time-zone.yml"
+        command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.8, set-time-zone.yml"
     }  
     provisioner "local-exec" {
         working_dir = "../../../2-Ansible-Provision/Docker-Install/"
-        command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.12, Docker-Install-AMD.yml"
+        command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.8, Docker-Install-AMD.yml"
     }  
 }
