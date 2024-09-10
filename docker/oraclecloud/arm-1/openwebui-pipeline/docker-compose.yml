@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  pipelines:
+    image: ghcr.io/open-webui/pipelines:main
+    ports:
+      - "9099:9099"
+    networks:
+      - host-network
+    volumes:
+      - pipelines:/app/pipelines
+    restart: always
+
+networks:
+  host-network:
+    external: true
+
+volumes:
+  pipelines:
+      external: true
