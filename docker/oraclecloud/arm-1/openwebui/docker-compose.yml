@@ -15,7 +15,20 @@ services:
       - open-webui-local:/app/backend/data
 
 
+  pipelines:
+    image: ghcr.io/open-webui/pipelines:main
+    ports:
+      - "9099:9099"
+    networks:
+      - host-network
+    volumes:
+      - pipelines:/app/pipelines
+    restart: always
+
+
 volumes:
+  pipelines:
+      external: true
   open-webui-local:
     external: true
   
