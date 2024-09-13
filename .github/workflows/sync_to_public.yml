@@ -28,7 +28,7 @@ jobs:
         git clone --single-branch --branch main https://github.com/initcyber/homelab public_repo
         
         # Sync contents of private repo to public repo, excluding certain directories
-        rsync -av --delete --exclude '.git' --exclude '.github' ./ public_repo/
+        rsync -av --delete --exclude '.git' --exclude '.github' ./ public_repo/ || true
         
         cd public_repo
 
