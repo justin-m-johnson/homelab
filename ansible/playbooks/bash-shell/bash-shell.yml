@@ -1,0 +1,9 @@
+---
+- name: Change shell to /bin/bash
+  hosts: all
+  become: yes
+  tasks:
+    - name: Set shell for ansible user
+      user:
+        name: ansible
+        shell: /bin/bash
