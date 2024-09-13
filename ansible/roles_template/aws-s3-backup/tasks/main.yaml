@@ -1,0 +1,38 @@
+---
+
+- name: apt install pip
+  become: yes
+  apt: name="python3-pip"
+
+- name: pip install aws cli packages
+  become: yes
+  pip: name="{{aws_s3_backup_pip_packages}}"
+
+- name: create aws config dir for root
+  become: yes
+  file: path="/root/.aws/" state="directory" mode="0700"
+
+- name: configure aws credentials for root
+  become: yes
+  template: src="aws-{{item}}.j2" dest="/root/.aws/{{item}}" mode="0600"
+  loop:
+    - "credentials"
+    - "config"
+
+- name: create systemd target
+  become: yes
+  copy:
+    src: "aws-s3-backup.target"
+    dest: "/lib/systemd/system/aws-s3-backup.target"
+  notify: reload target
+
+- name: create systemd timer
+  become: yes
+  copy:
+    src: "aws-s3-backup.timer"
+    dest: "/lib/systemd/system/aws-s3-backup.timer"
+  notify: reload timer
+
+- name: ensure timer is started
+  become: yes
+  systemd: name="aws-s3-backup.timer" enabled="yes" state="started"

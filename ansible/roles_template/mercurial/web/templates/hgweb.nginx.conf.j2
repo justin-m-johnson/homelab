@@ -1,0 +1,33 @@
+server {
+    listen 80;
+    listen [::]:80;
+    server_name {{nginx_server_name}};
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+#    listen [::]:443 ssl ipv6only=on;
+    server_name {{nginx_server_name}};
+
+    ssl_certificate {{nginx_ssl_cert}};
+    ssl_certificate_key {{nginx_ssl_privkey}};
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    ssl_ecdh_curve X25519:prime256v1:secp384r1:secp521r1;
+    ssl_stapling on;
+    ssl_stapling_verify on;
+
+    location / {
+        include     uwsgi_params;
+        uwsgi_param REMOTE_PORT     $remote_port;
+        uwsgi_param SERVER_PORT     $server_port;
+        uwsgi_param SERVER_PROTOCOL $server_protocol;
+        uwsgi_param UWSGI_SCHEME    $scheme;
+        uwsgi_param SCRIPT_NAME     /;
+        uwsgi_param AUTH_USER       $remote_user;
+        uwsgi_param REMOTE_USER     $remote_user;
+        uwsgi_pass  unix:/var/run/uwsgi/hgweb.socket;
+    }
+}

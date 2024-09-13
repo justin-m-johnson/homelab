@@ -1,0 +1,14 @@
+[Unit]
+Description=Dendrite instance on port %i
+After=syslog.target network.target postgresql.service
+
+[Service]
+WorkingDirectory={{dendrite_dir}}/%i/
+ExecStart=/usr/local/bin/dendrite -config "{{dendrite_dir}}/%i/dendrite.yaml" -http-bind-address ":%i"
+Restart=always
+User={{dendrite_user}}
+LimitNOFILE=65535
+Environment="GOMEMLIMIT=2750MiB"
+
+[Install]
+WantedBy=multi-user.target

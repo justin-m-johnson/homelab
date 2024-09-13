@@ -1,0 +1,20 @@
+[Unit]
+Description=ergo
+#After=network.target
+# If you are using MySQL for history storage, comment out the above line
+# and uncomment these two instead (you must independently install and configure
+# MySQL for your system):
+Wants=mysql.service
+After=network.target mysql.service
+
+[Service]
+Type=simple
+User=ergo
+WorkingDirectory=/var/ergo
+ExecStart=/usr/local/bin/ergo run --conf /etc/ergo/config.yaml
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+LimitNOFILE=1048576
+
+[Install]
+WantedBy=multi-user.target

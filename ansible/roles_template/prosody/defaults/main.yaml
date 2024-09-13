@@ -1,0 +1,4 @@
+---
+
+prosody_db: "prosody_{{prosody_instance}}"
+prosody_db_port: "5432"

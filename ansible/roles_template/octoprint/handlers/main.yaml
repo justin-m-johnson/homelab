@@ -1,0 +1,5 @@
+---
+
+- name: restart octoprint
+  become: yes
+  systemd: name="octoprint.service" state="restarted" daemon_reload="yes"

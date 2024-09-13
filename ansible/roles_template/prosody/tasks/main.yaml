@@ -1,0 +1,57 @@
+---
+
+- name: install prosody
+  become: yes
+  apt: name="{{item}}"
+  notify: restart prosody
+  loop:
+    - "prosody"
+    - "lua-dbi-postgresql"
+
+- name: configure prosody
+  become: yes
+  template:
+    src: "prosody.cfg.lua.j2"
+    dest: "/etc/prosody/conf.avail/{{prosody_vhost}}.cfg.lua"
+  notify: restart prosody
+
+- name: install prosody site
+  become: yes
+  template: src="prosody.cfg.lua.j2" dest="/etc/prosody/conf.avail/{{prosody_vhost}}.cfg.lua"
+  notify: restart prosody
+
+- name: install letsencrypt ssl deploy hook
+  become: yes
+  copy:
+    src: "prosody.sh"
+    dest: "/etc/letsencrypt/renewal-hooks/deploy/prosody.sh"
+    mode: "0755"
+
+- name: run letsencrypt ssl deploy hook
+  become: yes
+  command: "/etc/letsencrypt/renewal-hooks/deploy/prosody.sh"
+  changed_when: false
+
+- name: install db schema file
+  become: yes
+  template:
+    src: "setup_db.psql.j2"
+    dest: "/tmp/setup_db_{{prosody_db}}.psql"
+    owner: "postgres"
+    group: "postgres"
+    mode: "0600"
+  changed_when: false
+
+- name: install psql
+  become: yes
+  become_user: "postgres"
+  command: "psql -f /tmp/setup_db_{{prosody_db}}.psql"
+  changed_when: false
+
+- name: enable prosody site
+  become: yes
+  file:
+    src:  "/etc/prosody/conf.avail/{{prosody_vhost}}.cfg.lua"
+    dest: "/etc/prosody/conf.d/{{prosody_vhost}}.cfg.lua"
+    state: "link"
+  notify: restart prosody

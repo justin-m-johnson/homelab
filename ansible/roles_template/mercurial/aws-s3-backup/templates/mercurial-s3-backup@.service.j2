@@ -1,0 +1,9 @@
+[Unit]
+Description=Mercurial s3 backup for "%I"
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/mercurial-s3-backup.sh %i "{{mercurial_s3_backup_dir}}"
+
+[Install]
+WantedBy=aws-s3-backup.target

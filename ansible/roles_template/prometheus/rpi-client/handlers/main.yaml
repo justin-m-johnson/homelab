@@ -1,0 +1,5 @@
+---
+
+- name: restart rpi_exporter
+  systemd: name="rpi_exporter.service" state="restarted" daemon_reload="yes"
+  become: yes

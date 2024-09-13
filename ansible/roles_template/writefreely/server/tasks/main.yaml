@@ -1,0 +1,102 @@
+---
+
+- name: add writefreely user
+  become: yes
+  user: name="{{writefreely_user}}" shell="/bin/false" system="yes" create_home="no"
+
+- name: unarchive writefreely
+  become: yes
+  unarchive:
+    remote_src: yes
+    src: "{{writefreely_tar}}"
+    dest: "/tmp/"
+    creates: "/tmp/writefreely/"
+    owner: "root"
+    group: "root"
+
+- name: install writefreely binary
+  become: yes
+  copy:
+    src: "/tmp/writefreely/writefreely"
+    dest: "/usr/local/bin/"
+    remote_src: yes
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  notify:
+    - migrate db
+    - restart service
+
+- name: create instance dir
+  become: yes
+  file:
+    path: "{{item}}"
+    state: "directory"
+    owner: "{{writefreely_user}}"
+    group: "{{writefreely_user}}"
+    mode: "0755"
+  notify: restart service
+  loop:
+    - "{{writefreely_dir}}"
+    - "{{writefreely_dir}}/{{writefreely_instance}}"
+
+- name: install static content
+  become: yes
+  copy:
+    src: "/tmp/writefreely/"
+    remote_src: yes
+    dest: "{{writefreely_dir}}/{{writefreely_instance}}/"
+    owner: "{{writefreely_user}}"
+    group: "{{writefreely_user}}"
+    mode: "0755"
+  notify: restart service
+
+- name: configure
+  become: yes
+  template:
+    src: "config.ini.j2"
+    dest: "{{writefreely_dir}}/{{writefreely_instance}}/config.ini"
+    mode: "0644"
+    owner: "{{writefreely_user}}"
+    group: "{{writefreely_user}}"
+  notify: restart service
+
+- name: generate keys
+  become: yes
+  become_user: "{{writefreely_user}}"
+  command: "writefreely keys generate"
+  args:
+    chdir: "{{writefreely_dir}}/{{writefreely_instance}}/"
+  changed_when: false
+
+- name: check if db exists
+  stat:
+    path: "{{writefreely_dir}}/{{writefreely_instance}}/writefreely.db"
+  register: db_file
+
+- name: create db
+  become: yes
+  become_user: "{{writefreely_user}}"
+  command: "writefreely db init"
+  args:
+    chdir: "{{writefreely_dir}}/{{writefreely_instance}}/"
+  when: not db_file.stat.exists
+
+- name: create admin
+  become: yes
+  become_user: "{{writefreely_user}}"
+  command: "writefreely --create-admin admin:admin"
+  args:
+    chdir: "{{writefreely_dir}}/{{writefreely_instance}}/"
+  when: not db_file.stat.exists
+
+- name: install systemd service
+  become: yes
+  template:
+    src: "writefreely@.service.j2"
+    dest: "/lib/systemd/system/writefreely@.service"
+  notify: reload service
+
+- name: ensure service is started
+  become: yes
+  systemd: name="writefreely@{{writefreely_instance}}.service" enabled="yes" state="started"

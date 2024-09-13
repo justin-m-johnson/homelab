@@ -1,0 +1,14 @@
+---
+
+adguard_dns_bypass: true
+adguard_home_port: "80"
+adguard_home_arch: "arm"
+adguard_home_tar: "https://static.adguard.com/adguardhome/release/AdGuardHome_linux_{{adguard_home_arch}}.tar.gz"
+adguard_home_data_dir: "/var/lib/AdGuardHome"
+adguard_home_filters:
+  - url: https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt
+    name: AdGuard Simplified Domain Names filter
+    id: 1
+  - url: https://abp.oisd.nl
+    name: oisd.nl
+    id: 2

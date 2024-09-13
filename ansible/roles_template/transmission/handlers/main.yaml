@@ -1,0 +1,5 @@
+---
+
+- name: restart transmission service
+  systemd: name="transmission-daemon" state="restarted" daemon_reload="yes"
+  become: yes

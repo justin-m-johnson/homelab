@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily AWS S3 backup
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+Unit=aws-s3-backup.target
+
+[Install]
+WantedBy=timers.target

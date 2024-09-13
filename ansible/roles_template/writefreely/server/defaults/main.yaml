@@ -1,0 +1,12 @@
+---
+
+writefreely_user: "writefreely"
+writefreely_arch: "arm64"
+writefreely_version: "0.15.0"
+# https://github.com/writeas/writefreely/releases
+writefreely_tar: "https://github.com/writeas/writefreely/releases/download/v{{writefreely_version}}/writefreely_{{writefreely_version}}_linux_{{writefreely_arch}}.tar.gz"
+
+writefreely_dir: "/var/writefreely"
+writefreely_port: "8080"
+writefreely_url: "https://{{writefreely_instance}}"
+writefreely_site_name: "{{writefreely_instance}}"

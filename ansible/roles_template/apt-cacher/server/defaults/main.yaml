@@ -1,0 +1,5 @@
+---
+
+apt_cacher_cache_dir: "/var/cache/apt-cacher-ng"
+apt_cacher_log_dir: "/var/log/apt-cacher-ng"
+apt_cacher_port: "3142"

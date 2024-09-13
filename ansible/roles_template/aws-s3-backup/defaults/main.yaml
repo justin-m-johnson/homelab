@@ -1,0 +1,6 @@
+---
+
+aws_s3_backup_region: "us-east-1"
+aws_s3_backup_pip_packages:
+  - "awscli"
+  - "boto3"

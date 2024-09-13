@@ -1,0 +1,14 @@
+[Unit]
+Description=relayer nostr relay
+Requires=network.target postgresql.service
+Before=nginx.service
+
+[Service]
+User=relayer
+EnvironmentFile=/etc/relayer/relayer.env
+
+ExecStart=/usr/local/bin/relayer
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

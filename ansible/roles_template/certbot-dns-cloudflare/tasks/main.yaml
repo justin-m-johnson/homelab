@@ -1,0 +1,40 @@
+---
+
+- name: apt install dns cloudflare
+  become: yes
+  apt: name="python3-certbot-dns-cloudflare"
+
+- name: configure cloudflare credentials
+  become: yes
+  template:
+    src: "cred.conf.j2"
+    dest: "/etc/letsencrypt/cred.conf"
+    mode: "0600"
+    owner: "root"
+    group: "root"
+
+- name: make renewal dir
+  become: yes
+  file:
+    path: "/etc/letsencrypt/renewal/"
+    state: "directory"
+
+- name: configure renewal
+  become: yes
+  template:
+    src: "{{certbot_dns_cloudflare_conf}}"
+    dest: "/etc/letsencrypt/renewal/{{certbot_dns_cloudflare_domain}}.conf"
+    mode: "0644"
+    owner: "root"
+    group: "root"
+
+- name: check if cert exists
+  become: yes
+  stat: path="/etc/letsencrypt/live/{{certbot_dns_cloudflare_domain}}-0001/cert.pem"
+  register: cert
+
+- name: run certbot
+  become: yes
+  command: "certbot certonly -n --agree-tos --email {{certbot_dns_cloudflare_email}} --dns-cloudflare --dns-cloudflare-credentials /etc/letsencrypt/cred.conf -d {{certbot_dns_cloudflare_domain}} -d \"*.{{certbot_dns_cloudflare_domain}}\""
+  when: not cert.stat.exists
+  changed_when: false

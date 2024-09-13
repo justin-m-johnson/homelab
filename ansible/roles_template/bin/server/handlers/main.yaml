@@ -1,0 +1,5 @@
+---
+
+- name: restart service
+  become: yes
+  systemd: name="bin@{{bin_port}}.service" state="restarted" daemon_reload="yes"

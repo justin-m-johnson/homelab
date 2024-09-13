@@ -1,0 +1,65 @@
+---
+
+- name: add ergo user
+  become: yes
+  user: name="ergo" shell="/bin/false" system="yes" create_home="no"
+
+- name: download ergo
+  become: yes
+  unarchive:
+    remote_src: yes
+    src: "{{ergo_url}}"
+    dest: "/tmp"
+    creates: "/tmp/{{ergo_tar_name}}/"
+
+- name: install ergo
+  become: yes
+  copy:
+    src: "/tmp/{{ergo_tar_name}}/ergo"
+    dest: "/usr/local/bin/"
+    remote_src: yes
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  notify: restart ergo
+
+- name: create ergo dirs
+  become: yes
+  file:
+    path: "{{item}}/ergo"
+    owner: "ergo"
+    group: "ergo"
+    mode: "0755"
+    state: "directory"
+  loop:
+    - "/etc"
+    - "/var"
+
+- name: configure ergo
+  become: yes
+  template:
+    src: "config.yaml.j2"
+    dest: "/etc/ergo/config.yaml"
+    owner: "ergo"
+    group: "ergo"
+    mode: "0644"
+  notify: reload ergo
+
+- name: copy motd file
+  become: yes
+  copy:
+    src: "{{ergo_motd}}"
+    dest: "/etc/ergo/motd"
+  notify: reload ergo
+
+- name: install ergo service
+  become: yes
+  copy:
+    src: "ergo.service"
+    dest: "/lib/systemd/system/ergo.service"
+    mode: "0644"
+  notify: restart ergo
+
+- name: ensure ergo is started
+  become: yes
+  systemd: service="ergo.service" enabled="yes" state="started" daemon_reload="yes"

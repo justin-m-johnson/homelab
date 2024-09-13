@@ -1,0 +1,50 @@
+---
+
+- name: add miniflux user
+  become: yes
+  user: name="miniflux" shell="/bin/false" system="yes" create_home="no"
+
+- name: download miniflux
+  become: yes
+  get_url:
+    url: "{{miniflux_url}}"
+    dest: "/usr/local/bin/miniflux"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+
+- name: configure miniflux
+  become: yes
+  template:
+    src: "miniflux.conf.j2"
+    dest: "/etc/miniflux.conf"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  notify: restart miniflux service
+
+- name: install miniflux schema file
+  become: yes
+  template:
+    src: "setup_db.psql.j2"
+    dest: "/tmp/setup_db_miniflux.psql"
+    owner: "postgres"
+    group: "postgres"
+    mode: "0600"
+
+- name: install miniflux psql
+  become: yes
+  become_user: "postgres"
+  command: "psql -f /tmp/setup_db_miniflux.psql"
+  changed_when: false
+
+- name: install systemd service
+  become: yes
+  copy:
+    src: "miniflux.service"
+    dest: "/lib/systemd/system/miniflux.service"
+  notify: restart miniflux service
+
+- name: ensure service is started
+  become: yes
+  systemd: name="miniflux.service" enabled="yes" state="started"

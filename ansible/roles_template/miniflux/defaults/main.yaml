@@ -1,0 +1,8 @@
+---
+
+miniflux_port: "8555"
+miniflux_admin_pass: "admin"
+miniflux_arch: "arm64"
+# https://github.com/miniflux/miniflux/releases
+miniflux_version: "2.1.4"
+miniflux_url: "https://github.com/miniflux/miniflux/releases/download/{{miniflux_version}}/miniflux-linux-{{miniflux_arch}}"

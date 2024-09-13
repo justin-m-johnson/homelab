@@ -1,0 +1,5 @@
+---
+
+- name: restart log2ram service
+  systemd: name="log2ram" state="restarted" daemon_reload="yes"
+  become: yes

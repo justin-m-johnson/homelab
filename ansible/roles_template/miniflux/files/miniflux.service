@@ -1,0 +1,13 @@
+[Unit]
+Description=Miniflux Feed Reader
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/miniflux.conf
+User=miniflux
+ExecStart=/usr/local/bin/miniflux
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

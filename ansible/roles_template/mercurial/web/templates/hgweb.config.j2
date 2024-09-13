@@ -1,0 +1,11 @@
+[paths]
+/ = {{mercurial_uwsgi_repos}}
+
+[web]
+deny_push = *
+allow_archive = gz bz2 zip
+encoding = UTF-8
+style = gitweb
+
+[extensions]
+hgext.highlight =

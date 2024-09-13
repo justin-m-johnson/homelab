@@ -1,0 +1,5 @@
+---
+
+- name: restart plex service
+  become: yes
+  systemd: name="plexmediaserver" state="restarted" daemon_reload="yes"

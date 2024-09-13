@@ -1,0 +1,28 @@
+---
+
+# https://jellyfin.org/downloads/server
+
+- name: add jellyfin apt key
+  become: yes
+  get_url:
+    url: "https://repo.jellyfin.org/jellyfin_team.gpg.key"
+    dest: "/etc/apt/trusted.gpg.d/jellyfin_team.asc"
+    mode: "0644"
+
+- name: add jellyfin apt repo
+  become: yes
+  apt_repository: repo="deb [signed-by=/etc/apt/trusted.gpg.d/jellyfin_team.asc] https://repo.jellyfin.org/ubuntu jammy main unstable"
+  notify: restart jellyfin service
+
+- name: update apt package cache
+  become: yes
+  apt: upgrade="dist" update_cache="yes" cache_valid_time="3600"
+
+- name: install jellyfin server
+  become: yes
+  apt: name="jellyfin"
+  notify: restart jellyfin service
+
+- name: ensure jellyfin service is running
+  become: yes
+  systemd: name="jellyfin.service" state="started" daemon_reload="yes"

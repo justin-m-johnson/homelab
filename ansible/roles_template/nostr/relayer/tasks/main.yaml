@@ -1,0 +1,61 @@
+---
+
+- name: add relayer user
+  become: yes
+  user: name="{{relayer_user}}" shell="/bin/false" create_home="false" system="yes"
+
+- name: install relayer systemd service
+  become: yes
+  copy:
+    src: "relayer.service"
+    dest: "/lib/systemd/system/relayer.service"
+  notify: restart relayer service
+
+- name: install relayer bin
+  become: yes
+  get_url:
+    url: "{{relayer_bin_url}}"
+    dest: "/usr/local/bin/relayer"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  notify: restart relayer service
+
+- name: create relayer dirs
+  become: yes
+  file:
+    path: "/etc/relayer"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+    state: "directory"
+
+- name: install relayer config
+  become: yes
+  template:
+    src: "relayer.env.j2"
+    dest: "/etc/relayer/relayer.env"
+    owner: "root"
+    group: "root"
+    mode: "0600"
+  notify: restart relayer service
+
+- name: copy db schema file
+  become: yes
+  template:
+    src: "setup_db.psql.j2"
+    dest: "/tmp/setup_db_relayer.psql"
+    owner: "postgres"
+    group: "postgres"
+    mode: "0600"
+  changed_when: false
+
+- name: install db schema psql
+  become: yes
+  become_user: "postgres"
+  command: "psql -f /tmp/setup_db_relayer.psql"
+  changed_when: false
+
+- name: ensure service is started
+  become: yes
+  systemd: name="relayer.service" enabled="yes" state="started"

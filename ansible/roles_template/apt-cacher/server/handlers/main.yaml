@@ -1,0 +1,5 @@
+---
+
+- name: restart apt-cacher-ng
+  become: yes
+  systemd: name="apt-cacher-ng.service" enabled="yes" daemon_reload="yes" state="restarted"

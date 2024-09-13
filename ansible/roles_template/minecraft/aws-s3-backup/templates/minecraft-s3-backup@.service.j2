@@ -1,0 +1,9 @@
+[Unit]
+Description=Minecraft s3 backup for "%I"
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/minecraft-s3-backup.sh %i "{{minecraft_s3_backup_dir}}" "{{minecraft_s3_backup_bucket}}" "{{minecraft_s3_backup_tar_dir}}"
+
+[Install]
+WantedBy=aws-s3-backup.target

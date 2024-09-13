@@ -1,0 +1,90 @@
+---
+
+- name: install transmission
+  become: yes
+  apt: name="transmission-daemon"
+  notify: restart transmission service
+
+- name: create data dir
+  become: yes
+  file:
+    path: "{{transmission_download_dir}}"
+    state: "directory"
+    owner: "{{transmission_user}}"
+    group: "{{transmission_user}}"
+    mode: "0755"
+    recurse: "yes"
+
+- name: stop transmission service
+  systemd: name="transmission-daemon" state="stopped" daemon_reload="yes"
+  become: yes
+  changed_when: false
+
+- name: config ip whitelist
+  become: yes
+  lineinfile:
+    path: "{{transmission_config}}"
+    regexp: '^    "rpc-whitelist":'
+    line: '    "rpc-whitelist": "127.0.0.1,192.168.*.*,10.0.*.*",'
+    insertafter: ",$"
+  notify: restart transmission service
+
+- name: config umask
+  become: yes
+  lineinfile:
+    path: "{{transmission_config}}"
+    regexp: '^    "umask":'
+    line: '    "umask": 2,'
+    insertafter: ",$"
+  notify: restart transmission service
+
+- name: config port
+  become: yes
+  lineinfile:
+    path: "{{transmission_config}}"
+    regexp: '^    "rpc-port":'
+    line: "    \"rpc-port\": {{transmission_port}},"
+    insertafter: ",$"
+  notify: restart transmission service
+
+# the password is hashed at start of server so this always changes
+- name: config password
+  become: yes
+  lineinfile:
+    path: "{{transmission_config}}"
+    regexp: '^    "rpc-password":'
+    line: "    \"rpc-password\": \"{{transmission_passwd}}\","
+    insertafter: ",$"
+  changed_when: false
+
+- name: config download dir
+  become: yes
+  lineinfile:
+    path: "{{transmission_config}}"
+    regexp: '^    "download-dir":'
+    line: "    \"download-dir\": \"{{transmission_download_dir}}\","
+    insertafter: ",$"
+  notify: restart transmission service
+
+- name: config disable seeding
+  become: yes
+  lineinfile:
+    path: "{{transmission_config}}"
+    regexp: '^    "idle-seeding-limit":'
+    line: "    \"idle-seeding-limit\": 0,"
+    insertafter: ",$"
+  notify: restart transmission service
+
+- name: config disable seeding
+  become: yes
+  lineinfile:
+    path: "{{transmission_config}}"
+    regexp: '^    "idle-seeding-limit-enabled":'
+    line: "    \"idle-seeding-limit-enabled\": true,"
+    insertafter: ",$"
+  notify: restart transmission service
+
+- name: start transmission service
+  become: yes
+  systemd: name="transmission-daemon" state="started" daemon_reload="yes"
+  changed_when: false

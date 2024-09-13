@@ -1,0 +1,49 @@
+server {
+    listen 80;
+    server_name {{nginx_server_name}};
+    return 301 https://$host$request_uri;
+}
+
+# Enable SSL session caching for improved performance
+ssl_session_cache shared:ssl_session_cache:10m;
+
+server {
+    listen {{nginx_server_port}} ssl http2;
+    server_name {{nginx_server_name}};
+
+    ssl_certificate {{nginx_ssl_cert}};
+    ssl_certificate_key {{nginx_ssl_privkey}};
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    ssl_ecdh_curve X25519:prime256v1:secp384r1:secp521r1;
+    ssl_stapling on;
+    ssl_stapling_verify on;
+
+    gzip_vary on;
+    gzip_proxied any;
+    gzip_comp_level 6;
+    gzip_buffers 16 8k;
+    gzip_http_version 1.1;
+    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript application/activity+json application/atom+xml;
+
+    # the nginx default is 1m, not enough for large media uploads
+    client_max_body_size 16m;
+
+    proxy_set_header Host              $host;
+    proxy_set_header X-Real-IP         $remote_addr;
+    proxy_set_header X-Forwarded-For   $remote_addr;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_read_timeout                 600;
+
+    location /_matrix {
+        proxy_pass http://127.0.0.1:{{nginx_proxy_port}};
+    }
+
+    root /var/www/{{nginx_server_name}};
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}

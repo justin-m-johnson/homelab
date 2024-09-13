@@ -1,0 +1,3 @@
+---
+
+unifi_apt_packages: ["haveged", "openjdk-8-jre-headless", "mongodb-org-server", "unifi"]

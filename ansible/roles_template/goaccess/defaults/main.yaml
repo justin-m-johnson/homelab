@@ -1,0 +1,5 @@
+---
+
+goaccess_timer_freq: "hourly"
+goaccess_http_log: "/var/log/nginx/access.log"
+goaccess_output_dest: "/var/www/report.html"

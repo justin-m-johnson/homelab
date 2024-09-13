@@ -1,0 +1,30 @@
+server {
+    listen 80;
+    listen [::]:80;
+    server_name {{nginx_server_name}};
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    # listen [::]:443 ssl ipv6only=on;
+    server_name {{nginx_server_name}};
+
+    ssl_certificate {{nginx_ssl_cert}};
+    ssl_certificate_key {{nginx_ssl_privkey}};
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    ssl_ecdh_curve X25519:prime256v1:secp384r1:secp521r1;
+    ssl_stapling on;
+    ssl_stapling_verify on;
+
+    location / {
+        proxy_pass {{nginx_proxy_pass}};
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}

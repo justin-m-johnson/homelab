@@ -1,0 +1,9 @@
+---
+
+- name: restart prometheus service
+  systemd: name="prometheus.service" state="restarted" daemon_reload="yes"
+  become: yes
+
+- name: restart grafana service
+  systemd: name="grafana-server.service" state="restarted" daemon_reload="yes"
+  become: yes

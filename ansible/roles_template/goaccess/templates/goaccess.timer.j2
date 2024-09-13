@@ -1,0 +1,9 @@
+[Unit]
+Description=GoAccess refresh timer
+
+[Timer]
+OnCalendar={{goaccess_timer_freq}}
+Unit=goaccess.service
+
+[Install]
+WantedBy=timers.target

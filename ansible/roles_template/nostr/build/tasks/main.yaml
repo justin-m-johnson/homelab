@@ -1,0 +1,68 @@
+---
+
+- name: install golang
+  become: yes
+  apt: name="golang-1.21-go"
+
+- name: link go bin
+  become: yes
+  file:
+    src: "/usr/lib/go-1.21/bin/go"
+    dest: "/usr/bin/go"
+    state: "link"
+    mode: "0755"
+
+- name: unarchive nostr relayer
+  unarchive:
+    remote_src: yes
+    src: "{{relayer_tar}}"
+    dest: "/tmp/"
+    creates: "{{relayer_build_dir}}"
+
+# update name
+- name: update relayer nip11 name
+  lineinfile:
+    path: "{{relayer_main_src}}"
+    regexp: "^(\\s*)return \"WhitelistedRelay\"$"
+    line: "\\1return \"{{relayer_name}}\""
+    backrefs: yes
+
+# update nip11 relay info
+- name: update relayer nip11 info
+  lineinfile:
+    path: "{{relayer_handler_src}}"
+    regexp: "^(\\s*){{item.k}}(\\s*)(.*)$"
+    line: "\\1{{item.k}}\\2\"{{item.v}}\","
+    backrefs: yes
+  loop:
+    - {"k": "Description:", "v": "{{relayer_description}}"}
+    - {"k": "PubKey:", "v": "{{relayer_admin_pubkey}}"}
+    - {"k": "Contact:", "v": "{{relayer_admin_contact}}"}
+    - {"k": "Version:", "v": "{{relayer_version}}"}
+
+- name: check if relayer build exists
+  stat:
+    path: "{{relayer_build_dir}}/examples/whitelisted/whitelisted"
+  register: build_file
+
+- name: build relayer
+  command: "go build"
+  args:
+    chdir: "{{relayer_build_dir}}/examples/whitelisted"
+  when: not build_file.stat.exists
+
+- name: create build server dir
+  become: yes
+  file:
+    path: "{{relayer_srv_dir}}"
+    mode: "0755"
+    state: "directory"
+  when: not build_file.stat.exists
+
+- name: copy bin to build server dir
+  become: yes
+  copy:
+    remote_src: yes
+    src: "{{relayer_build_dir}}/examples/whitelisted/whitelisted"
+    dest: "{{relayer_srv_dir}}/nostr-relayer-whitelisted"
+  when: not build_file.stat.exists

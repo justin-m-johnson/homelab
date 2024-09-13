@@ -1,0 +1,57 @@
+---
+
+- name: install golang
+  become: yes
+  apt: name="golang-1.21-go"
+
+- name: link go bin
+  become: yes
+  file:
+    src: "/usr/lib/go-1.21/bin/go"
+    dest: "/usr/bin/go"
+    state: "link"
+    mode: "0755"
+
+- name: unarchive dendrite
+  unarchive:
+    remote_src: yes
+    src: "{{dendrite_tar}}"
+    dest: "/tmp/"
+    creates: "{{dendrite_build_dir}}"
+
+- name: create build dir
+  file:
+    path: "{{dendrite_build_dir}}/bin"
+    mode: "0755"
+    state: "directory"
+
+- name: check if dendrite build exists
+  stat:
+    path: "{{dendrite_build_dir}}/bin/dendrite"
+  register: build_file
+
+- name: build dendrite
+  command: "go build -o bin/ ./cmd/..."
+  args:
+    chdir: "{{dendrite_build_dir}}"
+  when: not build_file.stat.exists
+
+- name: create build server dir
+  become: yes
+  file:
+    path: "{{dendrite_srv_dir}}"
+    mode: "0755"
+    state: "directory"
+  when: not build_file.stat.exists
+
+- name: create a gz archive of dendrite bins
+  become: yes
+  archive:
+    path: "{{dendrite_build_dir}}/bin/*"
+    exclude_path:
+      - "{{dendrite_build_dir}}/bin/dendrite-demo-pinecone"
+      - "{{dendrite_build_dir}}/bin/dendrite-demo-yggdrasil"
+      - "{{dendrite_build_dir}}/bin/furl"
+    dest: "{{dendrite_srv_dir}}/dendrite.tar.gz"
+    format: "gz"
+  when: not build_file.stat.exists
