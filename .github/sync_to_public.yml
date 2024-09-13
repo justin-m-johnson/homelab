@@ -1,0 +1,26 @@
+name: Sync to Public Repository
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 */6 * * *'  # Runs every 6 hours
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout private repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Push to public repository
+        uses: repo-sync/github-sync@v2
+        with:
+          source_repo: ${{ secrets.PRIVATE_REPO_URL }}
+          source_branch: main
+          destination_repo: ${{ secrets.PUBLIC_REPO_URL }}
+          destination_branch: main
+          github_token: ${{ secrets.TOKEN }}
