@@ -16,11 +16,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Push to public repository
-        uses: repo-sync/github-sync@v2
+      - name: Push to repository
+        uses: tech-thinker/push-to-repo@v1.0.0
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.TOKEN }}
         with:
-          source_repo: ${{ secrets.PRIVATE_REPO_URL }}
-          source_branch: main
-          destination_repo: ${{ secrets.PUBLIC_REPO_URL }}
-          destination_branch: main
-          github_token: ${{ secrets.TOKEN }}
+          user-name: "github-actions[bot]"
+          user-email: "github-actions[bot]@users.noreply.github.com"
+          source-directory: "."  # The directory containing files to push
+          destination-github-username: "initcyber"
+          destination-repository-name: "homelab"
+          target-branch: main
