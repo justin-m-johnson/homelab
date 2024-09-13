@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - name: Checkout Private Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         repository: initcyber/homelab_priv
         token: ${{ secrets.TOKEN }}  # Use PAT with read access to the private repository
