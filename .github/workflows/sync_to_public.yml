@@ -21,8 +21,8 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.TOKEN }}
         with:
-          user-name: "github-actions[bot]"
-          user-email: "github-actions[bot]@users.noreply.github.com"
+          user-name: "initcyber"
+          user-email: "justin@initcyber.com"
           source-directory: "."  # The directory containing files to push
           destination-github-username: "initcyber"
           destination-repository-name: "homelab"
