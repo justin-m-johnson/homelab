@@ -1,0 +1,6 @@
+---
+
+prometheus_client_apt_packages:
+  - "prometheus-node-exporter"
+  # - "prometheus-postgres-exporter"
+  # - "prometheus-nginx-exporter"

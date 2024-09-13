@@ -1,0 +1,5 @@
+---
+
+- name: restart uwsgi
+  systemd: name="uwsgi-app@hgweb.service" enabled="yes" daemon_reload="yes" state="restarted"
+  become: yes

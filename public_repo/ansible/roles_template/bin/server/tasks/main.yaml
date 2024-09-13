@@ -1,0 +1,24 @@
+---
+
+- name: add bin user
+  become: yes
+  user: name="{{bin_user}}" shell="/bin/false" system="yes"
+
+- name: install bin binary
+  become: yes
+  get_url:
+    url: "{{bin_url}}"
+    dest: "/usr/local/bin/bin"
+    mode: "0755"
+  notify: restart service
+
+- name: install systemd service
+  become: yes
+  template:
+    src: "bin@.service.j2"
+    dest: "/lib/systemd/system/bin@.service"
+  notify: restart service
+
+- name: ensure service is started
+  become: yes
+  systemd: name="bin@{{bin_port}}.service" enabled="yes" state="started"

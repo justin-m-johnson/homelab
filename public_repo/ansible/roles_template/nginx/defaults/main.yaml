@@ -1,0 +1,7 @@
+---
+
+nginx_conf_src: "files/{{nginx_server_name}}/nginx.conf.j2"
+nginx_root_src: "files/{{nginx_server_name}}/root/"
+nginx_root_dest: "/var/www/{{nginx_server_name}}"
+nginx_server_type: "site"
+nginx_root: false

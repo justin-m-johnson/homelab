@@ -1,0 +1,39 @@
+---
+
+- name: add homebridge apt key
+  become: yes
+  get_url:
+    url: "https://repo.homebridge.io/KEY.gpg"
+    dest: "/etc/apt/trusted.gpg.d/homebridge.asc"
+    mode: "0644"
+
+- name: add homebridge apt repo
+  become: yes
+  apt_repository: repo="deb [signed-by=/etc/apt/trusted.gpg.d/homebridge.asc] https://repo.homebridge.io stable main"
+
+- name: apt install homebridge
+  become: yes
+  apt: name="homebridge"
+  notify: restart homebridge service
+
+- name: install homebridge apt deps
+  become: yes
+  apt: name="{{homebridge_apt_packages}}"
+  notify: restart homebridge service
+
+# - name: install platform accessories
+#   become: yes
+#   npm: name="{{item}}" global="yes"
+#   loop: "{{homebridge_npm_packages}}"
+#   notify: restart homebridge service
+
+# - name: configure homebridge
+#   become: yes
+#   template:
+#     src: "{{homebridge_config_template}}"
+#     dest: "{{homebridge_dir}}/config.json"
+#   notify: restart homebridge service
+
+- name: ensure homebridge is started
+  become: yes
+  systemd: name="homebridge.service" enabled="yes" state="started"

@@ -1,0 +1,18 @@
+---
+
+- name: create minecraft geyser plugin dir
+  become: yes
+  file:
+    path: "{{minecraft_dir}}/geyser"
+    owner: "{{minecraft_user}}"
+    group: "{{minecraft_user}}"
+    mode: "0755"
+    state: "directory"
+
+- name: download geyser
+  become: yes
+  get_url:
+    url: "{{minecraft_geyser_url}}"
+    dest: "{{minecraft_dir}}/plugins/geyser.jar"
+    mode: "0755"
+  notify: restart minecraft

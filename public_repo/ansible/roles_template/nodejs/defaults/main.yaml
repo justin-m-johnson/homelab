@@ -1,0 +1,6 @@
+---
+
+nodejs_version: "v20.11.0"
+nodejs_arch: "{{ansible_architecture}}"
+nodejs_dir: "node-{{nodejs_version}}-{{ansible_system | lower}}-{{nodejs_arch}}"
+nodejs_src: "https://nodejs.org/dist/{{nodejs_version}}/{{nodejs_dir}}.tar.xz"

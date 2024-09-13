@@ -1,0 +1,9 @@
+[Unit]
+Description=Dendrite s3 backup for instance "%I"
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/dendrite-s3-backup.sh %i
+
+[Install]
+WantedBy=aws-s3-backup.target

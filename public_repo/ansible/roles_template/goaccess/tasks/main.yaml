@@ -1,0 +1,17 @@
+---
+
+- name: apt install goaccess
+  become: yes
+  apt: name="goaccess"
+
+- name: install systemd timer and service
+  become: yes
+  template: src="goaccess.{{item}}.j2" dest="/lib/systemd/system/goaccess.{{item}}"
+  loop:
+    - "timer"
+    - "service"
+  notify: daemon reload
+
+- name: ensure timer is started
+  become: yes
+  systemd: name="goaccess.timer" enabled="yes" state="started"

@@ -1,0 +1,18 @@
+---
+
+dendrite_user: "dendrite"
+dendrite_old_key: false
+dendrite_registration_disabled: true
+dendrite_registration_secret: ""
+
+dendrite_db_user: "dendrite_{{dendrite_instance}}"
+dendrite_db: "{{dendrite_db_user}}"
+
+dendrite_dir: "/var/dendrite"
+dendrite_port: 8008
+
+dendrite_recaptcha_enable: false
+dendrite_recaptcha_public_key: ""
+dendrite_recaptcha_private_key: ""
+dendrite_recaptcha_bypass_secret: ""
+dendrite_recaptcha_siteverify_api: ""

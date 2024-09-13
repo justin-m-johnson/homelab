@@ -1,0 +1,43 @@
+---
+
+- name: add prometheus user to video group for rpi GPU stats
+  become: yes
+  user: name="prometheus" groups="video" append="yes"
+
+- name: install prometheus rpi-exporter
+  unarchive:
+    src: "{{prometheus_client_rpi_src}}"
+    remote_src: yes
+    dest: "/tmp"
+    creates: "/tmp/{{prometheus_client_rpi_dest}}"
+  notify: restart rpi_exporter
+
+- name: disable GPU temp scraping
+  become: yes
+  lineinfile:
+    path: "/tmp/{{prometheus_client_rpi_dest}}/rpi_exporter.service"
+    regexp: "^ExecStart=/usr/local/bin/rpi_exporter"
+    line: "ExecStart=/usr/local/bin/rpi_exporter --no-collector.gpu"
+  when: not prometheus_client_rpi_collect_gpu_temp
+  changed_when: false
+
+- name: install systemd service for rpi-exporter
+  become: yes
+  copy:
+    src: "/tmp/{{prometheus_client_rpi_dest}}/rpi_exporter.service"
+    remote_src: yes
+    dest: "/lib/systemd/system/rpi_exporter.service"
+  notify: restart rpi_exporter
+
+- name: install rpi-exporter binary
+  become: yes
+  copy:
+    src: "/tmp/{{prometheus_client_rpi_dest}}/rpi_exporter"
+    remote_src: yes
+    dest: "/usr/local/bin/rpi_exporter"
+    mode: "0755"
+  notify: restart rpi_exporter
+
+- name: ensure systemd service is started
+  become: yes
+  systemd: name="rpi_exporter.service" enabled="yes" state="started"

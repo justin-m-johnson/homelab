@@ -1,0 +1,9 @@
+[uwsgi]
+processes = 2
+max-requests = 10240
+max-requests-delta = 1024
+max-worker-lifetime = 604800
+
+chdir = {{mercurial_uwsgi_root}}
+wsgi-file = hgweb.wsgi
+plugins = python3

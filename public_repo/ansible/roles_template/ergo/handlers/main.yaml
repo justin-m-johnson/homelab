@@ -1,0 +1,9 @@
+---
+
+- name: restart ergo
+  become: yes
+  systemd: name="ergo.service" state="restarted" daemon_reload="yes"
+
+- name: reload ergo
+  become: yes
+  systemd: name="ergo.service" state="reloaded"

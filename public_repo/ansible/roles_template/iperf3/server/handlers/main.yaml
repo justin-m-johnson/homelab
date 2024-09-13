@@ -1,0 +1,5 @@
+---
+
+- name: restart iperf3
+  become: yes
+  systemd: name="iperf3.service" state="restarted" daemon_reload="yes"

@@ -1,0 +1,43 @@
+name: Mirror to Public Repository
+
+on:
+  push:
+    branches:
+      - main  # Or specify the branch you want to track
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight, adjust as needed
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Private Repo
+      uses: actions/checkout@v2
+      with:
+        repository: initcyber/homelab_priv
+        token: ${{ secrets.TOKEN }}  # Use PAT with read access to the private repository
+
+    - name: Sync to Public Repo
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+        
+        # Clone the public repository
+        git clone --single-branch --branch main https://github.com/initcyber/homelab.git public_repo
+        cd public_repo
+        
+        # Pull latest changes from remote to avoid conflicts
+        git pull origin main
+        
+        # Copy files from the private repo to the public repo
+        rsync -av --delete --exclude '.git' ../ public_repo/
+        
+        # Check for changes and push if there are any
+        git add .
+        if git diff-index --quiet HEAD; then
+          echo "No changes detected"
+        else
+          git commit -m "Mirror update from private repo"
+          git push https://${{ secrets.TOKEN }}@github.com/initcyber/homelab.git main
+        fi

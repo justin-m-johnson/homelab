@@ -1,0 +1,21 @@
+---
+
+- name: add octoprint user
+  become: yes
+  user: name="octoprint" groups="{{octoprint_groups}}" home="/opt/octoprint" system="yes"
+
+- name: pip install octoprint
+  become: yes
+  pip: name="octoprint" executable="pip3"
+  notify: restart octoprint
+
+- name: install octoprint systemd service
+  become: yes
+  copy:
+    src: "octoprint.service"
+    dest: "/lib/systemd/system/octoprint.service"
+  notify: restart octoprint
+
+- name: ensure octoprint service is started
+  become: yes
+  systemd: name="octoprint.service" enabled="yes"

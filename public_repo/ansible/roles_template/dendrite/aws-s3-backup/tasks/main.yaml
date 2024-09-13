@@ -1,0 +1,27 @@
+---
+
+- name: create s3 backup shell script
+  become: yes
+  copy:
+    src: "dendrite-s3-backup.sh"
+    dest: "/usr/local/bin/dendrite-s3-backup.sh"
+    mode: "0755"
+
+- name: create s3 backup lifesycle json file
+  become: yes
+  copy:
+    src: "dendrite-s3-backup-lifecycle.json"
+    dest: "/usr/local/share/dendrite-s3-backup-lifecycle.json"
+    mode: "0755"
+
+- name: configure s3 backup systemd service
+  become: yes
+  copy:
+    src: "dendrite-s3-backup@.service"
+    dest: "/lib/systemd/system/dendrite-s3-backup@.service"
+    mode: "0644"
+  notify: restart dendrite instance s3 backup
+
+- name: ensure s3 backup is enabled
+  become: yes
+  systemd: name="dendrite-s3-backup@{{dendrite_instance}}.service" enabled="yes"

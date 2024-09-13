@@ -1,0 +1,5 @@
+---
+
+- name: restart miniflux service
+  become: yes
+  systemd: name="miniflux.service" state="restarted" daemon_reload="yes"

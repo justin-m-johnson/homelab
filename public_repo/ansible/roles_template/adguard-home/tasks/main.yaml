@@ -1,0 +1,55 @@
+---
+
+- name: unarchive adguard home
+  become: yes
+  unarchive:
+    remote_src: yes
+    src: "{{adguard_home_tar}}"
+    dest: "/tmp/"
+    creates: "/tmp/AdGuardHome/"
+    owner: "root"
+    group: "root"
+
+- name: install adguard home binary
+  become: yes
+  copy:
+    src: "/tmp/AdGuardHome/AdGuardHome"
+    dest: "/usr/local/bin/"
+    remote_src: yes
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  notify: restart adguard home
+
+- name: create dirs
+  become: yes
+  file:
+    path: "{{item}}"
+    state: "directory"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  loop:
+    - "/etc/AdGuardHome"
+    - "{{adguard_home_data_dir}}"
+  notify: restart adguard home
+
+- name: configure adguard home service
+  become: yes
+  template: src="AdGuardHome.service.j2" dest="/etc/systemd/system/AdGuardHome.service"
+  notify: restart adguard home
+
+- name: configure adguard home
+  become: yes
+  template: src="AdGuardHome.yaml.j2" dest="/etc/AdGuardHome/AdGuardHome.yaml"
+  notify: restart adguard home
+
+- include: enable-dns-bypass.yaml
+  when: adguard_dns_bypass
+
+- include: disable-dns-bypass.yaml
+  when: not adguard_dns_bypass
+
+- name: ensure adguard home is started
+  become: yes
+  systemd: name="AdGuardHome.service" enabled="yes" state="started"

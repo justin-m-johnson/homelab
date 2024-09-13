@@ -1,0 +1,6 @@
+---
+
+octoprint_groups:
+  - "tty"
+  - "dialout"
+  - "video"

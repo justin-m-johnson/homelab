@@ -1,0 +1,29 @@
+---
+
+- name: install prometheus node exporter
+  become: yes
+  apt: name="prometheus-node-exporter"
+
+- name: ensure prometheus node exporter is started
+  become: yes
+  systemd: name="prometheus-node-exporter.service" enabled="yes" state="started"
+
+#   # Nginx
+# - name: check if running nginx
+#   stat: path="/etc/nginx/"
+#   register: stat_nginx_conf
+
+# - name: install prometheus-nginx-exporter
+#   become: yes
+#   apt: name="prometheus-nginx-exporter"
+#   when: stat_nginx_conf.stat.exists
+
+#   # PostgreSQL
+# - name: check if running postgresql
+#   stat: path="/etc/postgresql/"
+#   register: stat_postgresql_conf
+
+# - name: install prometheus-postgresql-exporter
+#   become: yes
+#   apt: name="prometheus-postgres-exporter"
+#   when: stat_postgresql_conf.stat.exists

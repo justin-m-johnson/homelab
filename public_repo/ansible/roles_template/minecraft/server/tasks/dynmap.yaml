@@ -1,0 +1,24 @@
+---
+
+- name: create minecraft dynmap plugin dir
+  become: yes
+  file:
+    path: "{{minecraft_dir}}/dynmap"
+    owner: "{{minecraft_user}}"
+    group: "{{minecraft_user}}"
+    mode: "0755"
+    state: "directory"
+
+- name: download dynmap
+  become: yes
+  get_url:
+    url: "{{minecraft_dynmap_url}}"
+    dest: "{{minecraft_dir}}/plugins/dynmap.jar"
+    mode: "0755"
+  notify: restart minecraft
+
+- name: configure dynmap
+  become: yes
+  template:
+    src: "configuration.txt.j2"
+    dest: "{{minecraft_dir}}/plugins/dynmap/configuration.txt"

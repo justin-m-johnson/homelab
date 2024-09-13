@@ -1,0 +1,3 @@
+nessustest.py
+/Nessus/data/*
+!/Nessus/data/sample.csv

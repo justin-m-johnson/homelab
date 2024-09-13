@@ -1,0 +1,26 @@
+---
+
+- name: create writefreely s3 backup shell script
+  become: yes
+  copy:
+    src: "writefreely-s3-backup.sh"
+    dest: "/usr/local/bin/writefreely-s3-backup.sh"
+    mode: "0755"
+
+- name: create s3 backup lifesycle json file
+  become: yes
+  copy:
+    src: "writefreely-s3-backup-lifecycle.json"
+    dest: "/usr/local/share/writefreely-s3-backup-lifecycle.json"
+    mode: "0755"
+
+- name: configure writefreely s3 backup systemd service
+  become: yes
+  template:
+    src: "writefreely-s3-backup@.service.j2"
+    dest: "/lib/systemd/system/writefreely-s3-backup@{{writefreely_s3_backup_bucket}}.service"
+  notify: reload s3 backup service
+
+- name: ensure writefreely s3 backup service is started
+  become: yes
+  systemd: name="writefreely-s3-backup@{{writefreely_s3_backup_bucket}}.service" enabled="yes"

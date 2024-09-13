@@ -1,0 +1,17 @@
+---
+
+- name: apt install iperf3
+  become: yes
+  apt: name="iperf3"
+
+- name: install iperf3 service
+  become: yes
+  copy:
+    src: "iperf3.service"
+    dest: "/lib/systemd/system/iperf3.service"
+    mode: "0644"
+  notify: restart iperf3
+
+- name: ensure iperf3 is started
+  become: yes
+  systemd: service="iperf3.service" enabled="yes" state="started" daemon_reload="yes"

@@ -1,0 +1,5 @@
+---
+
+- name: daemon reload
+  systemd: name="goaccess.timer" enabled="yes" daemon_reload="yes"
+  become: yes

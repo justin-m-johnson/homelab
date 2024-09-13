@@ -1,0 +1,19 @@
+---
+
+rpi_base_enable_wifi: True
+rpi_base_timezone: "America/Chicago"
+rpi_base_log_size: "100M"
+rpi_base_apt_packages:
+  - "mosh"
+  - "avahi-daemon"
+  - "log2ram"
+  - "fail2ban"
+  - "unattended-upgrades"
+  - "emacs-nox"
+  - "htop"
+  - "jq"
+  - "tree"
+  - "iperf3"
+  - "python3-pip"
+  - "unzip"
+  - "apt-transport-https"

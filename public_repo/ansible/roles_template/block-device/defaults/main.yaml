@@ -1,0 +1,7 @@
+---
+
+block_device_user: "{{ansible_user}}"
+block_device_group: "{{ansible_group}}"
+block_device_mode: "0755"
+block_device_umask: "0022"
+block_device_opts: "defaults"

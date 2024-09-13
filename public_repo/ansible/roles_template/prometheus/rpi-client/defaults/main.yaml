@@ -1,0 +1,10 @@
+---
+
+# https://github.com/lukasmalkmus/rpi_exporter/releases
+prometheus_client_rpi_exporter_version: "0.8.0"
+prometheus_client_arch: "{{ansible_architecture}}"
+
+prometheus_client_rpi_src: "https://github.com/lukasmalkmus/rpi_exporter/releases/download/v{{prometheus_client_rpi_exporter_version}}/rpi_exporter-{{prometheus_client_rpi_exporter_version}}.linux-{{prometheus_client_arch}}.tar.gz"
+prometheus_client_rpi_dest: "rpi_exporter-{{prometheus_client_rpi_exporter_version}}.linux-{{prometheus_client_arch}}"
+
+prometheus_client_rpi_collect_gpu_temp: true

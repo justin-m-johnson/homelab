@@ -1,0 +1,14 @@
+---
+
+relayer_version: "2.1.13"
+# https://github.com/fiatjaf/relayer/releases
+relayer_tar: "https://github.com/fiatjaf/relayer/archive/refs/tags/v{{relayer_version}}.tar.gz"
+relayer_build_dir: "/tmp/relayer-{{relayer_version}}"
+relayer_srv_dir: "/var/www/build/"
+
+relayer_main_src: "{{relayer_build_dir}}/examples/whitelisted/main.go"
+relayer_handler_src: "{{relayer_build_dir}}/handlers.go"
+relayer_name: "Relayer"
+relayer_description: ""
+relayer_admin_pubkey: ""
+relayer_admin_contact: ""

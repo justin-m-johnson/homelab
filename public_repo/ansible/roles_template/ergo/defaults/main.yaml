@@ -1,0 +1,10 @@
+---
+
+ergo_user: "ergo"
+# https://github.com/ergochat/ergo/releases/
+ergo_version: "2.14.0"
+ergo_arch: "arm64"
+ergo_tar_name: "ergo-{{ergo_version}}-linux-{{ergo_arch}}"
+ergo_tar: "{{ergo_tar_name}}.tar.gz"
+ergo_url: "https://github.com/ergochat/ergo/releases/download/v{{ergo_version}}/{{ergo_tar}}"
+ergo_force_nick_equals_account: false

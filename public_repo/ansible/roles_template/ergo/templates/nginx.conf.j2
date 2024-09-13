@@ -1,0 +1,8 @@
+server {
+      listen 6697 ssl;
+      proxy_pass unix:/var/ergo/socket;
+      proxy_protocol on;
+
+      ssl_certificate {{nginx_ssl_cert}};
+      ssl_certificate_key {{nginx_ssl_privkey}};
+}

@@ -1,0 +1,37 @@
+---
+
+- name: install cargo
+  become: yes
+  apt: name="cargo"
+
+- name: unarchive bin
+  unarchive:
+    remote_src: yes
+    src: "{{bin_tar}}"
+    dest: "/tmp/"
+    creates: "{{bin_build_dir}}"
+
+- name: check if bin build exists
+  stat:
+    path: "{{bin_build_dir}}/target/release/bin"
+  register: build_file
+
+- name: build bin
+  command: "cargo build --release"
+  args:
+    chdir: "{{bin_build_dir}}"
+  when: not build_file.stat.exists
+
+- name: create build server dir
+  become: yes
+  file:
+    path: "{{bin_srv_dir}}"
+    mode: "0755"
+    state: "directory"
+
+- name: copy bin to build server dir
+  become: yes
+  copy:
+    remote_src: yes
+    src: "{{bin_build_dir}}/target/release/bin"
+    dest: "{{bin_srv_dir}}/bin"

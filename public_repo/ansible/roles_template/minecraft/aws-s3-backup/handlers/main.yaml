@@ -1,0 +1,5 @@
+---
+
+- name: reload s3 backup service
+  systemd: name="minecraft-s3-backup@{{minecraft_s3_backup_world_name}}.service" enabled="yes" daemon_reload="yes"
+  become: yes

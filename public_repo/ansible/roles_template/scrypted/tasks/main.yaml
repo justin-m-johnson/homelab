@@ -1,0 +1,46 @@
+---
+
+- name: add scrypted user
+  become: yes
+  user: name="scrypted" shell="/bin/false" system="yes" create_home="no" groups="docker"
+
+- name: install docker apt packages
+  become: yes
+  apt: name="docker-ce"
+
+- name: make scrypted dir
+  become: yes
+  file:
+    path: "{{item}}"
+    state: "directory"
+    owner: "scrypted"
+    group: "scrypted"
+    mode: "0755"
+  loop:
+    - "{{scrypted_dir}}"
+    - "{{scrypted_dir}}/volume"
+
+- name: configure scrypted docker compose
+  become: yes
+  template:
+    src: "docker-compose.yml.j2"
+    dest: "{{scrypted_dir}}/docker-compose.yml"
+    owner: "scrypted"
+    group: "scrypted"
+    mode: "0600"
+
+- name: docker compose pull
+  become: yes
+  become_user: "scrypted"
+  command: "docker compose pull"
+  args:
+    chdir: "{{scrypted_dir}}"
+  changed_when: false
+
+- name: docker compose
+  become: yes
+  become_user: "scrypted"
+  command: "docker compose up -d"
+  args:
+    chdir: "{{scrypted_dir}}"
+  changed_when: false

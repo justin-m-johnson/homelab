@@ -1,0 +1,106 @@
+---
+
+- name: add minecraft user
+  become: yes
+  user: name="{{minecraft_user}}" home="{{minecraft_parent_dir}}/minecraft" shell="/bin/false" system="yes"
+
+- name: install java
+  become: yes
+  apt: name="openjdk-17-jre-headless"
+
+- name: create minecraft dir
+  become: yes
+  file:
+    path: "{{minecraft_dir}}"
+    owner: "{{minecraft_user}}"
+    group: "{{minecraft_user}}"
+    mode: "0755"
+    state: "directory"
+
+- name: download minecraft
+  become: yes
+  get_url:
+    url: "{{minecraft_url}}"
+    dest: "{{minecraft_dir}}/server.jar"
+    mode: "0755"
+  notify: restart minecraft
+
+- name: configure minecraft eula
+  become: yes
+  copy:
+    src: "eula.txt"
+    dest: "{{minecraft_dir}}/eula.txt"
+    owner: "{{minecraft_user}}"
+    group: "{{minecraft_user}}"
+  notify: restart minecraft
+
+- name: configure minecraft ops
+  become: yes
+  copy:
+    src: "{{minecraft_ops_file}}"
+    dest: "{{minecraft_dir}}/ops.json"
+    owner: "{{minecraft_user}}"
+    group: "{{minecraft_user}}"
+  when: minecraft_ops_file is defined
+  notify: restart minecraft
+
+- name: configure minecraft whitelist
+  become: yes
+  copy:
+    src: "{{minecraft_whitelist_file}}"
+    dest: "{{minecraft_dir}}/whitelist.json"
+    owner: "{{minecraft_user}}"
+    group: "{{minecraft_user}}"
+  when: minecraft_whitelist_file is defined and minecraft_whitelist == "true"
+  notify: restart minecraft
+
+- name: create minecraft plugins dir
+  become: yes
+  file:
+    path: "{{minecraft_dir}}/plugins"
+    owner: "{{minecraft_user}}"
+    group: "{{minecraft_user}}"
+    mode: "0755"
+    state: "directory"
+
+- name: install plugins
+  include_tasks: "{{item}}.yaml"
+  loop: "{{minecreat_plugins_enabled}}"
+
+- name: create server.properties
+  become: yes
+  file:
+    path: "{{minecraft_dir}}/server.properties"
+    state: "touch"
+    access_time: "preserve"
+    modification_time: "preserve"
+    owner: "{{minecraft_user}}"
+    group: "{{minecraft_user}}"
+
+- name: configure server.properties
+  become: yes
+  lineinfile:
+    path: "{{minecraft_dir}}/server.properties"
+    regexp: "^{{item.key}}="
+    line: "{{item.key}}={{item.value}}"
+  notify: restart minecraft
+  loop:
+    - {key: "motd", value: "{{minecraft_motd}}"}
+    - {key: "level-name", value: "{{minecraft_world_name}}"}
+    - {key: "level-seed", value: "{{minecraft_seed}}"}
+    - {key: "difficulty", value: "{{minecraft_difficulty}}"}
+    - {key: "white-list", value: "{{minecraft_whitelist}}"}
+    - {key: "enforce-whitelist", value: "{{minecraft_whitelist}}"}
+    - {key: "view-distance", value: "{{minecraft_view_distance}}"}
+    - {key: "snooper-enabled", value: "false"}
+
+- name: install systemd service
+  become: yes
+  template:
+    src: "minecraft@.service.j2"
+    dest: "/lib/systemd/system/minecraft@.service"
+  notify: restart minecraft
+
+- name: ensure service is started
+  become: yes
+  systemd: name="minecraft@{{minecraft_world_name}}.service" enabled="yes" state="started"

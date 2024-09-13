@@ -1,0 +1,26 @@
+VirtualHost "{{prosody_vhost}}"
+
+storage = "sql"
+sql = {
+    driver = "PostgreSQL";
+    database = "{{prosody_db}}";
+    host = "localhost";
+    port = {{prosody_db_port}};
+    username = "{{prosody_db}}";
+    password = "{{prosody_db_pass}}";
+}
+
+------ Components ------
+-- You can specify components to add hosts that provide special services,
+-- like multi-user conferences, and transports.
+-- For more information on components, see http://prosody.im/doc/components
+
+-- Set up a MUC (multi-user chat) room server on conference.example.com:
+--Component "conference.example.com" "muc"
+
+-- Set up a SOCKS5 bytestream proxy for server-proxied file transfers:
+--Component "proxy.example.com" "proxy65"
+
+---Set up an external component (default component port is 5347)
+--Component "gateway.example.com"
+--	component_secret = "password"

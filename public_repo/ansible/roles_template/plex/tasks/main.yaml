@@ -1,0 +1,28 @@
+---
+
+# https://forums.plex.tv/t/read-me-first-about-server-armv7-and-armv8-ubuntu-debian/226567
+
+- name: add plex apt key
+  become: yes
+  get_url:
+    url: "https://downloads.plex.tv/plex-keys/PlexSign.key"
+    dest: "/etc/apt/trusted.gpg.d/plex.asc"
+    mode: "0644"
+
+- name: add plex apt repo
+  become: yes
+  apt_repository: repo="deb [signed-by=/etc/apt/trusted.gpg.d/plex.asc] https://downloads.plex.tv/repo/deb public main"
+  notify: restart plex service
+
+- name: update apt package cache
+  become: yes
+  apt: upgrade="dist" update_cache="yes" cache_valid_time="3600"
+
+- name: install plex server
+  become: yes
+  apt: name="plexmediaserver"
+  notify: restart plex service
+
+- name: ensure plex service is running
+  become: yes
+  systemd: name="plexmediaserver.service" state="started" daemon_reload="yes"

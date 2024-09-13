@@ -1,0 +1,26 @@
+---
+
+- name: create mercurial s3 backup shell script
+  become: yes
+  copy:
+    src: "mercurial-s3-backup.sh"
+    dest: "/usr/local/bin/mercurial-s3-backup.sh"
+    mode: "0755"
+
+- name: create s3 backup lifesycle json file
+  become: yes
+  copy:
+    src: "mercurial-s3-backup-lifecycle.json"
+    dest: "/usr/local/share/mercurial-s3-backup-lifecycle.json"
+    mode: "0755"
+
+- name: configure mercurial s3 backup systemd service
+  become: yes
+  template:
+    src: "mercurial-s3-backup@.service.j2"
+    dest: "/lib/systemd/system/mercurial-s3-backup@{{mercurial_s3_backup_bucket}}.service"
+  notify: reload s3 backup service
+
+- name: ensure mercurial s3 backup service is started
+  become: yes
+  systemd: name="mercurial-s3-backup@{{mercurial_s3_backup_bucket}}.service" enabled="yes"

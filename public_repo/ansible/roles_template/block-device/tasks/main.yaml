@@ -1,0 +1,17 @@
+---
+
+- name: create mount point
+  become: yes
+  file:
+    path:  "{{block_device_mount_point}}"
+    mode:  "{{block_device_mode}}"
+    state: "directory"
+
+- name: mount block device
+  become: yes
+  mount:
+    path:   "{{block_device_mount_point}}"
+    src:    "{{block_device_uuid}}"
+    fstype: "{{block_device_fstype}}"
+    opts:   "{{block_device_opts}}"
+    state:  "mounted"

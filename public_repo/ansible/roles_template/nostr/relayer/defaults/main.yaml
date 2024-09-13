@@ -1,0 +1,9 @@
+---
+
+# https://github.com/fiatjaf/relayer/releases
+relayer_user: "relayer"
+relayer_pubkey: ""
+relayer_port: "7447"
+relayer_db: "relayer"
+relayer_db_user: "relayer"
+relayer_db_pass: "relayer"

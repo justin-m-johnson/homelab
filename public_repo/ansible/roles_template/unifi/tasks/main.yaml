@@ -1,0 +1,39 @@
+---
+
+- name: add mongo apt key
+  become: yes
+  get_url:
+    url: "https://pgp.mongodb.com/server-3.6.asc"
+    dest: "/etc/apt/trusted.gpg.d/mongo-3.6.asc"
+    mode: "0644"
+
+- name: add mongo apt repo
+  become: yes
+  apt_repository: repo="deb [arch=arm64 signed-by=/etc/apt/trusted.gpg.d/mongo-3.6.asc] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.6 multiverse"
+
+- name: install libssl1.1 deb
+  become: yes
+  apt: deb="http://ports.ubuntu.com/pool/main/o/openssl1.0/libssl1.0.0_1.0.2n-1ubuntu5_{{arch}}.deb"
+
+# To accept codename change:
+# 1. sudo apt update
+# 2. sudo apt-get upgrade -y
+
+- name: add unifi apt key
+  become: yes
+  get_url:
+    url: "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x06e85760c0a52c50"
+    dest: "/etc/apt/trusted.gpg.d/unifi.asc"
+    mode: "0644"
+
+- name: add unifi apt repo
+  become: yes
+  apt_repository: repo="deb [arch=armhf signed-by=/etc/apt/trusted.gpg.d/unifi.asc] https://www.ui.com/downloads/unifi/debian unifi-7.4 ubiquiti"
+
+- name: update apt package cache
+  become: yes
+  apt: upgrade="dist" update_cache="yes" cache_valid_time="3600"
+
+- name: install unifi apt packages
+  become: yes
+  apt: name="{{unifi_apt_packages}}"

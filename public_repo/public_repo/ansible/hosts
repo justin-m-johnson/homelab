@@ -1,0 +1,54 @@
+[proxmox]
+172.16.10.2 ansible_ssh_user=root
+172.16.10.3 ansible_ssh_user=root
+172.16.10.4 ansible_ssh_user=root
+172.16.10.5 ansible_ssh_user=root
+
+[enterprise]
+172.16.10.2 ansible_ssh_user=root
+
+[discovery]
+172.16.10.3 ansible_ssh_user=root
+
+[atlantis]
+172.16.10.4 ansible_ssh_user=root
+
+[endeavour]
+172.16.10.5 ansible_ssh_user=root
+
+[oracle-nodes]
+100.126.205.128 #oracle-node1
+
+; [oracle-nodes:vars]
+; ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q ubuntu@100.114.16.19"'
+
+[ops]
+172.16.10.8
+
+[dev]
+172.16.10.9
+
+[omv]
+172.16.10.10
+
+[plex]
+172.16.10.11
+
+[prod1]
+172.16.10.12
+
+[splunk]
+172.16.10.20
+
+[wazuh]
+172.16.10.21
+
+[ans-platform]
+172.16.10.40
+
+[git-runners]
+172.16.10.41
+172.16.10.42
+
+[staging1]
+172.16.10.50

@@ -1,0 +1,17 @@
+---
+
+- name: check if resolv.conf exists
+  stat: path="/etc/resolv.conf"
+  register: sym
+
+- name: replace systemd-resolved conf link
+  become: yes
+  file:
+    src:  "../run/systemd/resolve/stub-resolv.conf"
+    dest: "/etc/resolv.conf"
+    state: "link"
+  when: sym.stat.islnk is defined and not sym.stat.islnk
+
+- name: enable systemd-resolved service
+  become: yes
+  systemd: name="systemd-resolved.service" enabled="yes" state="started"

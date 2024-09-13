@@ -1,0 +1,39 @@
+version: "3"
+
+networks:
+  gitea:
+    external: false
+
+services:
+  server:
+    image: gitea/gitea:1.22.1
+    container_name: gitea
+    environment:
+      - USER_UID=114
+      - USER_GID=119
+    restart: always
+    volumes:
+      - ./gitea:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /home/git/.ssh/:/data/git/.ssh # Get SSH key from Home for SSH Shim
+    ports:
+      - "3001:3000"
+      - "127.0.0.1:2222:22" #SSH Shim
+
+  nginx-proxy-manager:
+    image: 'jc21/nginx-proxy-manager:2.11.3' #https://github.com/NginxProxyManager/nginx-proxy-manager/issues/3824
+    container_name: npm
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - npmdata:/data
+      - letsencrypt:/etc/letsencrypt
+volumes:
+  npmdata:
+    external: true
+  letsencrypt:
+    external: true

@@ -1,0 +1,9 @@
+---
+
+- name: reload timer
+  systemd: name="aws-s3-backup.timer" enabled="yes" daemon_reload="yes"
+  become: yes
+
+- name: reload target
+  systemd: name="aws-s3-backup.target" enabled="yes" daemon_reload="yes"
+  become: yes

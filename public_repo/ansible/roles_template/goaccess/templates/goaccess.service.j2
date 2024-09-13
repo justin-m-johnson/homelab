@@ -1,0 +1,10 @@
+[Unit]
+Description=GoAccess
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/goaccess {{goaccess_http_log}} -o {{goaccess_output_dest}} --log-format=COMBINED --no-progress --no-parsing-spinner
+Environment=HOME=/var/run
+
+[Install]
+WantedBy=multi-user.target

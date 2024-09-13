@@ -1,0 +1,87 @@
+---
+
+- name: turn swap off
+  become: yes
+  command: "swapoff -a"
+  changed_when: false
+
+- name: remove swap apt package
+  become: yes
+  apt: state="absent" name="dphys-swapfile"
+
+- name: add log2ram apt key
+  become: yes
+  get_url:
+    url: "https://azlux.fr/repo.gpg.key"
+    dest: "/etc/apt/trusted.gpg.d/log2ram.asc"
+    mode: "0644"
+
+- name: add log2ram apt repo
+  become: yes
+  apt_repository: repo="deb [signed-by=/etc/apt/trusted.gpg.d/log2ram.asc] https://packages.azlux.fr/debian/ buster main"
+
+- name: set timezone
+  become: yes
+  timezone: name="{{rpi_base_timezone}}"
+
+- name: setup wifi
+  become: yes
+  template: src="wpa_supplicant.conf.j2" dest="/etc/wpa_supplicant/wpa_supplicant.conf" mode="0600"
+
+- name: update apt package cache
+  become: yes
+  apt: upgrade="dist" autoremove="yes" autoclean="yes" update_cache="yes" cache_valid_time="3600"
+
+- name: install extra apt packages
+  become: yes
+  apt: name="{{rpi_base_apt_packages}}" state="latest"
+
+- name: configure auto upgrades
+  become: yes
+  copy: src="20auto-upgrades" dest="/etc/apt/apt.conf.d/20auto-upgrades"
+
+- name: configure log2ram disk size
+  become: yes
+  lineinfile:
+    path: "/etc/log2ram.conf"
+    regexp: "^SIZE="
+    line: "SIZE={{rpi_base_log_size}}"
+  notify: restart log2ram service
+
+- name: configure fail2ban
+  become: yes
+  copy: src="jail.local" dest="/etc/fail2ban/jail.local"
+
+- name: add users
+  become: yes
+  user:
+    name: "{{admin_user_name}}"
+    password: "{{admin_user_password}}"
+    groups: "sudo,users"
+    shell: "/bin/bash"
+    append: yes
+
+- name: authorize ssh keys
+  become: yes
+  authorized_key: user="{{item}}" key="https://github.com/{{github_user}}.keys"
+  loop:
+    - "{{admin_user_name}}"
+    - "{{ansible_user}}"
+
+- name: nopasswd sudo for admin user
+  become: yes
+  template:
+    src: "010_admin-nopasswd"
+    dest: "/etc/sudoers.d/010_admin-nopasswd"
+
+- name: disable ssh password login
+  become: yes
+  lineinfile:
+    path: "/etc/ssh/sshd_config"
+    regexp: "^PasswordAuthentication"
+    insertafter: "^#PasswordAuthentication"
+    line: "PasswordAuthentication no"
+
+- name: ensure log2ram service is started
+  become: yes
+  systemd: name="log2ram.service" enabled="yes" state="started"

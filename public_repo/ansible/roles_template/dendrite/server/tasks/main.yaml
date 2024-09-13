@@ -1,0 +1,110 @@
+---
+
+- name: add dendrite user
+  become: yes
+  user: name="{{dendrite_user}}" shell="/bin/false" system="yes"
+
+- name: create unzip dir
+  become: yes
+  file:
+    path: "/tmp/dendrite/"
+    state: "directory"
+    mode: "0755"
+  changed_when: false
+
+- name: unarchive dendrite bins
+  become: yes
+  unarchive:
+    remote_src: yes
+    src: "{{dendrite_tar}}"
+    dest: "/tmp/dendrite/"
+  changed_when: false
+
+- name: install dendrite binary
+  become: yes
+  copy:
+    src: "/tmp/dendrite/{{item.src}}"
+    dest: "/usr/local/bin/{{item.dest}}"
+    remote_src: yes
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  loop:
+    - {"src": "dendrite"                , "dest": "dendrite"}
+    - {"src": "create-account"          , "dest": "dendrite-create-account"}
+    - {"src": "dendrite-upgrade-tests"  , "dest": "dendrite-upgrade-tests"}
+    - {"src": "generate-config"         , "dest": "dendrite-generate-config"}
+    - {"src": "generate-keys"           , "dest": "dendrite-generate-keys"}
+    - {"src": "resolve-state"           , "dest": "dendrite-resolve-state"}
+  notify: restart service
+
+- name: create instance dir
+  become: yes
+  file:
+    path: "{{item}}"
+    state: "directory"
+    owner: "{{dendrite_user}}"
+    group: "{{dendrite_user}}"
+    mode: "0755"
+  notify: restart service
+  loop:
+    - "{{dendrite_dir}}"
+    - "{{dendrite_dir}}/{{dendrite_instance}}"
+
+- name: create instance port symlink
+  become: yes
+  file:
+    src: "{{dendrite_dir}}/{{dendrite_instance}}"
+    dest: "{{dendrite_dir}}/{{dendrite_port}}"
+    state: "link"
+    owner: "{{dendrite_user}}"
+    group: "{{dendrite_user}}"
+    mode: "0755"
+  notify: restart service
+
+- name: install keys
+  become: yes
+  copy:
+    src: "{{item}}"
+    dest: "{{dendrite_dir}}/{{dendrite_instance}}/"
+    owner: "{{dendrite_user}}"
+    group: "{{dendrite_user}}"
+    mode: "0600"
+  loop: "{{dendrite_keys}}"
+
+- name: copy db schema file
+  become: yes
+  template:
+    src: "setup_db.psql.j2"
+    dest: "/tmp/setup_db_dendrite_{{dendrite_instance}}.psql"
+    owner: "postgres"
+    group: "postgres"
+    mode: "0600"
+  changed_when: false
+
+- name: install db schema psql
+  become: yes
+  become_user: "postgres"
+  command: "psql -f /tmp/setup_db_dendrite_{{dendrite_instance}}.psql"
+  changed_when: false
+
+- name: configure dendrite
+  become: yes
+  template:
+    src: "dendrite.yaml.j2"
+    dest: "{{dendrite_dir}}/{{dendrite_instance}}/dendrite.yaml"
+    mode: "0600"
+    owner: "{{dendrite_user}}"
+    group: "{{dendrite_user}}"
+  notify: restart service
+
+- name: install systemd service
+  become: yes
+  template:
+    src: "dendrite@.service.j2"
+    dest: "/lib/systemd/system/dendrite@.service"
+  notify: restart service
+
+- name: ensure service is started
+  become: yes
+  systemd: name="dendrite@{{dendrite_port}}.service" enabled="yes" state="started"

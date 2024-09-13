@@ -1,0 +1,14 @@
+[Unit]
+Description=Octoprint
+After=network.target
+
+[Service]
+Environment="LC_ALL=C.UTF-8"
+Environment="LANG=C.UTF-8"
+User=octoprint
+Group=octoprint
+WorkingDirectory=/opt/octoprint/
+ExecStart=/usr/local/bin/octoprint
+
+[Install]
+WantedBy=multi-user.target

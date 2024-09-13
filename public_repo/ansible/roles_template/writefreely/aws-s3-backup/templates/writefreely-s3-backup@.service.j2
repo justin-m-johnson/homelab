@@ -1,0 +1,9 @@
+[Unit]
+Description=Writefreely s3 backup for "%I"
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/writefreely-s3-backup.sh %i "{{writefreely_s3_backup_dir}}"
+
+[Install]
+WantedBy=aws-s3-backup.target

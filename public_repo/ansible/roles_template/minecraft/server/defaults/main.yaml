@@ -1,0 +1,32 @@
+---
+
+minecraft_user: "minecraft"
+minecraft_parent_dir: "/opt"
+minecraft_motd: "A Minecraft Server"
+minecraft_mem: "2G"
+minecraft_seed: ""
+minecraft_difficulty: "hard"
+minecraft_whitelist: "true"
+minecraft_view_distance: "10"
+minecraft_world_name: "world"
+minecraft_dir: "{{minecraft_parent_dir}}/minecraft/{{minecraft_world_name}}"
+minecraft_url: "https://papermc.io/api/v2/projects/paper/versions/{{minecraft_paper_version}}/builds/{{minecraft_paper_build}}/downloads/paper-{{minecraft_paper_version}}-{{minecraft_paper_build}}.jar"
+
+# https://papermc.io/downloads/paper
+# paper is a spigot derivative
+minecraft_paper_version: "1.20.6"
+minecraft_paper_build: "148"
+
+minecreat_plugins_enabled:
+  - "dynmap"
+  - "geyser"
+
+# https://www.reddit.com/r/Dynmap/
+# http://dynmap.us/builds/dynmap/?C=M;O=D
+minecraft_dynmap_version: "3.7-beta-6"
+minecraft_dynmap_url: "http://dynmap.us/builds/dynmap/Dynmap-{{minecraft_dynmap_version}}-spigot.jar"
+
+# https://geysermc.org
+# https://ci.opencollab.dev/job/GeyserMC/view/default/builds
+minecraft_geyser_version: "1538"
+minecraft_geyser_url: "https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/master/{{minecraft_geyser_version}}/artifact/bootstrap/spigot/build/libs/Geyser-Spigot.jar"

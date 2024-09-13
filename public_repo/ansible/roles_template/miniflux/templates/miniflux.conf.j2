@@ -1,0 +1,10 @@
+# See https://miniflux.app/docs/
+
+LISTEN_ADDR={{miniflux_listen}}
+
+DATABASE_URL=user=miniflux password={{miniflux_db_pass}} dbname=miniflux sslmode=disable
+RUN_MIGRATIONS=1
+
+CREATE_ADMIN=1
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD={{miniflux_admin_pass}}

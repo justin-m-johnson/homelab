@@ -1,0 +1,80 @@
+---
+
+- name: add grafana apt key
+  become: yes
+  get_url:
+    url: "https://apt.grafana.com/gpg.key"
+    dest: "/etc/apt/trusted.gpg.d/grafana.asc"
+    mode: "0644"
+
+- name: add grafana apt repo
+  become: yes
+  apt_repository: repo="deb [signed-by=/etc/apt/trusted.gpg.d/grafana.asc] https://apt.grafana.com stable main"
+
+- name: install prometheus and grafana
+  become: yes
+  apt: name="{{prometheus_server_apt_packages}}" state="latest"
+
+- name: make prometheus data dir
+  become: yes
+  file:
+    path: "{{prometheus_server_data_dir}}"
+    state: "directory"
+    owner: "prometheus"
+    group: "prometheus"
+    recurse: yes
+  notify: restart prometheus service
+
+- name: configure prometheus data dir
+  become: yes
+  lineinfile:
+    path: "/etc/default/prometheus"
+    regexp: '^ARGS="'
+    line: 'ARGS="--storage.tsdb.path={{prometheus_server_data_dir}}"'
+  notify: restart prometheus service
+
+- name: configure prometheus
+  become: yes
+  template:
+    src: "{{prometheus_server_conf}}"
+    dest: "/etc/prometheus/prometheus.yml"
+  notify:
+    - restart prometheus service
+    - restart grafana service
+
+- name: ensure grafana is started
+  become: yes
+  systemd: name="grafana-server.service" enabled="yes" state="started"
+
+### TODO: This is broken and not sure why. Started having errors one day. I
+### supect bug with anisble module
+# - name: install grafana prometheus data source
+#   become: yes
+#   grafana_datasource:
+#     name: "Prometheus"
+#     ds_type: "prometheus"
+#     ds_url: "http://localhost:9090"
+#     grafana_url: "http://localhost:3000"
+#     is_default: yes
+#   changed_when: false
+
+# - name: install grafana plugins
+#   become: yes
+#   grafana_plugin: name="{{item}}"
+#   loop: "{{prometheus_server_grafana_plugins}}"
+
+- name: copy dashboards to target
+  become: yes
+  copy:
+    src: "{{prometheus_server_grafana_dashboard_src}}/{{item}}"
+    dest: "/tmp/"
+    mode: "0640"
+  loop: "{{prometheus_server_grafana_dashboards}}"
+
+- name: install grafana dashboards
+  become: yes
+  grafana_dashboard:
+    grafana_url: "http://localhost:3000"
+    path: "/tmp/{{item}}"
+    overwrite: yes
+  loop: "{{prometheus_server_grafana_dashboards}}"

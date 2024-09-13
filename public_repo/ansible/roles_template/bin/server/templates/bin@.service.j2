@@ -1,0 +1,11 @@
+[Unit]
+Description=Bin pastebin server bound on port %i
+After=syslog.target network.target
+
+[Service]
+ExecStart=/usr/local/bin/bin 127.0.0.1:%i --buffer-size 10 --max-paste-size 16000
+Restart=always
+User={{bin_user}}
+
+[Install]
+WantedBy=multi-user.target

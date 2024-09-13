@@ -1,0 +1,23 @@
+---
+
+- name: download and unarchive nodejs
+  become: yes
+  unarchive:
+    src: "{{nodejs_src}}"
+    dest: "/opt/"
+    remote_src: yes
+    creates: "/opt/{{nodejs_dir}}"
+    owner: "root"
+    group: "root"
+
+# sudo update-alternatives --install "/usr/bin/node" "node" "/opt/node/bin/node" 1
+- name: update node alterantives
+  become: yes
+  alternatives:
+    link: "/usr/bin/{{item}}"
+    name: "{{item}}"
+    path: "/opt/{{nodejs_dir}}/bin/{{item}}"
+    priority: "1"
+  loop:
+    - "node"
+    - "npm"

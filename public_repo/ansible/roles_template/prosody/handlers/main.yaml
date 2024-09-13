@@ -1,0 +1,5 @@
+---
+
+- name: restart prosody
+  become: yes
+  systemd: name="prosody.service" state="restarted" daemon_reload="yes"

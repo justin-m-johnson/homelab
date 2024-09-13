@@ -1,0 +1,12 @@
+---
+
+- name: check if running apt-cacher server
+  stat: path="/etc/apt-cacher-ng/acng.conf"
+  register: stat_server_conf
+
+- name: configure apt-cacher proxy
+  become: yes
+  template:
+    src: "02proxy.j2"
+    dest: "/etc/apt/apt.conf.d/02proxy"
+  when: not stat_server_conf.stat.exists
