@@ -20,5 +20,5 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         with:
-          source-repo: "git@github.com:your-org/private-repo.git"
-          destination-repo: "git@github.com:your-org/public-repo.git"
+          source-repo: "git@github.com:initcyber/homelab-priv.git"
+          destination-repo: "git@github.com:initcyber/homelab.git"
