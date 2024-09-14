@@ -1,0 +1,18 @@
+version: "3"
+services:
+  nginx-proxy-manager:
+    image: 'jc21/nginx-proxy-manager:2.11.3' #https://github.com/NginxProxyManager/nginx-proxy-manager/issues/3824
+    container_name: npm
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - npmdata:/data
+      - letsencrypt:/etc/letsencrypt
+volumes:
+  npmdata:
+    external: true
+  letsencrypt:
+    external: true
