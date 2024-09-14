@@ -28,7 +28,7 @@ jobs:
         git clone --single-branch --branch main https://github.com/initcyber/homelab public_repo
         
         # Sync contents of private repo to public repo, excluding certain directories
-        rsync -av --delete --exclude '.git' --exclude '.github' ./ public_repo/ || true
+        rsync -av --delete --exclude '.git' --exclude '.github/workflows/sync_to_public.yml' ./ public_repo/ || true
         
         cd public_repo
 
@@ -37,6 +37,9 @@ jobs:
         if git diff-index --quiet HEAD; then
           echo "No changes to commit"
         else
-          git commit -m "Mirror update from private repository"
+         # Get the commit message from the private repo
+          commit_message=$(git log -1 --pretty=%B)
+
+          git commit -m "$commit_message"
           git push https://${{ secrets.TOKEN }}@github.com/initcyber/homelab.git main
         fi
