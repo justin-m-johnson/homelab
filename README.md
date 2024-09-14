@@ -17,18 +17,19 @@ This repo documents my homelab and how I have it set up. It is under constant co
 | Mid June 2024    | Homelab overhaul: Removed old node, added three new nodes, incorporated Ollama and OpenWebUI    |
 | Early July 2024  | Reintroduced Terraform, replacing Ansible for IaC                                    |
 | August 2024      | Restructured folders for better layout. Lower-cased everything except README.md      |
+| September 2024   | Downsized lab - Too much power and not enough utilization currently, Implemented private repo to public repo push for self hosted github runners                  |
 
 ## Hardware Used
 For my HomeLab I am using:
 
- - Proxmox HA Cluster - "Kennedy"
-   - 3x Lenovo m710q Ultra Small Form Factor (USFF) PCs: "Discovery", "Atlantis", "Endeavour"
+ - Proxmox - Hypervisor/VM host - "Discovery"
+   - Lenovo m710q Ultra Small Form Factor (USFF)
 	 - i5-6500T Intel CPU
 	 - 32GB RAM
    - 128GB SATA SSD (Boot)
 	 - 1TB NVMe (Data) 
 
- - NAS/Hyperconverged PC- "Enterprise"
+ - NAS/Hyperconverged PC - "Enterprise"
      - i3 - 9300 Intel CPU
      - 32GB Ram
      - 512GB SSD (Boot)
