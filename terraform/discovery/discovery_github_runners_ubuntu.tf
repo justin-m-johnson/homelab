@@ -2,7 +2,7 @@
 # ---
 # This will create a new Virtual Machine from a cloud-init file
 
-resource "proxmox_vm_qemu" "discovery_Gitea_Runners_Ubuntu" {
+resource "proxmox_vm_qemu" "discovery_github_runners" {
     
     #Set this number to how many VM's you need to deploy, comment out if you don't need to deploy more than 1 (adjust "vmid" and "name" as needed)
     count = 2
@@ -12,8 +12,8 @@ resource "proxmox_vm_qemu" "discovery_Gitea_Runners_Ubuntu" {
     # desc is a descriptive name for our virtual machine
     target_node = "discovery"
     vmid = "100${count.index + 1}"
-    name = "gitea-runner-0${count.index + 1}.home.initcyber.net"
-    desc = "Gitea Runners"
+    name = "github-runner-0${count.index + 1}.home.initcyber.net"
+    desc = "GitHub Runners"
 
     # Set VM to start on boot (true/false)
     onboot = true 
@@ -51,7 +51,7 @@ resource "proxmox_vm_qemu" "discovery_Gitea_Runners_Ubuntu" {
       
     
     # VM Memory Settings - Again, self explantory
-    memory = 2048
+    memory = 1024
     automatic_reboot = false  # refuse auto-reboot when changing a setting
 
     # VM Network Settings - Same
@@ -86,16 +86,13 @@ resource "proxmox_vm_qemu" "discovery_Gitea_Runners_Ubuntu" {
 
     }
     provisioner "local-exec" {
-        working_dir = "../../../2-Ansible-Provision/MOTD/"
+        working_dir = "../../ansible/playbooks/MOTD/"
         command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.4${count.index + 1}, MOTD.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
     }
     provisioner "local-exec" {
-        working_dir = "../../../2-Ansible-Provision/set-time-zone/"
+        working_dir = "../../ansible/playbooks/set-time-zone/"
         command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.4${count.index + 1}, set-time-zone.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
 
     }  
-    provisioner "local-exec" {
-        working_dir = "../../../2-Ansible-Provision/Docker-Install/"
-        command = "ansible-playbook -u ${var.user} --key-file ${var.ssh_keys["priv"]} -i 172.16.10.4${count.index + 1}, Docker-Gitea-Act-Runner.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
-    }     
+
 }

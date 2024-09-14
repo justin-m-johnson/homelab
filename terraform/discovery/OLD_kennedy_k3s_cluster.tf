@@ -102,7 +102,7 @@ resource "proxmox_vm_qemu" "discovery_k3s_node" {
 
 }
 
-resource "proxmox_vm_qemu" "discovery_k3s_node" {
+resource "proxmox_vm_qemu" "discovery_k3s_node2" {
     
     #Set this number to how many VM's you need to deploy, comment out if you don't need to deploy more than 1 (adjust "vmid" and "name" as needed)
     # count = 2
@@ -202,7 +202,7 @@ resource "proxmox_vm_qemu" "discovery_k3s_node" {
 
 }
 
-resource "proxmox_vm_qemu" "discovery_k3s_node" {
+resource "proxmox_vm_qemu" "discovery_k3s_node3" {
     
     #Set this number to how many VM's you need to deploy, comment out if you don't need to deploy more than 1 (adjust "vmid" and "name" as needed)
     # count = 2
