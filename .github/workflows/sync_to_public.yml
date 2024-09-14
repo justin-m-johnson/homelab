@@ -5,7 +5,7 @@ on:
     branches:
       - main  # Specify branch to track in the private repository
   schedule:
-    - cron: '0 0 * * *' # Runs daily at midnight, adjust as needed
+    - cron: '0 * * * *'  # Adjust the schedule as needed (e.g., runs every hour)
 
 jobs:
   mirror:
@@ -18,38 +18,26 @@ jobs:
         repository: initcyber/homelab_priv
         token: ${{ secrets.TOKEN }}  # Use PAT with read access to the private repository
 
-    - name: Clone Public Repo
+    - name: Configure Git
       run: |
-        # Setup git
         git config --global user.name 'github-actions[bot]'
         git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
-        
-        # Clone the public repository into the 'public_repo' directory
+
+    - name: Clone Public Repo
+      run: |
         git clone --single-branch --branch main https://github.com/initcyber/homelab.git public_repo
 
     - name: Sync Repositories
       run: |
-        # Sync contents from the private repo (current directory) to the public_repo directory
-        rsync -av --delete --exclude '.git' --exclude '.github' ./ public_repo/
-
-    - name: Change Directory to Public Repo
-      run: |
-        cd public_repo
-
-    - name: Add Changes
-      run: |
-        git add --all
+        rsync -av --delete --exclude '.git' --exclude '.github/workflows/sync_to_public.yml' ./ public_repo/
 
     - name: Commit and Push Changes
       run: |
+        cd public_repo
+        git add --all
         if git diff-index --quiet HEAD; then
           echo "No changes to commit"
         else
-          # Get the last commit message from the private repository
-          last_commit_message=$(git log -1 --pretty=%B)
-          
-          # Commit changes using the same message
+          last_commit_message=$(git -C ../ log -1 --pretty=%B)
           git commit -m "$last_commit_message"
-
-          # Push changes to the public repository
           git push https://${{ secrets.TOKEN }}@github.com/initcyber/homelab.git main
