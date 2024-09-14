@@ -32,14 +32,16 @@ jobs:
         # Sync contents from the private repo (current directory) to the public_repo directory
         rsync -av --delete --exclude '.git' --exclude '.github' ./ public_repo/
 
-    - name: Commit and Push Changes
+    - name: Change Directory to Public Repo
       run: |
         cd public_repo
 
-        # Add all changes
+    - name: Add Changes
+      run: |
         git add --all
-        
-        # Check for changes
+
+    - name: Commit and Push Changes
+      run: |
         if git diff-index --quiet HEAD; then
           echo "No changes to commit"
         else
