@@ -29,12 +29,13 @@ jobs:
 
     - name: Sync Repositories
       run: |
-        # Change to the public repo directory
+        # Sync contents from the private repo (current directory) to the public_repo directory
+        rsync -av --delete --exclude '.git' --exclude '.github' ./ public_repo/ || true
+
+    - name: Commit and Push Changes
+      run: |
         cd public_repo
 
-        # Sync contents from the private repo (..) to the public repo (.)
-        rsync -av --delete --exclude '.git' --exclude '.github/workflows/sync_to_public.yml' ../ public_repo/ || true
-        
         # Commit and push changes if there are any
         git add --all
         if git diff-index --quiet HEAD; then
@@ -45,4 +46,3 @@ jobs:
 
           git commit -m "$last_commit_message"
           git push https://${{ secrets.TOKEN }}@github.com/initcyber/homelab.git main
-        fi
