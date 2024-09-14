@@ -5,7 +5,7 @@ on:
     branches:
       - main  # Specify branch to track in the private repository
   schedule:
-    - cron: '0 * * * *'  # Adjust the schedule as needed (e.g., runs every hour)
+    - cron: '0 0 * * *' # Runs daily at midnight, adjust as needed
 
 jobs:
   mirror:
@@ -17,27 +17,26 @@ jobs:
       with:
         repository: initcyber/homelab_priv
         token: ${{ secrets.TOKEN }}  # Use PAT with read access to the private repository
-
-    - name: Configure Git
+    
+    - name: Sync to Public Repo
       run: |
+        # Setup git
         git config --global user.name 'github-actions[bot]'
         git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
-
-    - name: Clone Public Repo
-      run: |
-        git clone --single-branch --branch main https://github.com/initcyber/homelab.git public_repo
-
-    - name: Sync Repositories
-      run: |
-        rsync -av --delete --exclude '.git' --exclude '.github/workflows/sync_to_public.yml' ./ public_repo/
-
-    - name: Commit and Push Changes
-      run: |
+        
+        # Clone the public repository into the 'public_repo' directory
+        git clone --single-branch --branch main https://github.com/initcyber/homelab public_repo
+        
+        # Sync contents of private repo to public repo, excluding certain directories
+        rsync -av --delete --exclude '.git' --exclude '.github' ./ public_repo/ || true
+        
         cd public_repo
+
+        # Commit and push changes if there are any
         git add --all
         if git diff-index --quiet HEAD; then
           echo "No changes to commit"
         else
-          last_commit_message=$(git -C ../ log -1 --pretty=%B)
-          git commit -m "$last_commit_message"
+          git commit -m "Mirror update from private repository"
           git push https://${{ secrets.TOKEN }}@github.com/initcyber/homelab.git main
+        fi
