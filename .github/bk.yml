@@ -1,0 +1,47 @@
+name: Mirror to Public Repository
+
+on:
+  push:
+    branches:
+      - main  # Specify branch to track in the private repository
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight, adjust as needed
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Private Repo
+      uses: actions/checkout@v4
+      with:
+        repository: initcyber/homelab_priv
+        token: ${{ secrets.TOKEN }}  # Use PAT with read access to the private repository
+
+    - name: Sync to Public Repo
+      run: |
+        # Setup git
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+        
+        # Clone the public repository into the 'public_repo' directory
+        git clone --single-branch --branch main https://github.com/initcyber/homelab public_repo
+        
+        # Sync contents of private repo to root of public repo directory (excluding certain directories)
+        rsync -av --delete --exclude '.git' --exclude '.github' ./ public_repo/
+        
+        # Change to the public_repo directory
+        cd public_repo
+
+        # Commit and push changes if there are any
+        if [ -n "$(git status --porcelain)" ]; then 
+          # Fetch the latest commit message from the private repo
+          commit_message=$(git -C ../ log -1 --pretty=%B)
+
+          # Commit and push changes
+          git add --all
+          git commit -m "$commit_message"
+          git push https://${{ secrets.TOKEN }}@github.com/initcyber/homelab.git main
+        else
+          echo "No changes to commit"
+        fi
