@@ -13,11 +13,11 @@ jobs:
 
     steps:
     - name: Checkout Private Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         repository: initcyber/homelab_priv
         token: ${{ secrets.TOKEN }}  # Use PAT with read access to the private repository
-    
+
     - name: Sync to Public Repo
       run: |
         # Setup git
@@ -27,16 +27,20 @@ jobs:
         # Clone the public repository into the 'public_repo' directory
         git clone --single-branch --branch main https://github.com/initcyber/homelab public_repo
         
-        # Sync contents of private repo to public repo, excluding certain directories
-        rsync -av --delete --exclude '.git' --exclude '.github' ./ public_repo/ || true
+        # Sync contents of private repo to public repo directory (excluding certain directories)
+        rsync -av --delete --exclude '.git' --exclude '.github/workflows/sync_to_public.yml' ./ public_repo/ || true
         
         cd public_repo
 
-        # Commit and push changes if there are any
-        git add --all
-        if git diff-index --quiet HEAD; then
-          echo "No changes to commit"
-        else
-          git commit -m "Mirror update from private repository"
+        # Ensure the provided token has `repo` scope for write access to the public repository
+        if [ -n "$(git status --porcelain)" ]; then 
+          # Fetch the latest commit message from the private repo
+          commit_message=$(git -C ../ log -1 --pretty=%B)
+
+          # Commit and push changes if there are any
+          git add --all
+          git commit -m "$commit_message"
           git push https://${{ secrets.TOKEN }}@github.com/initcyber/homelab.git main
+        else
+          echo "No changes to commit"
         fi
