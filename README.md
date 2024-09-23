@@ -74,26 +74,9 @@ This folder contains docker-compose.yml scripts for various VMs.
 
 
 ## Virtual Machine Requirements - Incomplete
-
-1 - Splunk VM
- - 4 CPU Cores
- - 6 GB RAM
- - 100 GB SSD
-
-2 - Wazuh VM
- - 4 CPU Cores
- - 6 GB RAM
- - 100 GB SSD
-
-3 - CI VM
- - 2 CPU core
- - 16 GB RAM
- - 50 GB SSD
-
 (TBD)
 
 # Putting it all together
-
 (TBD)
 
 
