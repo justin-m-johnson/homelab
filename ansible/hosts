@@ -19,6 +19,9 @@
 [oracle-nodes]
 100.126.205.128 #oracle-node1
 
+[small-arm]
+100.102.27.84 #small-arm
+
 ; [oracle-nodes:vars]
 ; ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q ubuntu@100.114.16.19"'
 

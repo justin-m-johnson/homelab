@@ -1,6 +1,6 @@
 ---
 # Install Docker and Docker CE
-- hosts: oracle-nodes
+- hosts: small-arm
   become: yes
   gather_facts: yes
   vars:
