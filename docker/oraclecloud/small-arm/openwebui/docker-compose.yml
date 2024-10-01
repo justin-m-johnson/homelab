@@ -18,7 +18,7 @@ services:
     ports:
       - "9099:9099"
     networks:
-      - host-network
+      - host
     volumes:
       - pipelines:/app/pipelines
     restart: always
