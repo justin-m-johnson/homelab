@@ -17,8 +17,6 @@ services:
     image: ghcr.io/open-webui/pipelines:main
     ports:
       - "9099:9099"
-    networks:
-      - host
     volumes:
       - pipelines:/app/pipelines
     restart: always
