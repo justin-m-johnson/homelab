@@ -27,8 +27,8 @@ services:
     ports:
       - "3000:8080"
     volumes:
-      - ollama:/root/.ollama
-      - open-webui:/app/backend/data
+      - ollama-data:/root/.ollama
+      - open-webui-local:/app/backend/data
     restart: always
 
 
