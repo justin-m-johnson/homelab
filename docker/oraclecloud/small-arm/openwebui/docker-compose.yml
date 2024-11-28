@@ -1,27 +1,16 @@
 services:
 
-  # openWebUI:
-  #   image: ghcr.io/open-webui/open-webui:0.4.6
-  #   restart: always
-  #   ports:
-  #     - "3002:8080"
-  #   environment:
-  #     - 'OLLAMA_BASE_URL=http://172.16.100.10:11434' 
-  #   #extra_hosts:
-  #   #  - "host.docker.internal:host-gateway"
-  #   volumes:
-  #     - open-webui-local:/app/backend/data
-
-  open-webui:
-    image: ghcr.io/open-webui/open-webui:ollama  # Docker image to use
-    container_name: open-webui  # Name of the container
+  openWebUI:
+    image: ghcr.io/open-webui/open-webui:0.4.6
+    restart: always
     ports:
-      - "3000:8080"  # Maps port 3000 on the host to port 8080 in the container
+      - "3002:8080"
+    environment:
+      - 'OLLAMA_BASE_URL=http://172.16.100.10:11434' 
+    #extra_hosts:
+    #  - "host.docker.internal:host-gateway"
     volumes:
-      - ollama-data:/root/.ollama  # Mounts the 'ollama' volume
-      - open-webui-local:/app/backend/data  # Mounts the 'open-webui' volume
-    restart: always  # Always restart the container unless explicitly stopped
-
+      - open-webui-local:/app/backend/data
 
 
   pipelines:
@@ -32,6 +21,16 @@ services:
       - pipelines:/app/pipelines
     restart: always
 
+  ollama-local:
+    image: ghcr.io/ollama/ollama:latest
+    container_name: ollama-local
+    restart: always
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/ollama/data
+    environment:
+      - OLLAMA_CONFIG_PATH=/ollama/config
 
 volumes:
   pipelines:
