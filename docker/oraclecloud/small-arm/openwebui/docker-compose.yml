@@ -1,7 +1,7 @@
 services:
 
   openWebUI:
-    image: ghcr.io/open-webui/open-webui:main
+    image: ghcr.io/open-webui/open-webui:0.4.6
     restart: always
     ports:
       - "3002:8080"
