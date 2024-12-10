@@ -31,7 +31,7 @@ services:
       SMTP_AUTH_STRATEGY: TLS
       SMTP_USER: ${SMTP_USER}
       SMTP_PASSWORD: ${SMTP_PASSWORD}
-      BASE_URL: https://meal.clouddefenselabs.com
+      BASE_URL: https://meals.clouddefenselabs.com
       # Database Settings
       DB_ENGINE: postgres
       POSTGRES_USER: mealie
