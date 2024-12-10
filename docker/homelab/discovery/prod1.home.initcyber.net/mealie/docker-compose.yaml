@@ -16,8 +16,12 @@ services:
       ALLOW_SIGNUP: "false"
       PUID: 1000
       PGID: 1000
-      TZ: America/Anchorage
-      BASE_URL: https://mealie.yourdomain.com
+      TZ: America/new_york
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL}
+      OPENAI_MODEL: ${OPENAI_MODEL}
+      OPENAI_ENABLE_IMAGE_SERVICES: True
+      OPENAI_WORKERS: 2
+      BASE_URL: https://meal.clouddefenselabs.com
       # Database Settings
       DB_ENGINE: postgres
       POSTGRES_USER: mealie
