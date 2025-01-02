@@ -1,0 +1,12 @@
+services:
+  actual-server:
+    image: actualbudget/actual-server:latest
+    container_name: actual_budget
+    restart: unless-stopped
+    ports:
+      - '5006:5006'
+    volumes:
+      - actual_data:/data
+volumes:
+  actual_data:
+    external: true
