@@ -85,11 +85,11 @@ services:
       PAPERLESS_OCR_LANGUAGE: eng
 
 volumes:
-  data:
+  paper_data:
     external: true
-  media:
+  paper_media:
     external: true
-  pgdata:
+  paper_pgdata:
     external: true
-  redisdata:
+  paper_redisdata:
     external: true
