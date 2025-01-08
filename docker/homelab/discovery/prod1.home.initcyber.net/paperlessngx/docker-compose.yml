@@ -79,7 +79,7 @@ services:
 # be a very long sequence of random characters. You don't need to remember it.
       #PAPERLESS_SECRET_KEY: change-me
 # Use this variable to set a timezone for the Paperless Docker containers. If not specified, defaults to UTC.
-      PAPERLESS_TIME_ZONE: America/NewYork
+      PAPERLESS_TIME_ZONE: America/New_York
       PAPERLESS_URL: https://paperless.johnsonbunch.com
       PAPERLESS_CSRF_TRUSTED_ORIGINS: https://paperless.johnsonbunch.com
       PAPERLESS_ALLOWED_HOSTS: paperless.johnsonbunch.com
