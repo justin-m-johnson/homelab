@@ -56,8 +56,8 @@ services:
     volumes:
       - paper_data:/usr/src/paperless/data
       - paper_media:/usr/src/paperless/media
-      - ./export:/usr/src/paperless/export
-      - ./consume:/usr/src/paperless/consume
+      - paper_export:/usr/src/paperless/export
+      - paper_consume:/usr/src/paperless/consume
     environment:
       PAPERLESS_REDIS: redis://broker:6379
       PAPERLESS_DBHOST: db
@@ -88,6 +88,10 @@ services:
       PAPERLESS_OCR_LANGUAGE: eng
 
 volumes:
+  paper_consume:
+    external: true
+  paper_export:
+    external: true
   paper_data:
     external: true
   paper_media:
