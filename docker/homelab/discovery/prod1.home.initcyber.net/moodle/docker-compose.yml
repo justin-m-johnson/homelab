@@ -7,6 +7,11 @@ services:
       - MYSQL_ROOT_PASSWORD=moodle
       - MYSQL_ROOT_USER=root
       - MYSQL_DATABASE=moodle
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
       
   moodle:
     image: bitnami/moodle:latest
@@ -24,9 +29,8 @@ services:
       - moodle:/bitnami/moodle
       - moodle-data:/bitnami/moodledata
     depends_on:
-      - mariadb
-    links:
-      - mariadb:mariadb
+      mariadb:
+        condition: service_healthy
 
 volumes:
   moodle:
