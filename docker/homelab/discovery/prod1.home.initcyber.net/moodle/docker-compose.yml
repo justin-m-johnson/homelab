@@ -2,7 +2,7 @@ services:
   mariadb:
     image: mariadb
     volumes:
-      - /srv/Configs/Databases/Moodle:/var/lib/mysql
+      - moodle-database:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=moodle
       - MYSQL_ROOT_USER=root
