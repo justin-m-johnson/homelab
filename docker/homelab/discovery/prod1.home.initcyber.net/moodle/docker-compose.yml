@@ -33,3 +33,5 @@ volumes:
     external: true
   moodle-data:
     external: true
+  moodle-database:
+    external: true
