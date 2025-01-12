@@ -18,8 +18,8 @@ services:
       - MOODLE_DATABASE_USER=root
       - MOODLE_DATABASE_PASSWORD=moodle
       - MOODLE_DATABASE_NAME=moodle
-      - PUID=998
-      - PGID=100
+      - PUID=1000
+      - PGID=1000
     volumes:
       - moodle:/bitnami/moodle
       - moodle-data:/bitnami/moodledata
