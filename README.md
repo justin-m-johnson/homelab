@@ -2,7 +2,7 @@
 This project is under heavy construction as of July 2024. After a brief hiatus in the spring of 2024 due to work/life/hobby balance, I'm now resuming and making significant updates. Upcoming changes include documentation fixes, incorporating AI tools, and adding a Kubernetes cluster.
 
 #  Project Description
-Welcome to my Home Lab documentation! Here, I document my journey setting up my home lab using mostly free and open-source software. You can follow this documentation on [my personal website](https://www.initcyber.com) and my [YouTube](https://www.youtube.com/@initcyber) channel.
+Welcome to my Home Lab documentation! Here, I document my journey setting up my home lab using mostly free and open-source software. You can follow this documentation on [my personal website](https://www.justinmjohnson.com) and my [YouTube](https://www.youtube.com/@initcyber) channel.
 
 ## Use Case
 This repo documents my homelab and how I have it set up. It is under constant construction as I build, tear down, rebuild, automate, write it out as code (IAC: Terraform/Ansible), and figure out what works best for me and my lab environment.
