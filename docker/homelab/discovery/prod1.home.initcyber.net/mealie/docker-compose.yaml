@@ -1,18 +1,83 @@
+# services:
+#   mealie:
+#     image: ghcr.io/mealie-recipes/mealie:v2.4.2 # 
+#     container_name: mealie
+#     restart: always
+#     ports:
+#         - "9925:9000" # 
+#     deploy:
+#       resources:
+#         limits:
+#           memory: 1000M # 
+#     volumes:
+#       - mealie-data:/app/data/
+#     environment:
+#       # Set Backend ENV Variables Here
+#       ALLOW_SIGNUP: "false"
+#       PUID: 1000
+#       PGID: 1000
+#       TZ: America/new_york
+#       OPENAI_BASE_URL: ${OPENAI_BASE_URL}
+#       OPENAI_API_KEY: ${OPENAI_API_KEY}
+#       OPENAI_MODEL: ${OPENAI_MODEL}
+#       OPENAI_SEND_DATABASE_DATA: True
+#       OPENAI_ENABLE_IMAGE_SERVICES: True
+#       OPENAI_WORKERS: 2
+#       OPENAI_REQUEST_TIMEOUT: 360
+#       SMTP_HOST: ${SMTP_HOST}
+#       SMTP_PORT: ${SMTP_PORT}
+#       SMTP_FROM_NAME: ${SMTP_FROM_NAME}
+#       SMTP_FROM_EMAIL: ${SMTP_FROM_EMAIL}
+#       SMTP_AUTH_STRATEGY: TLS
+#       SMTP_USER: ${SMTP_USER}
+#       SMTP_PASSWORD: ${SMTP_PASSWORD}
+#       BASE_URL: ${BASE_URL}
+#       # Database Settings
+#       DB_ENGINE: postgres
+#       POSTGRES_USER: mealie
+#       POSTGRES_PASSWORD: mealie
+#       POSTGRES_SERVER: postgres
+#       POSTGRES_PORT: 5432
+#       POSTGRES_DB: mealie
+#     depends_on:
+#       postgres:
+#         condition: service_healthy
+
+#   postgres:
+#     container_name: postgres
+#     image: postgres:15
+#     restart: always
+#     volumes:
+#       - mealie-pgdata:/var/lib/postgresql/data
+#     environment:
+#       POSTGRES_PASSWORD: mealie
+#       POSTGRES_USER: mealie
+#       POSTGRES_DB: mealie
+#     healthcheck:
+#       test: ["CMD-SHELL", "pg_isready -U mealie -d mealie"]
+#       interval: 30s
+#       timeout: 20s
+#       retries: 3
+
+# volumes:
+#   mealie-data:
+#     external: true
+#   mealie-pgdata:
+#     external: true
 services:
   mealie:
-    image: ghcr.io/mealie-recipes/mealie:v2.4.2 # 
+    image: ghcr.io/mealie-recipes/mealie:v2.4.2
     container_name: mealie
     restart: always
     ports:
-        - "9925:9000" # 
+      - "9925:9000"
     deploy:
       resources:
         limits:
-          memory: 1000M # 
+          memory: 1000M
     volumes:
       - mealie-data:/app/data/
     environment:
-      # Set Backend ENV Variables Here
       ALLOW_SIGNUP: "false"
       PUID: 1000
       PGID: 1000
@@ -20,8 +85,8 @@ services:
       OPENAI_BASE_URL: ${OPENAI_BASE_URL}
       OPENAI_API_KEY: ${OPENAI_API_KEY}
       OPENAI_MODEL: ${OPENAI_MODEL}
-      OPENAI_SEND_DATABASE_DATA: True
-      OPENAI_ENABLE_IMAGE_SERVICES: True
+      OPENAI_SEND_DATABASE_DATA: "true"
+      OPENAI_ENABLE_IMAGE_SERVICES: "true"
       OPENAI_WORKERS: 2
       OPENAI_REQUEST_TIMEOUT: 360
       SMTP_HOST: ${SMTP_HOST}
@@ -32,13 +97,17 @@ services:
       SMTP_USER: ${SMTP_USER}
       SMTP_PASSWORD: ${SMTP_PASSWORD}
       BASE_URL: ${BASE_URL}
-      # Database Settings
       DB_ENGINE: postgres
       POSTGRES_USER: mealie
       POSTGRES_PASSWORD: mealie
       POSTGRES_SERVER: postgres
       POSTGRES_PORT: 5432
       POSTGRES_DB: mealie
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/docs"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     depends_on:
       postgres:
         condition: service_healthy
@@ -47,13 +116,16 @@ services:
     container_name: postgres
     image: postgres:15
     restart: always
+    ports:
+      - "5432:5432"
     volumes:
       - mealie-pgdata:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: mealie
       POSTGRES_USER: mealie
+      POSTGRES_DB: mealie
     healthcheck:
-      test: ["CMD", "pg_isready"]
+      test: ["CMD-SHELL", "pg_isready -U mealie -d mealie"]
       interval: 30s
       timeout: 20s
       retries: 3
