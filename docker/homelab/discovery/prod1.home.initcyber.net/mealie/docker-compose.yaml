@@ -31,7 +31,7 @@ services:
       SMTP_AUTH_STRATEGY: TLS
       SMTP_USER: ${SMTP_USER}
       SMTP_PASSWORD: ${SMTP_PASSWORD}
-      BASE_URL: ${base_url}
+      BASE_URL: ${BASE_URL}
       # Database Settings
       DB_ENGINE: postgres
       POSTGRES_USER: mealie
