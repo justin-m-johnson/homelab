@@ -18,6 +18,7 @@ This repo documents my homelab and how I have it set up. It is under constant co
 | Early July 2024  | Reintroduced Terraform, replacing Ansible for IaC                                    |
 | August 2024      | Restructured folders for better layout. Lower-cased everything except README.md      |
 | September 2024   | Downsized lab - Too much power and not enough utilization currently, Implemented private repo to public repo push for self hosted github runners                  |
+| December 2024    | Changed hardware in lab  |
 
 ## Hardware Used
 For my HomeLab I am using:
@@ -30,8 +31,8 @@ For my HomeLab I am using:
 	 - 1TB NVMe (Data) 
 
  - NAS/Hyperconverged PC - "Enterprise"
-     - i3 - 9300 Intel CPU
-     - 32GB Ram
+     - i5 - 9500 Intel CPU
+     - 64GB Ram
      - 512GB SSD (Boot)
      - 256GB SSD (Log Storage)
 
