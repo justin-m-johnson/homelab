@@ -104,7 +104,7 @@ services:
       POSTGRES_PORT: 5432
       POSTGRES_DB: mealie
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/docs"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9000/api/health"]
       interval: 30s
       timeout: 10s
       retries: 3
